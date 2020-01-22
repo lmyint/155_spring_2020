@@ -1,0 +1,18 @@
+# Statistics and Society {-}
+
+Below are some articles relating to the role that statistics plays in our society. If you come across something interesting and would like to share it here, feel free to email the instructor!
+
+- [Amazon scraps secret AI recruiting tool that showed bias against women](https://www.reuters.com/article/us-amazon-com-jobs-automation-insight/amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK08G)
+- WSJ Podcast: [Machine Love: Dating in the Digital Age](https://itunes.apple.com/us/podcast/wsjs-the-future-of-everything/id1234320525?mt=2&i=1000429776935) (Thanks, Meera!)
+    - Related: [How a Math Genius Hacked OkCupid to Find True Love](https://www.wired.com/2014/01/how-to-hack-okcupid/)
+- [ML and astrophysics](https://www.symmetrymagazine.org/article/data-scientists-face-off-in-lsst-machine-learning-competition) (Thanks, Karen!)
+- [Automated background checks are deciding who's fit for a home](https://www.theverge.com/platform/amp/2019/2/1/18205174/automation-background-check-criminal-records-corelogic) (Thanks, Eleanor!)
+- [How many high school stars make it in the NBA?](https://pudding.cool/2019/03/hype/)
+- [The AI-Art Gold Rush Is Here](https://www.theatlantic.com/technology/archive/2019/03/ai-created-art-invades-chelsea-gallery-scene/584134/) (Thanks, Blake!)
+- [Genes mirror geography within Europe](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2735096/) (PCA on genotypes reflects European geography!)
+- [First M87 Event Horizon Telescope Results. IV. Imaging the Central Supermassive Black Hole](https://iopscience.iop.org/article/10.3847/2041-8213/ab0e85) (Thanks, Karen!)
+- [One Month, 500,000 Face Scans: How China Is Using A.I. to Profile a Minority](https://www.nytimes.com/2019/04/14/technology/china-surveillance-artificial-intelligence-racial-profiling.html) (Thanks, James!)
+
+
+
+

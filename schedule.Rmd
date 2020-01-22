@@ -1,0 +1,11 @@
+# Schedule {-}
+
+## Week 1: 1/24 {-}
+
+- **Friday:** Introductions; a taste of R and visualization
+
+## Week 2: 1/27 - 1/31 {-}
+
+- **Monday:** Univariate visualization and summary measures
+- **Wednesday:** Bivariate visualization and summary measures
+- **Friday:** Multivariate visualization

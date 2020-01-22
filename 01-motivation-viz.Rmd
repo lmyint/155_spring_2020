@@ -1,0 +1,222 @@
+```{r 01_setup, include=FALSE}
+# knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+
+```{r, include=FALSE}
+tutorial::go_interactive(greedy = FALSE)
+```
+
+# (PART) Describing and Visualizing Data {-}
+
+# Welcome and Motivation
+
+## Introductions {-}
+
+Get to know the others at your table. Share your names, preferred pronouns, and anything else that is important to you.
+
+<br><br><br><br>
+
+## A taste of data visualization in R {-}
+
+Throughout the semester we'll be using the statistical software R to analyze data. We'll take a first look at R code today in the following activity.
+
+<br><br>
+
+Board games are a favorite hobby of your instructor, and to her delight, there is a dataset containing information about many different board games and their ratings from the website [BoardGameGeek.com](https://boardgamegeek.com/)!
+
+You will work through exploring this dataset in pairs, and the instructor will be circling around to help. For some phases of this exploration, you will need to have [this page](https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-03-12) open to access the data description.
+
+This code may seem foreign at first, but over the semester you will have a lot of practice, and you'll be able to write code like this by yourself at the end! Today, focus on getting a feel for what the code looks like and its *potential* for helping us gain insight.
+
+<br><br><br>
+
+<script src="https://cdn.datacamp.com/datacamp-light-latest.min.js"></script>
+
+### Warm-up {-}
+
+The data are stored in an object (a container) called `games`. Let's get a quick feel for this data.
+
+- How many **variables** are present? Which are **quantitative**? Which are **categorical**?
+- How many **cases**, or **units of observation**, do we have?
+- How are the variables named / labeled?
+
+```{r ex="warm_up", type="pre-exercise-code", tut=TRUE}
+library(ggplot2)
+library(dplyr)
+library(readr)
+games <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-12/board_games.csv")
+```
+
+```{r ex="warm_up", type="sample-code", tut=TRUE}
+# Look at the first 6 rows
+head(games)
+
+# How many rows and columns does the data have?
+# What are its dimensions?
+dim(games)
+```
+
+<br><br><br>
+<!-- ====================================================================== -->
+
+### Phase 1 {-}
+
+- Use the code below to construct a visualization (a **histogram**) of average ratings for the games.
+- What do you notice? What information can you gain from this plot?
+- What do you think `binwidth = 2` does? Try setting a different value for `binwidth` to make a plot that looks better to you.
+
+```{r ex="phase1", type="pre-exercise-code", tut=TRUE}
+library(ggplot2)
+library(dplyr)
+library(readr)
+games <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-12/board_games.csv")
+```
+
+```{r ex="phase1", type="sample-code", tut=TRUE}
+# Create a plot of average ratings (histogram)
+ggplot(games, aes(x = average_rating)) +
+    geom_histogram(binwidth = 2)
+```
+
+<br><br><br>
+<!-- ====================================================================== -->
+
+### Phase 2 {-}
+
+- Another way to visualize average ratings is shown below. Use the code below to construct a **density plot** of average ratings.
+- Do you like this plot or the previous one better? Why?
+
+```{r ex="phase2", type="pre-exercise-code", tut=TRUE}
+library(ggplot2)
+library(dplyr)
+library(readr)
+games <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-12/board_games.csv")
+```
+
+```{r ex="phase2", type="sample-code", tut=TRUE}
+# Create a plot of average ratings (density plot)
+ggplot(games, aes(x = average_rating)) +
+    geom_density()
+```
+
+<br><br><br>
+<!-- ====================================================================== -->
+
+### Phase 3 {-}
+
+- Using code similar to either of the two above examples in Phases 1 and 2, what other variables might you visualize in a similar way? Try the code here.
+- Make note of any interesting findings.
+
+```{r ex="phase3", type="pre-exercise-code", tut=TRUE}
+library(ggplot2)
+library(dplyr)
+library(readr)
+games <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-12/board_games.csv")
+```
+
+```{r ex="phase3", type="sample-code", tut=TRUE}
+# Visualize some other variables
+```
+
+<br><br><br>
+<!-- ====================================================================== -->
+
+### Phase 4 {-}
+
+- Using the code below, construct a visualization of average ratings broken down by minimum age.
+- What do you notice? What is surprising? What is not surprising?
+
+```{r ex="phase4", type="pre-exercise-code", tut=TRUE}
+library(ggplot2)
+library(dplyr)
+library(readr)
+games <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-12/board_games.csv")
+```
+
+```{r ex="phase4", type="sample-code", tut=TRUE}
+# Visualize average ratings for different numbers of min. players
+ggplot(games, aes(x = average_rating)) +
+    geom_histogram() +
+    facet_wrap(~ min_players)
+```
+
+<br><br><br>
+<!-- ====================================================================== -->
+
+### Phase 5 {-}
+
+- Using the code below, construct two alternate visualizations of average ratings broken down by minimum age. These plots use color instead of panels and also only keep games for which the minimum number of players ranges from 1 to 4.
+- Which of the three visualizations do you like best? Why?
+
+```{r ex="phase5", type="pre-exercise-code", tut=TRUE}
+library(ggplot2)
+library(dplyr)
+library(readr)
+games <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-12/board_games.csv")
+```
+
+```{r ex="phase5", type="sample-code", tut=TRUE}
+# Subset the data to only keep games where min_players is from 1 to 4
+games_sub <- dplyr::filter(games, min_players >= 1, min_players <= 4)
+
+# Colored histograms
+ggplot(games_sub, aes(x = average_rating, fill = factor(min_players))) +
+    geom_histogram()
+
+# Colored density plots
+ggplot(games_sub, aes(x = average_rating, color = factor(min_players))) +
+    geom_density()
+```
+
+<br><br><br>
+<!-- ====================================================================== -->
+
+### Phase 6 {-}
+
+- Using the code below, construct a visualization of the relationship between minimum recommended play time and average rating (a **scatterplot**).
+- Is the plot useful? Why or why not?
+- Using the `dplyr::filter` part of the Phase 5 code, subset the data to only keep games where the minimum recommended playtime is less than 1000 minutes. Then remake the scatterplot.
+- Make note of any interesting findings.
+
+```{r ex="phase6", type="pre-exercise-code", tut=TRUE}
+library(ggplot2)
+library(dplyr)
+library(readr)
+games <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-12/board_games.csv")
+```
+
+```{r ex="phase6", type="sample-code", tut=TRUE}
+# Relationship between min. recommended play time and average rating
+ggplot(games, aes(x = min_playtime, y = average_rating)) +
+    geom_point() +
+    geom_smooth()
+
+# Subset the data to only keep games where the
+# minimum recommended playtime is less than 1000 minutes
+
+
+# Relationship between min. recommended play time and average rating
+
+
+```
+
+<br><br><br>
+<!-- ====================================================================== -->
+
+### Phase 7 {-}
+
+- What other questions would you like to explore? Try them out below.
+- If you would like to try something that is not part of the above examples, feel free to brainstorm with the instructor.
+
+```{r ex="phase7", type="pre-exercise-code", tut=TRUE}
+library(ggplot2)
+library(dplyr)
+library(readr)
+games <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-12/board_games.csv")
+```
+
+```{r ex="phase7", type="sample-code", tut=TRUE}
+# Your own explorations!
+```
+
+<br><br><br>
