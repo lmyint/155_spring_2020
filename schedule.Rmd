@@ -6,6 +6,7 @@
 
 ## Week 2: 1/27 - 1/31 {-}
 
-- **Monday:** Univariate visualization and summary measures
+- **Monday:** Univariate visualization and summary measures    
+    **Before class:** Follow all instructions on the [Software Setup] page. Read sections 1.1, 2.1-2.4, and 2.6 in the [STAT 155 Notes](https://bcheggeseth.github.io/Stat155Notes/index.html), and answer the Moodle questions under Reading Checks > Data; Univariate Summaries and Visualization.
 - **Wednesday:** Bivariate visualization and summary measures
 - **Friday:** Multivariate visualization

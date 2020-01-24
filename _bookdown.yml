@@ -1,6 +1,6 @@
-book_filename: "math253_manual"
+book_filename: "stat155_manual"
 output_dir: docs/
-rmd_files: ["index.Rmd", "schedule.Rmd", "01-motivation-viz.Rmd"]
+rmd_files: ["index.Rmd", "schedule.Rmd", "software_setup.Rmd", "01-motivation-viz.Rmd"]
 language:
   ui:
     chapter_name: "Topic "
