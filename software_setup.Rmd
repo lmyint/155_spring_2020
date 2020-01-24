@@ -26,7 +26,7 @@ Required: Install required **packages**.
     ```
 - You will see a lot of text from status messages appearing in the Console as the packages are being installed. Wait until you see the `> ` again.
 - Enter the command `library(ggplot2)` and hit enter.    
-    If you see the message `Error in library(ggplot2) : there is no package called ggplot2`, then there was a problem installing this package. Seek help from the instructor. (Any other messages that appear are fine, and a lack of any messages is also fine.)
+    If you see the message `Error in library(ggplot2) : there is no package called ggplot2`, then there was a problem installing this package. Jump down to the Troubleshooting section below. (Any other messages that appear are fine, and a lack of any messages is also fine.)
 - Repeat the above step for the commands:
     - `library(dplyr)`
     - `library(readr)`
@@ -34,3 +34,17 @@ Required: Install required **packages**.
 - Quit RStudio. You're done setting up!
 
 Optional: If you want a quick tour of RStudio before class on Monday, watch this [video](https://www.youtube.com/watch?v=HWnanydsBCs). It also shows you how to customize the layout and color scheme of RStudio.
+
+<br><br>
+
+## Troubleshooting {-}
+
+- **Problem:** You are on a Mac and getting the following error:    
+    ```
+    Error: package or namespace load failed for ‘ggplot2’ in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):
+     there is no package called ‘rlang’
+    ```    
+    Here's how to fix it:
+    - First install the suite of Command Line Tools for Mac using the instructions [here](http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/).
+    - Next enter `install.packages("rlang")` in the Console.
+    - Finally check that entering `library(ggplot2)` gives no errors. You should be good now for `dplyr`, `readr`, and `rmarkdown`.
