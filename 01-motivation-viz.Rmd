@@ -1,8 +1,4 @@
 ```{r 01_setup, include=FALSE}
-# knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
-```
-
-```{r, include=FALSE}
 tutorial::go_interactive(greedy = FALSE)
 ```
 
@@ -123,7 +119,7 @@ games <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidy
 
 ### Phase 4 {-}
 
-- Using the code below, construct a visualization of average ratings broken down by minimum age.
+- Using the code below, construct a visualization of average ratings broken down by minimum number of players.
 - What do you notice? What is surprising? What is not surprising?
 
 ```{r ex="phase4", type="pre-exercise-code", tut=TRUE}
@@ -145,7 +141,7 @@ ggplot(games, aes(x = average_rating)) +
 
 ### Phase 5 {-}
 
-- Using the code below, construct two alternate visualizations of average ratings broken down by minimum age. These plots use color instead of panels and also only keep games for which the minimum number of players ranges from 1 to 4.
+- Using the code below, construct two alternate visualizations of average ratings broken down by minimum number of players. These plots use color instead of panels and also only keep games for which the minimum number of players ranges from 1 to 4.
 - Which of the three visualizations do you like best? Why?
 
 ```{r ex="phase5", type="pre-exercise-code", tut=TRUE}

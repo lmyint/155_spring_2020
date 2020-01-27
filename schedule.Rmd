@@ -8,5 +8,10 @@
 
 - **Monday:** Univariate visualization and summary measures    
     **Before class:** Follow all instructions on the [Software Setup] page. Read sections 1.1, 2.1-2.4, and 2.6 in the [STAT 155 Notes](https://bcheggeseth.github.io/Stat155Notes/index.html), and answer the Moodle questions under Reading Checks > Data; Univariate Summaries and Visualization.
-- **Wednesday:** Bivariate visualization and summary measures
+- **Wednesday:** Bivariate visualization and summary measures    
+    **Before class:** Read sections 2.5, 2.7, and 2.8 in the [STAT 155 Notes](https://bcheggeseth.github.io/Stat155Notes/index.html), and answer the Moodle questions under Reading Checks > Bivariate Summaries and Visualization.
 - **Friday:** Multivariate visualization
+
+<span style="color:red">
+Homework 1 (on Moodle) is due Friday, January 31 at midnight.
+</span>
