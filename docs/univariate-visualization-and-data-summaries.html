@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Topic 2 Univariate Visualization and Data Summaries | STAT 155: Introduction to Statistical Modeling</title>
+  <meta name="description" content="This is the class website for STAT 155 at Macalester College." />
+  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Topic 2 Univariate Visualization and Data Summaries | STAT 155: Introduction to Statistical Modeling" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is the class website for STAT 155 at Macalester College." />
+  <meta name="github-repo" content="lmyint/155_spring_2020" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Topic 2 Univariate Visualization and Data Summaries | STAT 155: Introduction to Statistical Modeling" />
+  
+  <meta name="twitter:description" content="This is the class website for STAT 155 at Macalester College." />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="welcome-and-motivation.html"/>
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #2a211c; color: #bdae9d; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; background-color: #2a211c; color: #bdae9d; border-right: 1px solid #bdae9d; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #bdae9d; background-color: #2a211c; }
+code > span.kw { color: #43a8ed; font-weight: bold; } /* Keyword */
+code > span.dt { text-decoration: underline; } /* DataType */
+code > span.dv { color: #44aa43; } /* DecVal */
+code > span.bn { color: #44aa43; } /* BaseN */
+code > span.fl { color: #44aa43; } /* Float */
+code > span.ch { color: #049b0a; } /* Char */
+code > span.st { color: #049b0a; } /* String */
+code > span.co { color: #0066ff; font-style: italic; } /* Comment */
+code > span.al { color: #ffff00; } /* Alert */
+code > span.fu { color: #ff9358; font-weight: bold; } /* Function */
+code > span.er { color: #ffff00; font-weight: bold; } /* Error */
+code > span.wa { color: #ffff00; font-weight: bold; } /* Warning */
+code > span.cn { } /* Constant */
+code > span.sc { color: #049b0a; } /* SpecialChar */
+code > span.vs { color: #049b0a; } /* VerbatimString */
+code > span.ss { color: #049b0a; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { } /* Variable */
+code > span.cf { color: #43a8ed; font-weight: bold; } /* ControlFlow */
+code > span.op { } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { font-weight: bold; } /* Preprocessor */
+code > span.at { } /* Attribute */
+code > span.do { color: #0066ff; font-style: italic; } /* Documentation */
+code > span.an { color: #0066ff; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.co { color: #0066ff; font-weight: bold; font-style: italic; } /* Comment */
+code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href = "./">STAT 155: Intro to Stat Modeling</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome!</a></li>
+<li class="chapter" data-level="" data-path="schedule.html"><a href="schedule.html"><i class="fa fa-check"></i>Schedule</a><ul>
+<li class="chapter" data-level="" data-path="schedule.html"><a href="schedule.html#week-1-124"><i class="fa fa-check"></i>Week 1: 1/24</a></li>
+<li class="chapter" data-level="" data-path="schedule.html"><a href="schedule.html#week-2-127---131"><i class="fa fa-check"></i>Week 2: 1/27 - 1/31</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="software-setup.html"><a href="software-setup.html"><i class="fa fa-check"></i>Software Setup</a><ul>
+<li class="chapter" data-level="" data-path="software-setup.html"><a href="software-setup.html#troubleshooting"><i class="fa fa-check"></i>Troubleshooting</a></li>
+</ul></li>
+<li class="part"><span><b>I Describing and Visualizing Data</b></span></li>
+<li class="chapter" data-level="1" data-path="welcome-and-motivation.html"><a href="welcome-and-motivation.html"><i class="fa fa-check"></i><b>1</b> Welcome and Motivation</a><ul>
+<li class="chapter" data-level="" data-path="welcome-and-motivation.html"><a href="welcome-and-motivation.html#introductions"><i class="fa fa-check"></i>Introductions</a></li>
+<li class="chapter" data-level="" data-path="welcome-and-motivation.html"><a href="welcome-and-motivation.html#a-taste-of-data-visualization-in-r"><i class="fa fa-check"></i>A taste of data visualization in R</a><ul>
+<li class="chapter" data-level="" data-path="welcome-and-motivation.html"><a href="welcome-and-motivation.html#warm-up"><i class="fa fa-check"></i>Warm-up</a></li>
+<li class="chapter" data-level="" data-path="welcome-and-motivation.html"><a href="welcome-and-motivation.html#phase-1"><i class="fa fa-check"></i>Phase 1</a></li>
+<li class="chapter" data-level="" data-path="welcome-and-motivation.html"><a href="welcome-and-motivation.html#phase-2"><i class="fa fa-check"></i>Phase 2</a></li>
+<li class="chapter" data-level="" data-path="welcome-and-motivation.html"><a href="welcome-and-motivation.html#phase-3"><i class="fa fa-check"></i>Phase 3</a></li>
+<li class="chapter" data-level="" data-path="welcome-and-motivation.html"><a href="welcome-and-motivation.html#phase-4"><i class="fa fa-check"></i>Phase 4</a></li>
+<li class="chapter" data-level="" data-path="welcome-and-motivation.html"><a href="welcome-and-motivation.html#phase-5"><i class="fa fa-check"></i>Phase 5</a></li>
+<li class="chapter" data-level="" data-path="welcome-and-motivation.html"><a href="welcome-and-motivation.html#phase-6"><i class="fa fa-check"></i>Phase 6</a></li>
+<li class="chapter" data-level="" data-path="welcome-and-motivation.html"><a href="welcome-and-motivation.html#phase-7"><i class="fa fa-check"></i>Phase 7</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="univariate-visualization-and-data-summaries.html"><a href="univariate-visualization-and-data-summaries.html"><i class="fa fa-check"></i><b>2</b> Univariate Visualization and Data Summaries</a><ul>
+<li class="chapter" data-level="" data-path="univariate-visualization-and-data-summaries.html"><a href="univariate-visualization-and-data-summaries.html#learning-goals"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="univariate-visualization-and-data-summaries.html"><a href="univariate-visualization-and-data-summaries.html#discussion"><i class="fa fa-check"></i>Discussion</a></li>
+<li class="chapter" data-level="" data-path="univariate-visualization-and-data-summaries.html"><a href="univariate-visualization-and-data-summaries.html#exercises"><i class="fa fa-check"></i>Exercises</a><ul>
+<li class="chapter" data-level="" data-path="univariate-visualization-and-data-summaries.html"><a href="univariate-visualization-and-data-summaries.html#part-1"><i class="fa fa-check"></i>Part 1</a></li>
+<li class="chapter" data-level="" data-path="univariate-visualization-and-data-summaries.html"><a href="univariate-visualization-and-data-summaries.html#part-2"><i class="fa fa-check"></i>Part 2</a></li>
+<li class="chapter" data-level="" data-path="univariate-visualization-and-data-summaries.html"><a href="univariate-visualization-and-data-summaries.html#extra"><i class="fa fa-check"></i>Extra!</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">STAT 155: Introduction to Statistical Modeling</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="univariate-visualization-and-data-summaries" class="section level1">
+<h1><span class="header-section-number">Topic 2</span> Univariate Visualization and Data Summaries</h1>
+<div id="learning-goals" class="section level2 unnumbered">
+<h2>Learning Goals</h2>
+<ul>
+<li>Understand how bar charts, histograms, and density plots are constructed (not in full detail for a density plot)</li>
+<li>Identify the best type of plot to display a given variable and be able to construct those plots in R</li>
+<li>Clearly describe plots of quantitative variables using the concepts of shape, center, spread, and outliers</li>
+<li>Relate summary statistics of data to the concepts of shape, center, spread, and outliers</li>
+</ul>
+<p><br><br><br><br></p>
+</div>
+<div id="discussion" class="section level2 unnumbered">
+<h2>Discussion</h2>
+<p>When you interpret a plot of a quantitative variable, I expect you to discuss the following four aspects as part of a complete answer.</p>
+<p><strong>Shape</strong>: How are values distributed along the observed range? What does the <strong>distribution</strong> of the variable look like?</p>
+<p><img src="stat155_manual_files/figure-html/unnamed-chunk-18-1.png" width="864" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">games &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-12/board_games.csv&quot;</span>)
+<span class="kw">ggplot</span>(games, <span class="kw">aes</span>(<span class="dt">x =</span> min_playtime)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_density</span>()</code></pre></div>
+<p><img src="stat155_manual_files/figure-html/unnamed-chunk-19-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><br></p>
+<p><strong>Center:</strong> What is a typical value of the variable?</p>
+<ul>
+<li>Quantified with summary statistics like the <strong>mean</strong> and <strong>median</strong>.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(games<span class="op">$</span>min_playtime)</code></pre></div>
+<pre><code>##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+##     0.00    25.00    45.00    80.88    90.00 60000.00</code></pre>
+<p><br></p>
+<p><strong>Spread:</strong> How spread out are the values? Are most values very close together or far apart?</p>
+<ul>
+<li>Quantified with summary statistics like the <strong>variance</strong> and <strong>standard deviation</strong>.</li>
+<li>Interpretation of the variance: it is the average (roughly) squared distance of each value to the mean. Units are the squared version of the original variable.</li>
+<li>Interpretation of the standard deviation: square root of the variance. Measures spread on the same scale as the original variable (same units as the original variable).</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">var</span>(games<span class="op">$</span>min_playtime)</code></pre></div>
+<pre><code>## [1] 406883.1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(games<span class="op">$</span>min_playtime)</code></pre></div>
+<pre><code>## [1] 637.8739</code></pre>
+<p><br></p>
+<p><strong>Outliers:</strong> Are there any values that are particularly high or low relative to the rest?</p>
+<p><br></p>
+<p><strong>A good paragraph putting all of these aspects together:</strong></p>
+<blockquote>
+<p>The distribution of minimum playtimes is right-skewed with values ranging from 0 to 60,000 minutes. The center of the distribution is around 45 minutes (median). The mean is higher at about 80.88 minutes because of the high outliers (such as the game with a 60,000 minute minimum play time). Because of the outliers, it is difficult to see the spread of the bulk of the data clearly, and it is these outliers that contribute to the high standard deviation of 637.9 minutes.</p>
+</blockquote>
+<p>Qualities of a good paragraph:</p>
+<ul>
+<li>Describes the shape and range of the data</li>
+<li>Includes units</li>
+<li>Reports on the mean and median and explains any discrepancies between them</li>
+<li>Describes spread in terms of standard deviation</li>
+<li>Comments on the noteworthy visual features of the plot, including outliers</li>
+</ul>
+<p><br><br><br><br></p>
+</div>
+<div id="exercises" class="section level2 unnumbered">
+<h2>Exercises</h2>
+<p>A template RMarkdown document that you can start from is available <a href="template_rmds/02-univariate-vix.Rmd">here</a>.</p>
+<p>As you proceed, put any new code that you encounter on your cheat sheet.</p>
+<div id="part-1" class="section level3 unnumbered">
+<h3>Part 1</h3>
+<p>We have data on course evaluations for all courses offered in the Spring 2019 semester at Johns Hopkins University (<a href="http://studentaffairs.jhu.edu/registrar/wp-content/uploads/sites/23/2019/07/Spring-2019-Homewood-Completed-courses.pdf">source</a>). We have the following pieces of information on each course:</p>
+<ul>
+<li><code>avg_rating</code>: The average of student responses to the question asking them to rate the overall quality of the course using the Likert scale:
+<ul>
+<li>1 = Poor</li>
+<li>2 = Weak</li>
+<li>3 = Fair</li>
+<li>4 = Good</li>
+<li>5 = Excellent</li>
+</ul></li>
+<li><code>division</code>: Either <code>AS</code> for Arts &amp; Sciences or <code>EN</code> for Engineering</li>
+<li><code>dept_name</code>: Name of the department</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load required packages</span>
+<span class="kw">library</span>(readr)
+<span class="kw">library</span>(ggplot2)
+
+<span class="co"># Read in the course evaluation data</span>
+evals &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/3gayi1iq2p76kn0/jhu_evals.csv?dl=1&quot;</span>)</code></pre></div>
+<div id="exercise-1" class="section level4 unnumbered">
+<h4>Exercise 1</h4>
+<p>The first step in any data analysis is to get acquainted with the data. Look at the first few rows, and obtain the dimensions of the dataset.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Look at the first 6 rows</span>
+<span class="kw">head</span>(evals)
+
+<span class="co"># Get the dimensions of the dataset</span>
+<span class="kw">dim</span>(evals)</code></pre></div>
+<ol style="list-style-type: lower-alpha">
+<li>How many cases are there? (What are the cases?)</li>
+<li>What type of variable are the key ones described above?</li>
+</ol>
+<p><br></p>
+</div>
+<div id="exercise-2" class="section level4 unnumbered">
+<h4>Exercise 2</h4>
+<p>Are the numbers of courses taught in the Arts &amp; Sciences and the Engineering divisions roughly the same? Before making the plot, make note of what your expectation is. Then compare to what you observe when you make the plot. (Clearly defining your expectations first is good scientific practice that is often not practiced enough to become habit.)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(evals, <span class="kw">aes</span>(<span class="dt">x =</span> division)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_bar</span>()</code></pre></div>
+<p><br></p>
+</div>
+<div id="exercise-3" class="section level4 unnumbered">
+<h4>Exercise 3</h4>
+<p>Now we’ll look at the distribution of the <code>avg_rating</code> variable and associated summary statistics. Just like before, make note of what you expect the plots to look like before you make them.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plots</span>
+<span class="kw">ggplot</span>(evals, <span class="kw">aes</span>(<span class="dt">x =</span> avg_rating)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_histogram</span>()
+<span class="kw">ggplot</span>(evals, <span class="kw">aes</span>(<span class="dt">x =</span> avg_rating)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_density</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Summary statistics</span>
+<span class="co"># Adapt the code from the Discussion section to compute these</span>
+???</code></pre></div>
+<ol style="list-style-type: lower-alpha">
+<li>Write a good paragraph interpreting the histogram or density plot. (Discuss the 4 essential aspects.)</li>
+<li>What information is given by the tallest bar of the histogram?</li>
+<li>In what situations might you prefer a histogram to a density plot and vice-versa?</li>
+<li>Looking at the summary statistics, compare the mean to the median, and relate this to the shape of the distribution of average ratings. What would the distribution probably look like if the ordering of the mean and median were reversed?</li>
+</ol>
+<p><br><br></p>
+</div>
+</div>
+<div id="part-2" class="section level3 unnumbered">
+<h3>Part 2</h3>
+<p>When we are sitting behind a computer screen analyzing data, it can be easy to get caught up in the code, methods, or findings, and lose track of the human impact of our analysis.</p>
+<p>The analysis we did in Part 1 actually foreshadows a rather serious ethical concern for faculty.</p>
+<p><br></p>
+<div id="exercise-4" class="section level4 unnumbered">
+<h4>Exercise 4</h4>
+<p>Suppose that you were asked to rate the overall quality of one of your Fall courses on a 5-point scale. What kinds of things would you think about in giving your rating? Do you think you would give the same rating on a different day? In your opinion, do you think other students are using the same criteria as you?</p>
+<p><br></p>
+</div>
+<div id="exercise-5" class="section level4 unnumbered">
+<h4>Exercise 5</h4>
+<p>In this last exercise, we’ll explore the misleading nature of the mean of Likert-scale responses.</p>
+<p>The datasets being read in below come from 3 different courses with 20 students each. For each student we have their rating of the overall course quality on the scale:</p>
+<ul>
+<li>1 = Poor</li>
+<li>2 = Weak</li>
+<li>3 = Fair</li>
+<li>4 = Good</li>
+<li>5 = Excellent</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Read in the course evaluation data</span>
+course1 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/qbw4ahys9mkxsqj/course1.csv?dl=1&quot;</span>)
+course2 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/tg8g0hchh435lx7/course2.csv?dl=1&quot;</span>)
+course3 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/b3cg2tdbpyjzwr6/course3.csv?dl=1&quot;</span>)</code></pre></div>
+<ol style="list-style-type: lower-alpha">
+<li><p>For each course, make an appropriate plot showing the distribution of student ratings. Put yourself in the professor’s shoes and briefly summarize the information that the plot gives.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot the distribution of ratings for each course</span>
+???</code></pre></div></li>
+<li><p>Now compute the mean rating for each course. You can adapt the code from the Discussion section to replace <code>summary</code> with <code>mean</code> to display only the mean.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Compute the mean rating for each course</span>
+???</code></pre></div></li>
+<li><p>Consider a school policy that ranks professors based on this mean rating and uses the rankings for evaluative and promotion purposes. Based on your investigations so far, would such a policy be fair? Is there a potential for it creating injustice?</p></li>
+</ol>
+<p><br><br><br></p>
+</div>
+</div>
+<div id="extra" class="section level3 unnumbered">
+<h3>Extra!</h3>
+<p>If you have time and want to explore more, try these exercises.</p>
+<ol style="list-style-type: decimal">
+<li>Make a plot showing the number of courses by department. Is it effective?</li>
+<li><p>Add the following to the end of the code for your last plot. What does this code do? Add this to your cheat sheet.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">hjust =</span> <span class="dv">1</span>))</code></pre></div></li>
+<li><p>Continue adding to the same plot the following code. What does it do? Modify it so that it is better suited to your plot. Add this to your cheat sheet.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;xxx&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;yyy&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;title&quot;</span>)</code></pre></div></li>
+</ol>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="welcome-and-motivation.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

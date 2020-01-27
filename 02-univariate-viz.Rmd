@@ -1,0 +1,234 @@
+```{r 02_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+library(readr)
+library(ggplot2)
+```
+
+# Univariate Visualization and Data Summaries
+
+## Learning Goals {-}
+
+- Understand how bar charts, histograms, and density plots are constructed (not in full detail for a density plot)
+- Identify the best type of plot to display a given variable and be able to construct those plots in R
+- Clearly describe plots of quantitative variables using the concepts of shape, center, spread, and outliers
+- Relate summary statistics of data to the concepts of shape, center, spread, and outliers
+
+<br><br><br><br>
+
+## Discussion {-}
+
+When you interpret a plot of a quantitative variable, I expect you to discuss the following four aspects as part of a complete answer.
+
+**Shape**: How are values distributed along the observed range? What does the **distribution** of the variable look like?
+
+```{r fig.width=9, fig.height=6, echo=FALSE, eval=TRUE}
+par(mfrow = c(2,3), mar = c(2,3,3,0.1))
+set.seed(22)
+n <- 1e6
+x1 <- rnorm(n, mean = 10)
+x2 <- rexp(n)
+x3 <- ceiling(max(x2)) - x2
+x4 <- c(rnorm(n/2, mean = 10), rnorm(n/2, mean = 15))
+x5 <- runif(n, 1, 4)
+plot(density(x1), xlab = "", ylab = "", main = "Symmetric", cex.main = 1.5)
+plot(density(x2), xlab = "", ylab = "", main = "Right-skewed", cex.main = 1.5)
+plot(density(x3), xlab = "", ylab = "", main = "Left-skewed", cex.main = 1.5)
+plot(density(x4), xlab = "", ylab = "", main = "Bimodal", cex.main = 1.5)
+plot(density(x5), xlab = "", ylab = "", main = "Uniform (flat)", cex.main = 1.5)
+```
+
+```{r eval=TRUE, message=FALSE, fig.width=6, fig.height=4, fig.align="center"}
+games <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-12/board_games.csv")
+ggplot(games, aes(x = min_playtime)) +
+    geom_density()
+```
+
+<br>
+
+**Center:** What is a typical value of the variable?
+
+- Quantified with summary statistics like the **mean** and **median**.
+
+```{r eval=TRUE}
+summary(games$min_playtime)
+```
+
+<br>
+
+**Spread:** How spread out are the values? Are most values very close together or far apart?
+
+- Quantified with summary statistics like the **variance** and **standard deviation**.
+- Interpretation of the variance: it is the average (roughly) squared distance of each value to the mean. Units are the squared version of the original variable.
+- Interpretation of the standard deviation: square root of the variance. Measures spread on the same scale as the original variable (same units as the original variable).
+
+```{r eval=TRUE}
+var(games$min_playtime)
+sd(games$min_playtime)
+```
+
+<br>
+
+**Outliers:** Are there any values that are particularly high or low relative to the rest?
+
+<br>
+
+**A good paragraph putting all of these aspects together:**
+
+> The distribution of minimum playtimes is right-skewed with values ranging from 0 to 60,000 minutes. The center of the distribution is around 45 minutes (median). The mean is higher at about 80.88 minutes because of the high outliers (such as the game with a 60,000 minute minimum play time). Because of the outliers, it is difficult to see the spread of the bulk of the data clearly, and it is these outliers that contribute to the high standard deviation of 637.9 minutes.
+
+Qualities of a good paragraph:
+
+- Describes the shape and range of the data
+- Includes units
+- Reports on the mean and median and explains any discrepancies between them
+- Describes spread in terms of standard deviation
+- Comments on the noteworthy visual features of the plot, including outliers
+
+
+<br><br><br><br>
+
+
+## Exercises {-}
+
+A template RMarkdown document that you can start from is available [here](template_rmds/02-univariate-vix.Rmd).
+
+As you proceed, put any new code that you encounter on your cheat sheet.
+
+### Part 1 {-}
+
+We have data on course evaluations for all courses offered in the Spring 2019 semester at Johns Hopkins University ([source](http://studentaffairs.jhu.edu/registrar/wp-content/uploads/sites/23/2019/07/Spring-2019-Homewood-Completed-courses.pdf)). We have the following pieces of information on each course:
+
+- `avg_rating`: The average of student responses to the question asking them to rate the overall quality of the course using the Likert scale:
+    - 1 = Poor
+    - 2 = Weak
+    - 3 = Fair
+    - 4 = Good
+    - 5 = Excellent
+- `division`: Either `AS` for Arts & Sciences or `EN` for Engineering
+- `dept_name`: Name of the department
+
+```{r}
+# Load required packages
+library(readr)
+library(ggplot2)
+
+# Read in the course evaluation data
+evals <- read_csv("https://www.dropbox.com/s/3gayi1iq2p76kn0/jhu_evals.csv?dl=1")
+```
+
+#### Exercise 1 {-}
+
+The first step in any data analysis is to get acquainted with the data. Look at the first few rows, and obtain the dimensions of the dataset.
+
+```{r}
+# Look at the first 6 rows
+head(evals)
+
+# Get the dimensions of the dataset
+dim(evals)
+```
+
+a. How many cases are there? (What are the cases?)
+b. What type of variable are the key ones described above?
+
+<br>
+
+#### Exercise 2 {-}
+
+Are the numbers of courses taught in the Arts & Sciences and the Engineering divisions roughly the same? Before making the plot, make note of what your expectation is. Then compare to what you observe when you make the plot. (Clearly defining your expectations first is good scientific practice that is often not practiced enough to become habit.)
+
+```{r}
+ggplot(evals, aes(x = division)) +
+    geom_bar()
+```
+
+<br>
+
+#### Exercise 3 {-}
+
+Now we'll look at the distribution of the `avg_rating` variable and associated summary statistics. Just like before, make note of what you expect the plots to look like before you make them.
+
+```{r}
+# Plots
+ggplot(evals, aes(x = avg_rating)) +
+    geom_histogram()
+ggplot(evals, aes(x = avg_rating)) +
+    geom_density()
+```
+
+```{r}
+# Summary statistics
+# Adapt the code from the Discussion section to compute these
+???
+```
+
+a. Write a good paragraph interpreting the histogram or density plot. (Discuss the 4 essential aspects.)
+b. What information is given by the tallest bar of the histogram?
+c. In what situations might you prefer a histogram to a density plot and vice-versa?
+d. Looking at the summary statistics, compare the mean to the median, and relate this to the shape of the distribution of average ratings. What would the distribution probably look like if the ordering of the mean and median were reversed?
+
+<br><br>
+
+
+### Part 2 {-}
+
+When we are sitting behind a computer screen analyzing data, it can be easy to get caught up in the code, methods, or findings, and lose track of the human impact of our analysis.
+
+The analysis we did in Part 1 actually foreshadows a rather serious ethical concern for faculty.
+
+<br>
+
+#### Exercise 4 {-}
+
+Suppose that you were asked to rate the overall quality of one of your Fall courses on a 5-point scale. What kinds of things would you think about in giving your rating? Do you think you would give the same rating on a different day? In your opinion, do you think other students are using the same criteria as you?
+
+<br>
+
+#### Exercise 5 {-}
+
+In this last exercise, we'll explore the misleading nature of the mean of Likert-scale responses.
+
+The datasets being read in below come from 3 different courses with 20 students each. For each student we have their rating of the overall course quality on the scale:
+
+- 1 = Poor
+- 2 = Weak
+- 3 = Fair
+- 4 = Good
+- 5 = Excellent
+
+```{r}
+# Read in the course evaluation data
+course1 <- read_csv("https://www.dropbox.com/s/qbw4ahys9mkxsqj/course1.csv?dl=1")
+course2 <- read_csv("https://www.dropbox.com/s/tg8g0hchh435lx7/course2.csv?dl=1")
+course3 <- read_csv("https://www.dropbox.com/s/b3cg2tdbpyjzwr6/course3.csv?dl=1")
+```
+
+a. For each course, make an appropriate plot showing the distribution of student ratings. Put yourself in the professor's shoes and briefly summarize the information that the plot gives.    
+    ```{r}
+    # Plot the distribution of ratings for each course
+    ???
+    ```
+b. Now compute the mean rating for each course. You can adapt the code from the Discussion section to replace `summary` with `mean` to display only the mean.    
+    ```{r}
+    # Compute the mean rating for each course
+    ???
+    ```
+c. Consider a school policy that ranks professors based on this mean rating and uses the rankings for evaluative and promotion purposes. Based on your investigations so far, would such a policy be fair? Is there a potential for it creating injustice?
+
+<br><br><br>
+
+### Extra! {-}
+
+If you have time and want to explore more, try these exercises.
+
+1. Make a plot showing the number of courses by department. Is it effective?
+2. Add the following to the end of the code for your last plot. What does this code do? Add this to your cheat sheet.    
+    ```{r}
+    + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+    ```
+3. Continue adding to the same plot the following code. What does it do? Modify it so that it is better suited to your plot. Add this to your cheat sheet.    
+    ```{r}
+    + labs(x = "xxx", y = "yyy", title = "title")
+    ```
+
+
