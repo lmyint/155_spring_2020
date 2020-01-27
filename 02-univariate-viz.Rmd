@@ -90,7 +90,7 @@ Qualities of a good paragraph:
 
 ## Exercises {-}
 
-A template RMarkdown document that you can start from is available [here](template_rmds/02-univariate-vix.Rmd).
+A template RMarkdown document that you can start from is available [here](template_rmds/02-univariate-viz.Rmd).
 
 As you proceed, put any new code that you encounter on your cheat sheet.
 

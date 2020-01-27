@@ -1,0 +1,182 @@
+---
+title: "Univariate Visualization and Data Summaries"
+author: "Your Name"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+# Part 1
+
+We have data on course evaluations for all courses offered in the Spring 2019 semester at Johns Hopkins University ([source](http://studentaffairs.jhu.edu/registrar/wp-content/uploads/sites/23/2019/07/Spring-2019-Homewood-Completed-courses.pdf)). We have the following pieces of information on each course:
+
+- `avg_rating`: The average of student responses to the question asking them to rate the overall quality of the course using the Likert scale:
+    - 1 = Poor
+    - 2 = Weak
+    - 3 = Fair
+    - 4 = Good
+    - 5 = Excellent
+- `division`: Either `AS` for Arts & Sciences or `EN` for Engineering
+- `dept_name`: Name of the department
+
+```{r}
+# Load required packages
+library(readr)
+library(ggplot2)
+
+# Read in the course evaluation data
+evals <- read_csv("https://www.dropbox.com/s/3gayi1iq2p76kn0/jhu_evals.csv?dl=1")
+```
+
+## Exercise 1
+
+The first step in any data analysis is to get acquainted with the data. Look at the first few rows, and obtain the dimensions of the dataset.
+
+```{r}
+# Look at the first 6 rows
+head(evals)
+
+# Get the dimensions of the dataset
+dim(evals)
+```
+
+### Part a
+
+How many cases are there? (What are the cases?)
+
+### Part b
+
+What type of variable are the key ones described above?
+
+
+
+
+
+## Exercise 2
+
+Are the numbers of courses taught in the Arts & Sciences and the Engineering divisions roughly the same? Before making the plot, make note of what your expectation is. Then compare to what you observe when you make the plot. (Clearly defining your expectations first is good scientific practice that is often not practiced enough to become habit.)
+
+```{r}
+ggplot(evals, aes(x = division)) +
+    geom_bar()
+```
+
+
+
+
+
+## Exercise 3
+
+Now we'll look at the distribution of the `avg_rating` variable and associated summary statistics. Just like before, make note of what you expect the plots to look like before you make them.
+
+```{r}
+# Plots
+ggplot(evals, aes(x = avg_rating)) +
+    geom_histogram()
+ggplot(evals, aes(x = avg_rating)) +
+    geom_density()
+```
+
+```{r}
+# Summary statistics
+# Adapt the code from the Discussion section to compute these
+???
+```
+
+### Part a
+
+Write a good paragraph interpreting the histogram or density plot. (Discuss the 4 essential aspects.)
+
+### Part b
+
+What information is given by the tallest bar of the histogram?
+
+### Part c
+
+In what situations might you prefer a histogram to a density plot and vice-versa?
+
+### Part d
+
+Looking at the summary statistics, compare the mean to the median, and relate this to the shape of the distribution of average ratings. What would the distribution probably look like if the ordering of the mean and median were reversed?
+
+
+
+
+
+# Part 2
+
+When we are sitting behind a computer screen analyzing data, it can be easy to get caught up in the code, methods, or findings, and lose track of the human impact of our analysis.
+
+The analysis we did in Part 1 actually foreshadows a rather serious ethical concern for faculty.
+
+## Exercise 4
+
+Suppose that you were asked to rate the overall quality of one of your Fall courses on a 5-point scale. What kinds of things would you think about in giving your rating? Do you think you would give the same rating on a different day? In your opinion, do you think other students are using the same criteria as you?
+
+
+
+## Exercise 5
+
+In this last exercise, we'll explore the misleading nature of the mean of Likert-scale responses.
+
+The datasets being read in below come from 3 different courses with 20 students each. For each student we have their rating of the overall course quality on the scale:
+
+- 1 = Poor
+- 2 = Weak
+- 3 = Fair
+- 4 = Good
+- 5 = Excellent
+
+```{r}
+# Read in the course evaluation data
+course1 <- read_csv("https://www.dropbox.com/s/qbw4ahys9mkxsqj/course1.csv?dl=1")
+course2 <- read_csv("https://www.dropbox.com/s/tg8g0hchh435lx7/course2.csv?dl=1")
+course3 <- read_csv("https://www.dropbox.com/s/b3cg2tdbpyjzwr6/course3.csv?dl=1")
+```
+
+### Part a
+
+For each course, make an appropriate plot showing the distribution of student ratings. Put yourself in the professor's shoes and briefly summarize the information that the plot gives.
+
+```{r}
+# Plot the distribution of ratings for each course
+???
+```
+
+### Part b
+
+Now compute the mean rating for each course. You can adapt the code from the Discussion section to replace `summary` with `mean` to display only the mean.
+
+```{r}
+# Compute the mean rating for each course
+???
+```
+
+### Part c
+
+Consider a school policy that ranks professors based on this mean rating and uses the rankings for evaluative and promotion purposes. Based on your investigations so far, would such a policy be fair? Is there a potential for it creating injustice?
+
+
+
+
+
+### Extra!
+
+If you have time and want to explore more, try these exercises.
+
+1. Make a plot showing the number of courses by department. Is it effective?
+2. Add the following to the end of the code for your last plot. What does this code do? Add this to your cheat sheet.
+
+```{r}
++ theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+3. Continue adding to the same plot the following code. What does it do? Modify it so that it is better suited to your plot. Add this to your cheat sheet.
+
+```{r}
++ labs(x = "xxx", y = "yyy", title = "title")
+```
+
+
+
