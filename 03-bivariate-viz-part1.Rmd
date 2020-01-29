@@ -1,0 +1,131 @@
+```{r 03_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+
+# Bivariate Visualization - Part 1
+
+## Learning Goals {-}
+
+- Construct bivariate data visualizations of (1) two categorical variables and (2) one quantitative and one categorical variable
+- Using good visualization principles, compare the strengths and weaknesses of these different visualizations
+
+<br><br><br><br>
+
+
+## Exercises {-}
+
+A template RMarkdown document that you can start from is available [here](template_rmds/03-bivariate-viz-part1.Rmd).
+
+As you proceed, put any new code that you encounter on your cheat sheet.
+
+### Context and Setup {-}
+
+Today we begin our data exploration for our first case study! We'll be looking at a dataset of weightlifting competition results to understand how various factors relate to an athlete's strength.
+
+The data originally come from [Kaggle](https://www.kaggle.com/open-powerlifting/powerlifting-database) and [OpenPowerlifting](https://www.openpowerlifting.org/).
+
+```{r}
+# Load required packages
+library(readr)
+library(ggplot2)
+library(dplyr)
+
+# Read in the course evaluation data
+lifts <- read_csv("https://www.dropbox.com/s/n6jko5m7ygeasoj/openpowerlifting_subs.csv?dl=1")
+```
+
+### Exercise 1 {-}
+
+As always, we'll start by getting acquainted with the data. Look at the first few rows, and obtain the dimensions of the dataset.
+
+```{r}
+# Look at the first 6 rows
+
+
+# Get the dimensions of the dataset
+
+```
+
+a. How many cases are there? (What are the cases?)
+b. What kinds of variables do we have information on? (Are there broader categories of variables?) Look up any variables that are unfamiliar (for example, [Wilks Coefficient](https://en.wikipedia.org/wiki/Wilks_Coefficient)).
+
+<br>
+
+### Exercise 2 {-}
+
+Research question: Do males and females tend to use different types of equipment?
+
+The three barplots below give different ways of showing the `Sex` and `Equipment` variables. Which one is best suited to answering this research question and why?
+
+```{r}
+ggplot(lifts, aes(x = Sex, fill = Equipment)) +
+    geom_bar()
+
+ggplot(lifts, aes(x = Sex, fill = Equipment)) +
+    geom_bar(position = "dodge")
+
+ggplot(lifts, aes(x = Sex, fill = Equipment)) +
+    geom_bar(position = "fill")
+```
+
+<br>
+
+### Exercise 3 {-}
+
+Your client for this case study (Leslie) is interested in using two of the variables to compute a third one. In particular, she wants to create a variable that is the ratio of total weight lifted to the athlete's bodyweight.
+
+The code below creates a new variable called `SWR` (strength-to-weight ratio). Read through the code below and get a sense for what it is doing. If you have questions, ask the instructor.
+
+```{r}
+# The %>% symbol is called a pipe. You can read it as:
+# take the output that comes before the pipe and feed it in as input to the function that comes after
+lifts <- lifts %>%
+    mutate(SWR = TotalKg/BodyweightKg)
+```
+
+Research question: How does strength-to-weight ratio differ between males and females?
+
+The code below makes different plots that can be used to explore this question. Before running the code, make note of what you expect. How might each contribute to answering the research question? Which one(s) would you choose to present to your client and why?
+
+```{r}
+ggplot(lifts, aes(x = SWR, fill = Sex)) +
+    geom_histogram()
+ggplot(lifts, aes(x = SWR, fill = Sex)) +
+    geom_histogram() +
+    facet_grid(~ Sex)
+ggplot(lifts, aes(x = SWR, color = Sex)) +
+    geom_density()
+ggplot(lifts, aes(x = Sex, y = SWR)) +
+    geom_boxplot()
+```
+
+<br>
+
+### Exercise 4 {-}
+
+Did you notice anything unusual about the shape of the distribution of SWR in males and females? What group of athletes do you think is causing this peculiar shape? (Hint: you may have noticed this when you looked at the first few rows of the data.)
+
+Let's filter out these individuals and remake your preferred plots from Exercise 3. Do you think that the rest of the analysis should proceed with these athletes filtered out?
+
+```{r}
+# Fill in the ??? below with a description of the athletes that you want to KEEP
+# See Day 1 - Phase 5 for an example
+lifts_subs <- lifts %>%
+    filter(???)
+```
+
+```{r}
+# Now remake your preferred plots from Exercise 3
+```
+
+<br>
+
+### Extra! {-}
+
+If you have time and want to continue your explorations, try the following:
+
+- Make plots showing the relationship between `SWR` and `Equipment`.
+- Make plots showing the relationship between `Wilks` and `Sex`.
+- Make plots showing the relationship between `Wilks` and `Equipment`.
+
+
