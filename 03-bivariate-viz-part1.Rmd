@@ -30,7 +30,7 @@ library(readr)
 library(ggplot2)
 library(dplyr)
 
-# Read in the course evaluation data
+# Read in the weightlifting data
 lifts <- read_csv("https://www.dropbox.com/s/n6jko5m7ygeasoj/openpowerlifting_subs.csv?dl=1")
 ```
 

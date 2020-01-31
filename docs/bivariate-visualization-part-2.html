@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Topic 2 Univariate Visualization and Data Summaries | STAT 155: Introduction to Statistical Modeling</title>
+  <title>Topic 4 Bivariate Visualization - Part 2 | STAT 155: Introduction to Statistical Modeling</title>
   <meta name="description" content="This is the class website for STAT 155 at Macalester College." />
   <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Topic 2 Univariate Visualization and Data Summaries | STAT 155: Introduction to Statistical Modeling" />
+  <meta property="og:title" content="Topic 4 Bivariate Visualization - Part 2 | STAT 155: Introduction to Statistical Modeling" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="lmyint/155_spring_2020" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Topic 2 Univariate Visualization and Data Summaries | STAT 155: Introduction to Statistical Modeling" />
+  <meta name="twitter:title" content="Topic 4 Bivariate Visualization - Part 2 | STAT 155: Introduction to Statistical Modeling" />
   
   <meta name="twitter:description" content="This is the class website for STAT 155 at Macalester College." />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="welcome-and-motivation.html"/>
-<link rel="next" href="bivariate-visualization-part-1.html"/>
+<link rel="prev" href="bivariate-visualization-part-1.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -178,176 +178,73 @@ code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="univariate-visualization-and-data-summaries" class="section level1">
-<h1><span class="header-section-number">Topic 2</span> Univariate Visualization and Data Summaries</h1>
-<div id="learning-goals" class="section level2 unnumbered">
+<div id="bivariate-visualization---part-2" class="section level1">
+<h1><span class="header-section-number">Topic 4</span> Bivariate Visualization - Part 2</h1>
+<div id="learning-goals-2" class="section level2 unnumbered">
 <h2>Learning Goals</h2>
 <ul>
-<li>Understand how bar charts, histograms, and density plots are constructed (not in full detail for a density plot)</li>
-<li>Identify the best type of plot to display a given variable and be able to construct those plots in R</li>
-<li>Clearly describe plots of quantitative variables using the concepts of shape, center, spread, and outliers</li>
-<li>Relate summary statistics of data to the concepts of shape, center, spread, and outliers</li>
+<li>Construct bivariate data visualizations of two quantiative variables</li>
+<li>Form ideas about the uses and building of statistical models</li>
+<li>Explain the uses, misuses, and limitations of the correlation coefficient</li>
 </ul>
 <p><br><br><br><br></p>
 </div>
-<div id="discussion" class="section level2 unnumbered">
-<h2>Discussion</h2>
-<p>When you interpret a plot of a quantitative variable, I expect you to discuss the following four aspects as part of a complete answer.</p>
-<p><strong>Shape</strong>: How are values distributed along the observed range? What does the <strong>distribution</strong> of the variable look like?</p>
-<p><img src="stat155_manual_files/figure-html/unnamed-chunk-18-1.png" width="864" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">games &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-12/board_games.csv&quot;</span>)
-<span class="kw">ggplot</span>(games, <span class="kw">aes</span>(<span class="dt">x =</span> min_playtime)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_density</span>()</code></pre></div>
-<p><img src="stat155_manual_files/figure-html/unnamed-chunk-19-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p><br></p>
-<p><strong>Center:</strong> What is a typical value of the variable?</p>
-<ul>
-<li>Quantified with summary statistics like the <strong>mean</strong> and <strong>median</strong>.</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(games<span class="op">$</span>min_playtime)</code></pre></div>
-<pre><code>##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-##     0.00    25.00    45.00    80.88    90.00 60000.00</code></pre>
-<p><br></p>
-<p><strong>Spread:</strong> How spread out are the values? Are most values very close together or far apart?</p>
-<ul>
-<li>Quantified with summary statistics like the <strong>variance</strong> and <strong>standard deviation</strong>.</li>
-<li>Interpretation of the variance: it is the average (roughly) squared distance of each value to the mean. Units are the squared version of the original variable.</li>
-<li>Interpretation of the standard deviation: square root of the variance. Measures spread on the same scale as the original variable (same units as the original variable).</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">var</span>(games<span class="op">$</span>min_playtime)</code></pre></div>
-<pre><code>## [1] 406883.1</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(games<span class="op">$</span>min_playtime)</code></pre></div>
-<pre><code>## [1] 637.8739</code></pre>
-<p><br></p>
-<p><strong>Outliers:</strong> Are there any values that are particularly high or low relative to the rest?</p>
-<p><br></p>
-<p><strong>A good paragraph putting all of these aspects together:</strong></p>
-<blockquote>
-<p>The distribution of minimum playtimes is right-skewed with values ranging from 0 to 60,000 minutes. The center of the distribution is around 45 minutes (median). The mean is higher at about 80.88 minutes because of the high outliers (such as the game with a 60,000 minute minimum play time). Because of the outliers, it is difficult to see the spread of the bulk of the data clearly, and it is these outliers that contribute to the high standard deviation of 637.9 minutes.</p>
-</blockquote>
-<p>Qualities of a good paragraph:</p>
-<ul>
-<li>Describes the shape and range of the data</li>
-<li>Includes units</li>
-<li>Reports on the mean and median and explains any discrepancies between them</li>
-<li>Describes spread in terms of standard deviation</li>
-<li>Comments on the noteworthy visual features of the plot, including outliers</li>
-</ul>
-<p><br><br><br><br></p>
-</div>
-<div id="exercises" class="section level2 unnumbered">
+<div id="exercises-2" class="section level2 unnumbered">
 <h2>Exercises</h2>
-<p>A template RMarkdown document that you can start from is available <a href="template_rmds/02-univariate-viz.Rmd">here</a>.</p>
-<p>As you proceed, put any new code that you encounter on your cheat sheet.</p>
-<div id="part-1" class="section level3 unnumbered">
-<h3>Part 1</h3>
-<p>We have data on course evaluations for all courses offered in the Spring 2019 semester at Johns Hopkins University (<a href="http://studentaffairs.jhu.edu/registrar/wp-content/uploads/sites/23/2019/07/Spring-2019-Homewood-Completed-courses.pdf">source</a>). We have the following pieces of information on each course:</p>
-<ul>
-<li><code>avg_rating</code>: The average of student responses to the question asking them to rate the overall quality of the course using the Likert scale:
-<ul>
-<li>1 = Poor</li>
-<li>2 = Weak</li>
-<li>3 = Fair</li>
-<li>4 = Good</li>
-<li>5 = Excellent</li>
-</ul></li>
-<li><code>division</code>: Either <code>AS</code> for Arts &amp; Sciences or <code>EN</code> for Engineering</li>
-<li><code>dept_name</code>: Name of the department</li>
-</ul>
+<p>A template RMarkdown document that you can start from is available <a href="template_rmds/04-bivariate-viz-part2.Rmd">here</a>.</p>
+<p>We’ll continue using the dataset for our first case study:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load required packages</span>
 <span class="kw">library</span>(readr)
 <span class="kw">library</span>(ggplot2)
+<span class="kw">library</span>(dplyr)
 
-<span class="co"># Read in the course evaluation data</span>
-evals &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/3gayi1iq2p76kn0/jhu_evals.csv?dl=1&quot;</span>)</code></pre></div>
-<div id="exercise-1" class="section level4 unnumbered">
-<h4>Exercise 1</h4>
-<p>The first step in any data analysis is to get acquainted with the data. Look at the first few rows, and obtain the dimensions of the dataset.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Look at the first 6 rows</span>
-<span class="kw">head</span>(evals)
+<span class="co"># Read in the weightlifting data</span>
+lifts &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/n6jko5m7ygeasoj/openpowerlifting_subs.csv?dl=1&quot;</span>)
 
-<span class="co"># Get the dimensions of the dataset</span>
-<span class="kw">dim</span>(evals)</code></pre></div>
-<ol style="list-style-type: lower-alpha">
-<li>How many cases are there? (What are the cases?)</li>
-<li>What type of variable are the key ones described above?</li>
-</ol>
-<p><br></p>
-</div>
-<div id="exercise-2" class="section level4 unnumbered">
-<h4>Exercise 2</h4>
-<p>Are the numbers of courses taught in the Arts &amp; Sciences and the Engineering divisions roughly the same? Before making the plot, make note of what your expectation is. Then compare to what you observe when you make the plot. (Clearly defining your expectations first is good scientific practice that is often not practiced enough to become habit.)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(evals, <span class="kw">aes</span>(<span class="dt">x =</span> division)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_bar</span>()</code></pre></div>
-<p><br></p>
-</div>
-<div id="exercise-3" class="section level4 unnumbered">
-<h4>Exercise 3</h4>
-<p>Now we’ll look at the distribution of the <code>avg_rating</code> variable and associated summary statistics. Just like before, make note of what you expect the plots to look like before you make them.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plots</span>
-<span class="kw">ggplot</span>(evals, <span class="kw">aes</span>(<span class="dt">x =</span> avg_rating)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_histogram</span>()
-<span class="kw">ggplot</span>(evals, <span class="kw">aes</span>(<span class="dt">x =</span> avg_rating)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_density</span>()</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Summary statistics</span>
-<span class="co"># Adapt the code from the Discussion section to compute these</span>
+<span class="co"># Try to create the SWR variable without looking at your cheat sheet</span>
 ???</code></pre></div>
-<ol style="list-style-type: lower-alpha">
-<li>Write a good paragraph interpreting the histogram or density plot. (Discuss the 4 essential aspects.)</li>
-<li>What information is given by the tallest bar of the histogram?</li>
-<li>In what situations might you prefer a histogram to a density plot and vice-versa?</li>
-<li>Looking at the summary statistics, compare the mean to the median, and relate this to the shape of the distribution of average ratings. What would the distribution probably look like if the ordering of the mean and median were reversed?</li>
-</ol>
-<p><br><br></p>
-</div>
-</div>
-<div id="part-2" class="section level3 unnumbered">
-<h3>Part 2</h3>
-<p>When we are sitting behind a computer screen analyzing data, it can be easy to get caught up in the code, methods, or findings, and lose track of the human impact of our analysis.</p>
-<p>The analysis we did in Part 1 actually foreshadows a rather serious ethical concern for faculty.</p>
 <p><br></p>
-<div id="exercise-4" class="section level4 unnumbered">
-<h4>Exercise 4</h4>
-<p>Suppose that you were asked to rate the overall quality of one of your Fall courses on a 5-point scale. What kinds of things would you think about in giving your rating? Do you think you would give the same rating on a different day? In your opinion, do you think other students are using the same criteria as you?</p>
+<div id="exercise-1-2" class="section level3 unnumbered">
+<h3>Exercise 1</h3>
+<ol style="list-style-type: lower-alpha">
+<li>Using the plotting examples that we have gone over so far, generalize the code structure to create a scatterplot of <code>SWR</code> (y-axis) vs. <code>BodyweightKg</code> (x-axis). For no reason at all, I’ll say the word “point”. Before running the code, write down what you expect the plot to look like.</li>
+<li>In a few sentences describe the direction, form, strength, and any unusual features of the plot.</li>
+<li>Now add the following after the scatterplot: <code>+ geom_smooth()</code>. What does this code do?</li>
+<li>Create another copy of your scatterplot code using <code>geom_smooth(method = &quot;lm&quot;)</code> instead of <code>geom_smooth()</code>. What does the <strong>argument</strong> <code>method = &quot;lm&quot;</code> do?</li>
+<li><p>Compute the correlation coefficient between these two variables using the following. Is the correlation coefficient appropriate for summarizing this relationship?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cor</span>(lifts<span class="op">$</span>SWR, lifts<span class="op">$</span>BodyweightKg)</code></pre></div></li>
+</ol>
+<p>Pause after this exercise, and we’ll discuss as a class.</p>
 <p><br></p>
 </div>
-<div id="exercise-5" class="section level4 unnumbered">
-<h4>Exercise 5</h4>
-<p>In this last exercise, we’ll explore the misleading nature of the mean of Likert-scale responses.</p>
-<p>The datasets being read in below come from 3 different courses with 20 students each. For each student we have their rating of the overall course quality on the scale:</p>
-<ul>
-<li>1 = Poor</li>
-<li>2 = Weak</li>
-<li>3 = Fair</li>
-<li>4 = Good</li>
-<li>5 = Excellent</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Read in the course evaluation data</span>
-course1 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/qbw4ahys9mkxsqj/course1.csv?dl=1&quot;</span>)
-course2 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/tg8g0hchh435lx7/course2.csv?dl=1&quot;</span>)
-course3 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/b3cg2tdbpyjzwr6/course3.csv?dl=1&quot;</span>)</code></pre></div>
-<ol style="list-style-type: lower-alpha">
-<li><p>For each course, make an appropriate plot showing the distribution of student ratings. Put yourself in the professor’s shoes and briefly summarize the information that the plot gives.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot the distribution of ratings for each course</span>
-???</code></pre></div></li>
-<li><p>Now compute the mean rating for each course. You can adapt the code from the Discussion section to replace <code>summary</code> with <code>mean</code> to display only the mean.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Compute the mean rating for each course</span>
-???</code></pre></div></li>
-<li><p>Consider a school policy that ranks professors based on this mean rating and uses the rankings for evaluative and promotion purposes. Based on your investigations so far, would such a policy be fair? Is there a potential for it creating injustice?</p></li>
-</ol>
-<p><br><br><br></p>
+<div id="exercise-2-2" class="section level3 unnumbered">
+<h3>Exercise 2</h3>
+<p>Using the plot from exercise 1, try to estimate by hand the equation of the line shown on the plot.</p>
+<p><br></p>
 </div>
+<div id="exercise-3-2" class="section level3 unnumbered">
+<h3>Exercise 3</h3>
+<p>Now use the code below to more precisely get the equation of the line. More specifically, this code <strong>fits</strong> a <strong>simple linear regression model</strong> to the data. There is a lot of output that gets printed, but focus only on the “Coefficients:” section and the “Estimate” column in that section.</p>
+<p>How does your estimated line compare?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod1 &lt;-<span class="st"> </span><span class="kw">lm</span>(SWR <span class="op">~</span><span class="st"> </span>BodyweightKg, <span class="dt">data =</span> lifts)
+<span class="kw">summary</span>(mod1)</code></pre></div>
+<p><br></p>
 </div>
-<div id="extra" class="section level3 unnumbered">
-<h3>Extra!</h3>
-<p>If you have time and want to explore more, try these exercises.</p>
-<ol style="list-style-type: decimal">
-<li>Make a plot showing the number of courses by department. Is it effective?</li>
-<li><p>Add the following to the end of the code for your last plot. What does this code do? Add this to your cheat sheet.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">hjust =</span> <span class="dv">1</span>))</code></pre></div></li>
-<li><p>Continue adding to the same plot the following code. What does it do? Modify it so that it is better suited to your plot. Add this to your cheat sheet.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;xxx&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;yyy&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;title&quot;</span>)</code></pre></div></li>
-</ol>
+<div id="exercise-4-2" class="section level3 unnumbered">
+<h3>Exercise 4</h3>
+<p>Do you think the simple linear regression model is any good? What features of the plot contribute to your decision? Using tools that we’ve learned so far, how might you try to quantify the quality of this model? How could we make the model better? What’s missing from it?</p>
+<p><br></p>
+</div>
+<div id="exercise-5-1" class="section level3 unnumbered">
+<h3>Exercise 5</h3>
+<p>Your client for this case study is interested in learning how height is related to athlete strength (as measured by <code>SWR</code> or <code>Wilks</code>. However, height is not recorded in the data. Plan: how might we address this issue?</p>
+<p><br></p>
+</div>
+<div id="exercise-6" class="section level3 unnumbered">
+<h3>Exercise 6</h3>
+<p>This last exercise takes a step away from our <code>lifts</code> dataset. Load the <code>anscombe</code> dataset using:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(anscombe)</code></pre></div>
+<p>There are 4 sets of data within this dataset. <code>x1</code> and <code>y1</code>, <code>x2</code> and <code>y2</code>, <code>x3</code> and <code>y3</code>, and <code>x4</code> and <code>y4</code>. Compute the correlation coefficient between each of these pairs, and also make a scatterplot for each of these pairs. What is the message of this last exercise?</p>
 
 </div>
 </div>
@@ -357,8 +254,8 @@ course3 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span cla
           </div>
         </div>
       </div>
-<a href="welcome-and-motivation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="bivariate-visualization-part-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="bivariate-visualization-part-1.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

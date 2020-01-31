@@ -1,0 +1,100 @@
+---
+title: "Bivariate Visualization - Part 2"
+author: "Your Name"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+# Setup
+
+```{r}
+# Load required packages
+library(readr)
+library(ggplot2)
+library(dplyr)
+
+# Read in the weightlifting data
+lifts <- read_csv("https://www.dropbox.com/s/n6jko5m7ygeasoj/openpowerlifting_subs.csv?dl=1")
+
+# Try to create the SWR variable without looking at your cheat sheet
+???
+```
+
+
+# Exercise 1
+
+a. Using the plotting examples that we have gone over so far, generalize the code structure to create a scatterplot of `SWR` (y-axis) vs. `BodyweightKg` (x-axis). For no reason at all, I'll say the word "point". Before running the code, write down what you expect the plot to look like.
+
+b. In a few sentences describe the direction, form, strength, and any unusual features of the plot.
+
+c. Now add the following after the scatterplot: `+ geom_smooth()`. What does this code do?
+
+d. Create another copy of your scatterplot code using `geom_smooth(method = "lm")` instead of `geom_smooth()`. What does the **argument** `method = "lm"` do?
+
+e. Compute the correlation coefficient between these two variables using the following. Is the correlation coefficient appropriate for summarizing this relationship?
+
+```{r}
+cor(lifts$SWR, lifts$BodyweightKg)
+```
+
+
+
+Pause after this exercise, and we'll discuss as a class.
+
+
+
+
+# Exercise 2
+
+Using the plot from exercise 1, try to estimate by hand the equation of the line shown on the plot.
+
+
+
+
+
+# Exercise 3
+
+Now use the code below to more precisely get the equation of the line. More specifically, this code **fits** a **simple linear regression model** to the data. There is a lot of output that gets printed, but focus only on the "Coefficients:" section and the "Estimate" column in that section.
+
+How does your estimated line compare?
+
+```{r}
+mod1 <- lm(SWR ~ BodyweightKg, data = lifts)
+summary(mod1)
+```
+
+
+
+
+
+# Exercise 4
+
+Do you think the simple linear regression model is any good? What features of the plot contribute to your decision? Using tools that we've learned so far, how might you try to quantify the quality of this model? How could we make the model better? What's missing from it?
+
+
+
+
+
+# Exercise 5
+
+Your client for this case study is interested in learning how height is related to athlete strength (as measured by `SWR` or `Wilks`. However, height is not recorded in the data. Plan: how might we address this issue?
+
+
+
+
+
+# Exercise 6
+
+This last exercise takes a step away from our `lifts` dataset. Load the `anscombe` dataset using:
+
+```{r}
+data(anscombe)
+```
+
+There are 4 sets of data within this dataset. `x1` and `y1`, `x2` and `y2`, `x3` and `y3`, and `x4` and `y4`. Compute the correlation coefficient between each of these pairs, and also make a scatterplot for each of these pairs. What is the message of this last exercise?
+
+
+
+
