@@ -1,0 +1,165 @@
+```{r 05_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+
+# (PART) Linear Regression Modeling {-}
+
+# Modeling Concepts
+
+## Learning Goals {-}
+
+- Construct simple linear regression models with a quantitative predictor in R
+- Use these models to describe relationships and make predictions
+- Develop two ideas of model quality: $R^2$ and residual standard error
+- Develop ideas of variation in estimates from sample to sample
+
+<br><br><br><br>
+
+## Discussion {-}
+
+```{r echo=FALSE, eval=TRUE, fig.align="center", message=FALSE}
+library(readr)
+library(ggplot2)
+homes <- read_tsv("http://sites.williams.edu/rdeveaux/files/2014/09/Saratoga.txt")
+ggplot(homes, aes(x = Living.Area, y = Price)) +
+    geom_point() +
+    geom_smooth(method = "lm") +
+    labs(x = "House price ($)", y = "Living area (square feet)")
+```
+
+**Models**
+
+- A **model** is a simplified description of the world.
+- **Statistical models** are mathematical descriptions that are informed by (estimated from) data.
+- A **simple linear regression model** is a line model that can be mathematically represented as below:
+
+$$ E[Y] = \beta_0 + \beta_1\,X $$
+
+- $Y$ is a quantitative **response** or **outcome** variable. e.g., House price
+- $X$ is a quantitative **predictor** or **explanatory** variable. e.g., Square footage of the house
+- The $E[\,\,]$ means "expected value of": this is why lines model trends in **averages** and not individual-level trends
+- $\beta_0$ and $\beta_1$ are the **coefficients** of the model.
+- These coefficients are obtained from our data using the method of **least squares**.
+
+<br><br><br>
+
+**Interpreting the model coefficients**
+
+- When $X = 0$, $E[Y] = \beta_0$.
+    - This means that $\beta_0$ is the **expected** value of the outcome when $X = 0$.
+    - Note that this sometimes does not make sense!
+    - **Centering** the predictor can fix this.
+    - Don't forget to report units in your interpretation!
+<br>
+- Case 1: $X = a \qquad\qquad\qquad E[Y_1] = \beta_0 + \beta_1\,a$    
+    Case 2: $X = a+1 \qquad\qquad E[Y_2] = \beta_0 + \beta_1\,(a+1)$        
+    $E[Y_2] - E[Y_1] = \beta_1$
+    - This means that $\beta_1$ is the **expected** change in the outcome per unit change in $X$.
+    - Reporting units is important.
+    - The math shown here will be important when we extend these models to have multiple predictors.
+
+<br><br><br>
+
+**Fitting linear regression models in R**
+
+```{r}
+# Fit the model and store the resulting information in "mod"
+mod <- lm(y ~ x, data = your_dataset)
+
+# Display summary output of the model
+summary(mod)
+
+# Extract the residuals of the model
+residuals(mod)
+```
+
+<br><br><br><br>
+
+## Exercises {-}
+
+A template RMarkdown document that you can start from is available [here](template_rmds/05-lin-reg-concepts.Rmd).
+
+We will be looking at housing data from upstate New York. This dataset contains information on house price and structural characteristics for a large set of homes in Saratoga, NY.
+
+```{r}
+library(readr)
+library(ggplot2)
+library(dplyr)
+
+homes <- read_tsv("http://sites.williams.edu/rdeveaux/files/2014/09/Saratoga.txt")
+```
+
+<br>
+
+### Exercise 1 {-}
+
+Get to know the data by displaying the first few rows and getting the dimensions. What are the cases? How many cases do we have? What kinds of variables do we have information on?
+
+<br>
+
+### Exercise 2 {-}
+
+Always start an analysis with visualization! Make a plot that shows the relationship between `Price` and `Living.Area`. Do you think a simple linear regression model is appropriate?
+
+```{r}
+ggplot(???) + ???
+```
+
+<br>
+
+### Exercise 3 {-}
+
+a. Fit a linear regression model of `Price` as a function of `Living.Area` using the code below.    
+    ```{r}
+    mod1 <- lm(Price ~ Living.Area, data = homes)
+    summary(mod1)
+    ```
+b. The two numbers in the "Estimate" column of the output give the intercept and the slope for `Living.Area`. Interpret both of these numbers. Is the intercept meaningful?
+c. We can center `Living.Area` at a more reasonable value. Let's use 1000 square feet. Complete the code below to create a centered version of `Living.Area`.
+    ```{r}
+    homes <- homes %>%
+        ???(Living.Area.Shifted = Living.Area-1000)
+    ```
+d. You can actually determine the coefficients of the `Price ~ Living.Area.Shifted` model by hand. Based on the summary output of `mod1`, work out what these new coefficients should be.
+e. Now check your answer to part (d) by fitting the model.    
+    ```{r}
+    mod2 <- lm(???)
+    summary(mod2)
+    ```
+f. What is the **residual** for a $150,000 house that is 1000 square feet?
+
+<br>
+
+### Exercise 4 {-}
+
+In this exercise, we'll develop some intuition for ideas about how to quantify the quality of a model.
+
+a. Based on your plot from Exercise 2, do you think that our `Price ~ Living.Area` model is a good one? Explain by describing whether you think the variance of the residuals should be low or high for a good model.
+b. In the model summary output, there is a metric near the bottom called "Residual standard error". The first number (ignore the "on XXXX degrees of freedom part") is very close to the standard deviation of the residuals of the model. Verify this with the code below. Given that residual standard error is essentially a standard deviation, how do you think we can interpret this number?    
+    ```{r}
+    mod1 %>% residuals() %>% sd()
+    ```
+c. Do you think that the variance of the residuals could ever be larger than the variance of the house prices? Why or why not?
+d. There is a metric for linear regression models called $R^2$ which is displayed in the model summary output near the bottom just after "Multiple R-squared". This number is computed as: 1 - Var(residuals)/Var(response). Do you think this number should be high or low for a good model?    
+    ```{r}
+    # If you are curious about checking the calculation
+    1-(var(residuals(mod1))/var(homes$Price))
+    ```
+
+<br>
+
+### Exercise 5 {-}
+
+We only used a **sample** of Saratoga homes to estimate $113.123 as the slope for `Living.Area`. Based on your scatterplot from Exercise 2, how much do you think that slope estimate would change if we had a different sample of houses? A lot? A little? What are you thinking about as you formulate your opinion?
+
+
+
+
+
+
+
+
+
+
+
+

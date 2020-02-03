@@ -1,0 +1,136 @@
+---
+title: "Linear Regression Modeling Concepts"
+author: "Your Name"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+# Setup
+
+```{r}
+library(readr)
+library(ggplot2)
+library(dplyr)
+
+homes <- read_tsv("http://sites.williams.edu/rdeveaux/files/2014/09/Saratoga.txt")
+```
+
+
+
+# Exercise 1
+
+Get to know the data by displaying the first few rows and getting the dimensions. What are the cases? How many cases do we have? What kinds of variables do we have information on?
+
+```{r}
+
+```
+
+
+
+
+# Exercise 2
+
+Always start an analysis with visualization! Make a plot that shows the relationship between `Price` and `Living.Area`. Do you think a simple linear regression model is appropriate?
+
+```{r}
+ggplot(???) + ???
+```
+
+
+
+
+# Exercise 3
+
+## Part a
+
+Fit a linear regression model of `Price` as a function of `Living.Area` using the code below.
+
+```{r}
+mod1 <- lm(Price ~ Living.Area, data = homes)
+summary(mod1)
+```
+
+## Part b
+
+The two numbers in the "Estimate" column of the output give the intercept and the slope for `Living.Area`. Interpret both of these numbers. Is the intercept meaningful?
+
+## Part c
+
+We can center `Living.Area` at a more reasonable value. Let's use 1000 square feet. Complete the code below to create a centered version of `Living.Area`.
+
+```{r}
+homes <- homes %>%
+    ???(Living.Area.Shifted = Living.Area-1000)
+```
+
+## Part d
+
+You can actually determine the coefficients of the `Price ~ Living.Area.Shifted` model by hand. Based on the summary output of `mod1`, work out what these new coefficients should be.
+
+## Part e
+
+Now check your answer to part (d) by fitting the model.
+
+```{r}
+mod2 <- lm(???)
+summary(mod2)
+```
+
+## Part f
+
+What is the **residual** for a $150,000 house that is 1000 square feet?
+
+
+
+
+
+# Exercise 4
+
+In this exercise, we'll develop some intuition for ideas about how to quantify the quality of a model.
+
+## Part a
+
+Based on your plot from Exercise 2, do you think that our `Price ~ Living.Area` model is a good one? Explain by describing whether you think the variance of the residuals should be low or high for a good model.
+
+## Part b
+
+In the model summary output, there is a metric near the bottom called "Residual standard error". The first number (ignore the "on XXXX degrees of freedom part") is very close to the standard deviation of the residuals of the model. Verify this with the code below. Given that residual standard error is essentially a standard deviation, how do you think we can interpret this number?
+
+```{r}
+mod1 %>% residuals() %>% sd()
+```
+
+## Part c
+
+Do you think that the variance of the residuals could ever be larger than the variance of the house prices? Why or why not?
+
+## Part d
+
+There is a metric for linear regression models called $R^2$ which is displayed in the model summary output near the bottom just after "Multiple R-squared". This number is computed as: 1 - Var(residuals)/Var(response). Do you think this number should be high or low for a good model?
+
+```{r}
+# If you are curious about checking the calculation
+1-(var(residuals(mod1))/var(homes$Price))
+```
+
+
+
+
+
+# Exercise 5
+
+We only used a **sample** of Saratoga homes to estimate $113.123 as the slope for `Living.Area`. Based on your scatterplot from Exercise 2, how much do you think that slope estimate would change if we had a different sample of houses? A lot? A little? What are you thinking about as you formulate your opinion?
+
+
+
+
+
+
+
+
+
+
+
+

@@ -25,3 +25,6 @@ Homework 1 (on Moodle) is due Friday, January 31 at midnight.
     **Before class:** Read section 3.9 in the [STAT 155 Notes](https://bcheggeseth.github.io/Stat155Notes/index.html) only up through section 3.9.1 Indicator Variables, and answer the Moodle questions under Reading Checks > Simple Linear Regression (Part 2).
 - **Friday:** Quiz 1 in class
 
+<span style="color:red">
+Homework 2 (on Moodle) is due Sunday, February 9 at midnight.
+</span>
