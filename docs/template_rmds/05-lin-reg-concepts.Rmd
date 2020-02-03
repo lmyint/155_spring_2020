@@ -32,13 +32,20 @@ Get to know the data by displaying the first few rows and getting the dimensions
 
 # Exercise 2
 
-Always start an analysis with visualization! Make a plot that shows the relationship between `Price` and `Living.Area`. Do you think a simple linear regression model is appropriate?
+a. Always start an analysis with visualization! Make a plot that shows the relationship between `Price` (response) and `Living.Area` (predictor).
 
 ```{r}
-ggplot(???) + ???
+
 ```
 
+b. Do you think a simple linear regression model is appropriate?
 
+
+c. Compute the correlation between `Price` and `Living.Area`. Carefully explain what this tells you about the **slope** of the least squares line.
+
+```{r}
+
+```
 
 
 # Exercise 3
