@@ -1,0 +1,182 @@
+```{r 06_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+
+# Modeling Concepts (Part 2)
+
+## Learning Goals {-}
+
+- Practice simple linear regression modeling concepts: model formula, coefficient interpretations, predicted values, residuals
+- Develop two ideas of model quality: $R^2$ and residual standard error
+- Develop ideas of variation in estimates from sample to sample
+- Understand how categorical predictors are incorporated in linear regression models
+
+<br><br><br><br>
+
+## Warm-up {-}
+
+```{r echo=FALSE, eval=TRUE, fig.align="center", message=FALSE}
+library(readr)
+library(dplyr)
+library(ggplot2)
+homes <- read_tsv("http://sites.williams.edu/rdeveaux/files/2014/09/Saratoga.txt")
+homes <- homes %>%
+    mutate(
+        Heat.Type = factor(Heat.Type),
+        Fuel.Type = factor(Fuel.Type),
+        Sewer.Type = factor(Sewer.Type)
+    )
+
+ggplot(homes, aes(x = Age, y = Price)) +
+    geom_point() +
+    geom_smooth(method = "lm") +
+    labs(x = "House age (years)", y = "House price ($)")
+```
+
+```{r eval=TRUE}
+mod1 <- lm(Price ~ Age, data = homes)
+summary(mod1)
+```
+
+- Write the regression model formula using numbers from this output.
+- Interpret all coefficients in this model.
+- For a 50 year old house whose price is $100,000, what is the residual?
+
+<br><br><br><br>
+
+## Discussion {-}
+
+**What can we quantify about residuals to measure model quality?**
+
+```{r echo=FALSE, eval=TRUE, fig.align="center", message=FALSE}
+ggplot(homes, aes(x = Living.Area, y = Price)) +
+    geom_point() +
+    geom_smooth(method = "lm") +
+    labs(x = "Living area (square feet)", y = "House price ($)")
+```
+
+- Not the sum or the mean of residuals (will always be zero)
+- **Residual standard error**: essentially equal to the standard deviation of the residuals
+- Scale of residual standard error changes with the scale of the data (e.g., house prices versus strength-to-weight ratio)
+    - Can we put the variance of the residuals on a nicer scale? Say from 0 to 1? *Yes, we can.*
+- Some facts:
+
+$$ \hbox{Var}(\hbox{response}) = \hbox{Var}(\hbox{residuals}) + \hbox{Var}(\hbox{predicted values}) $$
+$$ \hbox{Total variation} = \hbox{Unexplained variation} + \hbox{Explained variation} $$
+
+- $R^2$: What fraction of total variation in the response is explained by the model?
+    - Hopefully a lot. Which would mean that there is relatively little unexplained variation.
+
+$$
+\begin{align*}
+R^2 &= \frac{\hbox{Var}(\hbox{predicted values})}{\hbox{Var}(\hbox{response})} \\
+&= 1 - \frac{\hbox{Var}(\hbox{residuals})}{\hbox{Var}(\hbox{response})}
+\end{align*}
+$$
+
+```{r eval=TRUE}
+mod1 <- lm(Price ~ Living.Area, data = homes)
+summary(mod1)
+```
+
+- Residual standard error: $69100
+    - This describes the amount of spread in the residuals.
+    - What qualifies as "high"? Imagine that your residual changed by that much. Is that a lot?
+- $R^2$ (`Multiple R-squared`): 0.5075
+    - 50.75% of the variation in house prices is explained by a simple linear regression model with square footage as a predictor
+    - What qualifies as "high"? Context helps determine if the response variable simply varies a lot. (e.g., stocks)
+
+<br><br><br>
+
+**How do we incorporate categorical predictors?**
+
+In our housing dataset, there is a `Heat.Type` that indicates whether the heating type of the house is of type 2, 3, or 4.
+
+Including a categorical predictor variable creates $L-1$ **indicator variables** where $L$ is the number of levels of the categorical variable.
+
+- Type 2 is chosen as the **reference category** by default in R because it is first in alphanumeric order.
+- `Heat.Type3` and `Heat.Type4` get created as indicator variables by taking the original variable name (`Heat.Type`) and pasting the name of the category (`3` or `4` afterward)
+    - `Heat.Type3` equals 1 is this case is of heating type 3. Equals 0 otherwise.
+    - `Heat.Type4` equals 1 is this case is of heating type 4. Equals 0 otherwise.
+
+```
+Case   Heat.Type   Heat.Type3   Heat.Type4
+----   ---------   ----------   ----------
+  1        3            1            0
+  2        4            0            1
+  3        4            0            1
+  4        2            0            0
+```
+
+```{r eval=TRUE}
+mod2 <- lm(Price ~ Heat.Type, data = homes)
+summary(mod2)
+```
+
+From this output, I can see that the regression model formula is:
+
+$$
+\begin{align*}
+E[\hbox{Price}] &= \beta_0 + \beta_1\,\hbox{Heat.Type3} + \beta_2\,\hbox{Heat.Type4} \\
+&= 226355 - 17223\,\hbox{Heat.Type3} - 64467\,\hbox{Heat.Type4}
+\end{align*}
+$$
+
+- When a house is of heating type 2, what are the values of the indicator variables? Thus what is the expected (average) price for a house of heating type 2?
+- Same questions for types 3 and 4
+- This leads us to the interpretation of the coefficients in this model.
+
+
+## Exercises {-}
+
+We won't be working in R today. Instead, look at the output from R code below, and answer the following questions.
+
+### Exercise 1 {-}
+
+Let's look at a model that describes `Price` in terms of `Fuel.Type`, which can be of types 2, 3, or 4.
+
+```{r eval=TRUE}
+mod3 <- lm(Price ~ Fuel.Type, data = homes)
+summary(mod3)
+```
+
+a. Interpret all coefficients in this model.
+
+b. Interpret the $R^2$ and residual standard error to evaluate the quality of the model.
+
+c. What is the residual for a $250,000 house that is of fuel type 2? What about a $250,000 house that is of fuel type 3?
+
+
+
+### Exercise 2 {-}
+
+Let's look at a model that describes `Price` in terms of `Sewer.Type`, which can be of types 1, 2, or 3.
+
+```{r eval=TRUE}
+mod4 <- lm(Price ~ Sewer.Type, data = homes)
+summary(mod4)
+```
+
+a. Interpret all coefficients in this model.
+
+b. Interpret the $R^2$ and residual standard error to evaluate the quality of the model.
+
+c. What is the residual for a $200,000 house that is of sewer type 3? What about a $200,000 house that is of sewer type 1?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -4,7 +4,7 @@ knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
 
 # (PART) Linear Regression Modeling {-}
 
-# Modeling Concepts
+# Modeling Concepts (Part 1)
 
 ## Learning Goals {-}
 
@@ -35,7 +35,7 @@ homes <- read_tsv("http://sites.williams.edu/rdeveaux/files/2014/09/Saratoga.txt
 ggplot(homes, aes(x = Living.Area, y = Price)) +
     geom_point() +
     geom_smooth(method = "lm") +
-    labs(x = "House price ($)", y = "Living area (square feet)")
+    labs(x = "Living area (square feet)", y = "House price ($)")
 ```
 
 **Models**

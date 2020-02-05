@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Topic 2 Univariate Visualization and Data Summaries | STAT 155: Introduction to Statistical Modeling</title>
+  <title>Topic 5 Modeling Concepts (Part 1) | STAT 155: Introduction to Statistical Modeling</title>
   <meta name="description" content="This is the class website for STAT 155 at Macalester College." />
   <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Topic 2 Univariate Visualization and Data Summaries | STAT 155: Introduction to Statistical Modeling" />
+  <meta property="og:title" content="Topic 5 Modeling Concepts (Part 1) | STAT 155: Introduction to Statistical Modeling" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="lmyint/155_spring_2020" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Topic 2 Univariate Visualization and Data Summaries | STAT 155: Introduction to Statistical Modeling" />
+  <meta name="twitter:title" content="Topic 5 Modeling Concepts (Part 1) | STAT 155: Introduction to Statistical Modeling" />
   
   <meta name="twitter:description" content="This is the class website for STAT 155 at Macalester College." />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="welcome-and-motivation.html"/>
-<link rel="next" href="bivariate-visualization-part-1.html"/>
+<link rel="prev" href="bivariate-visualization-part-2.html"/>
+<link rel="next" href="modeling-concepts-part-2.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -200,176 +200,135 @@ code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="univariate-visualization-and-data-summaries" class="section level1">
-<h1><span class="header-section-number">Topic 2</span> Univariate Visualization and Data Summaries</h1>
-<div id="learning-goals" class="section level2 unnumbered">
+<div id="modeling-concepts-part-1" class="section level1">
+<h1><span class="header-section-number">Topic 5</span> Modeling Concepts (Part 1)</h1>
+<div id="learning-goals-3" class="section level2 unnumbered">
 <h2>Learning Goals</h2>
 <ul>
-<li>Understand how bar charts, histograms, and density plots are constructed (not in full detail for a density plot)</li>
-<li>Identify the best type of plot to display a given variable and be able to construct those plots in R</li>
-<li>Clearly describe plots of quantitative variables using the concepts of shape, center, spread, and outliers</li>
-<li>Relate summary statistics of data to the concepts of shape, center, spread, and outliers</li>
+<li>Construct simple linear regression models with a quantitative predictor in R</li>
+<li>Use these models to describe relationships and make predictions</li>
+<li>Develop two ideas of model quality: <span class="math inline">\(R^2\)</span> and residual standard error</li>
+<li>Develop ideas of variation in estimates from sample to sample</li>
 </ul>
 <p><br><br><br><br></p>
 </div>
-<div id="discussion" class="section level2 unnumbered">
+<div id="new-groups" class="section level2 unnumbered">
+<h2>New Groups!</h2>
+<p>In your new groups…</p>
+<ul>
+<li>Introduce yourselves</li>
+<li>Give your preferred pronouns</li>
+<li>If you had one extra hour of free time a day, how would you use it?</li>
+</ul>
+<p><br><br><br><br></p>
+</div>
+<div id="discussion-1" class="section level2 unnumbered">
 <h2>Discussion</h2>
-<p>When you interpret a plot of a quantitative variable, I expect you to discuss the following four aspects as part of a complete answer.</p>
-<p><strong>Shape</strong>: How are values distributed along the observed range? What does the <strong>distribution</strong> of the variable look like?</p>
-<p><img src="stat155_manual_files/figure-html/unnamed-chunk-18-1.png" width="864" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">games &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-12/board_games.csv&quot;</span>)
-<span class="kw">ggplot</span>(games, <span class="kw">aes</span>(<span class="dt">x =</span> min_playtime)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_density</span>()</code></pre></div>
-<p><img src="stat155_manual_files/figure-html/unnamed-chunk-19-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p><br></p>
-<p><strong>Center:</strong> What is a typical value of the variable?</p>
+<p><img src="stat155_manual_files/figure-html/unnamed-chunk-43-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><strong>Models</strong></p>
 <ul>
-<li>Quantified with summary statistics like the <strong>mean</strong> and <strong>median</strong>.</li>
+<li>A <strong>model</strong> is a simplified description of the world.</li>
+<li><strong>Statistical models</strong> are mathematical descriptions that are informed by (estimated from) data.</li>
+<li>A <strong>simple linear regression model</strong> is a line model that can be mathematically represented as below:</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(games<span class="op">$</span>min_playtime)</code></pre></div>
-<pre><code>##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-##     0.00    25.00    45.00    80.88    90.00 60000.00</code></pre>
-<p><br></p>
-<p><strong>Spread:</strong> How spread out are the values? Are most values very close together or far apart?</p>
+<p><span class="math display">\[ E[Y] = \beta_0 + \beta_1\,X \]</span></p>
 <ul>
-<li>Quantified with summary statistics like the <strong>variance</strong> and <strong>standard deviation</strong>.</li>
-<li>Interpretation of the variance: it is the average (roughly) squared distance of each value to the mean. Units are the squared version of the original variable.</li>
-<li>Interpretation of the standard deviation: square root of the variance. Measures spread on the same scale as the original variable (same units as the original variable).</li>
+<li><span class="math inline">\(Y\)</span> is a quantitative <strong>response</strong> or <strong>outcome</strong> variable. e.g., House price</li>
+<li><span class="math inline">\(X\)</span> is a quantitative <strong>predictor</strong> or <strong>explanatory</strong> variable. e.g., Square footage of the house</li>
+<li>The <span class="math inline">\(E[\,\,]\)</span> means “expected value of”: this is why lines model trends in <strong>averages</strong> and not individual-level trends</li>
+<li><span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are the <strong>coefficients</strong> of the model.</li>
+<li>These coefficients are obtained from our data using the method of <strong>least squares</strong>.</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">var</span>(games<span class="op">$</span>min_playtime)</code></pre></div>
-<pre><code>## [1] 406883.1</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(games<span class="op">$</span>min_playtime)</code></pre></div>
-<pre><code>## [1] 637.8739</code></pre>
-<p><br></p>
-<p><strong>Outliers:</strong> Are there any values that are particularly high or low relative to the rest?</p>
-<p><br></p>
-<p><strong>A good paragraph putting all of these aspects together:</strong></p>
-<blockquote>
-<p>The distribution of minimum playtimes is right-skewed with values ranging from 0 to 60,000 minutes. The center of the distribution is around 45 minutes (median). The mean is higher at about 80.88 minutes because of the high outliers (such as the game with a 60,000 minute minimum play time). Because of the outliers, it is difficult to see the spread of the bulk of the data clearly, and it is these outliers that contribute to the high standard deviation of 637.9 minutes.</p>
-</blockquote>
-<p>Qualities of a good paragraph:</p>
+<p><br><br><br></p>
+<p><strong>Interpreting the model coefficients</strong></p>
 <ul>
-<li>Describes the shape and range of the data</li>
-<li>Includes units</li>
-<li>Reports on the mean and median and explains any discrepancies between them</li>
-<li>Describes spread in terms of standard deviation</li>
-<li>Comments on the noteworthy visual features of the plot, including outliers</li>
+<li>When <span class="math inline">\(X = 0\)</span>, <span class="math inline">\(E[Y] = \beta_0\)</span>.
+<ul>
+<li>This means that <span class="math inline">\(\beta_0\)</span> is the <strong>expected</strong> value of the outcome when <span class="math inline">\(X = 0\)</span>.</li>
+<li>Note that this sometimes does not make sense!</li>
+<li><strong>Centering</strong> the predictor can fix this.</li>
+<li>Don’t forget to report units in your interpretation! <br></li>
+</ul></li>
+<li>Case 1: <span class="math inline">\(X = a \qquad\qquad\qquad E[Y_1] = \beta_0 + \beta_1\,a\)</span><br />
+Case 2: <span class="math inline">\(X = a+1 \qquad\qquad E[Y_2] = \beta_0 + \beta_1\,(a+1)\)</span><br />
+<span class="math inline">\(E[Y_2] - E[Y_1] = \beta_1\)</span>
+<ul>
+<li>This means that <span class="math inline">\(\beta_1\)</span> is the <strong>expected</strong> change in the outcome per unit change in <span class="math inline">\(X\)</span>.</li>
+<li>Reporting units is important.</li>
+<li>The math shown here will be important when we extend these models to have multiple predictors.</li>
+</ul></li>
 </ul>
+<p><br><br><br></p>
+<p><strong>Fitting linear regression models in R</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Fit the model and store the resulting information in &quot;mod&quot;</span>
+mod &lt;-<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> your_dataset)
+
+<span class="co"># Display summary output of the model</span>
+<span class="kw">summary</span>(mod)
+
+<span class="co"># Extract the residuals of the model</span>
+<span class="kw">residuals</span>(mod)</code></pre></div>
 <p><br><br><br><br></p>
 </div>
-<div id="exercises" class="section level2 unnumbered">
+<div id="exercises-3" class="section level2 unnumbered">
 <h2>Exercises</h2>
-<p>A template RMarkdown document that you can start from is available <a href="template_rmds/02-univariate-viz.Rmd">here</a>.</p>
-<p>As you proceed, put any new code that you encounter on your cheat sheet.</p>
-<div id="part-1" class="section level3 unnumbered">
-<h3>Part 1</h3>
-<p>We have data on course evaluations for all courses offered in the Spring 2019 semester at Johns Hopkins University (<a href="http://studentaffairs.jhu.edu/registrar/wp-content/uploads/sites/23/2019/07/Spring-2019-Homewood-Completed-courses.pdf">source</a>). We have the following pieces of information on each course:</p>
-<ul>
-<li><code>avg_rating</code>: The average of student responses to the question asking them to rate the overall quality of the course using the Likert scale:
-<ul>
-<li>1 = Poor</li>
-<li>2 = Weak</li>
-<li>3 = Fair</li>
-<li>4 = Good</li>
-<li>5 = Excellent</li>
-</ul></li>
-<li><code>division</code>: Either <code>AS</code> for Arts &amp; Sciences or <code>EN</code> for Engineering</li>
-<li><code>dept_name</code>: Name of the department</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load required packages</span>
-<span class="kw">library</span>(readr)
+<p>A template RMarkdown document that you can start from is available <a href="template_rmds/05-lin-reg-concepts.Rmd">here</a>.</p>
+<p>We will be looking at housing data from upstate New York. This dataset contains information on house price and structural characteristics for a large set of homes in Saratoga, NY.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readr)
 <span class="kw">library</span>(ggplot2)
+<span class="kw">library</span>(dplyr)
 
-<span class="co"># Read in the course evaluation data</span>
-evals &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/3gayi1iq2p76kn0/jhu_evals.csv?dl=1&quot;</span>)</code></pre></div>
-<div id="exercise-1" class="section level4 unnumbered">
-<h4>Exercise 1</h4>
-<p>The first step in any data analysis is to get acquainted with the data. Look at the first few rows, and obtain the dimensions of the dataset.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Look at the first 6 rows</span>
-<span class="kw">head</span>(evals)
-
-<span class="co"># Get the dimensions of the dataset</span>
-<span class="kw">dim</span>(evals)</code></pre></div>
+homes &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&quot;http://sites.williams.edu/rdeveaux/files/2014/09/Saratoga.txt&quot;</span>)</code></pre></div>
+<p><br></p>
+<div id="exercise-1-3" class="section level3 unnumbered">
+<h3>Exercise 1</h3>
+<p>Get to know the data by displaying the first few rows and getting the dimensions. What are the cases? How many cases do we have? What kinds of variables do we have information on?</p>
+<p><br></p>
+</div>
+<div id="exercise-2-3" class="section level3 unnumbered">
+<h3>Exercise 2</h3>
 <ol style="list-style-type: lower-alpha">
-<li>How many cases are there? (What are the cases?)</li>
-<li>What type of variable are the key ones described above?</li>
+<li>Always start an analysis with visualization! Make a plot that shows the relationship between <code>Price</code> (response) and <code>Living.Area</code> (predictor).</li>
+<li>Do you think a simple linear regression model is appropriate?</li>
+<li>Compute the correlation between <code>Price</code> and <code>Living.Area</code>. Carefully explain what this tells you about the <strong>slope</strong> of the least squares line.</li>
 </ol>
 <p><br></p>
 </div>
-<div id="exercise-2" class="section level4 unnumbered">
-<h4>Exercise 2</h4>
-<p>Are the numbers of courses taught in the Arts &amp; Sciences and the Engineering divisions roughly the same? Before making the plot, make note of what your expectation is. Then compare to what you observe when you make the plot. (Clearly defining your expectations first is good scientific practice that is often not practiced enough to become habit.)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(evals, <span class="kw">aes</span>(<span class="dt">x =</span> division)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_bar</span>()</code></pre></div>
-<p><br></p>
-</div>
-<div id="exercise-3" class="section level4 unnumbered">
-<h4>Exercise 3</h4>
-<p>Now we’ll look at the distribution of the <code>avg_rating</code> variable and associated summary statistics. Just like before, make note of what you expect the plots to look like before you make them.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plots</span>
-<span class="kw">ggplot</span>(evals, <span class="kw">aes</span>(<span class="dt">x =</span> avg_rating)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_histogram</span>()
-<span class="kw">ggplot</span>(evals, <span class="kw">aes</span>(<span class="dt">x =</span> avg_rating)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_density</span>()</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Summary statistics</span>
-<span class="co"># Adapt the code from the Discussion section to compute these</span>
-???</code></pre></div>
+<div id="exercise-3-3" class="section level3 unnumbered">
+<h3>Exercise 3</h3>
 <ol style="list-style-type: lower-alpha">
-<li>Write a good paragraph interpreting the histogram or density plot. (Discuss the 4 essential aspects.)</li>
-<li>What information is given by the tallest bar of the histogram?</li>
-<li>In what situations might you prefer a histogram to a density plot and vice-versa?</li>
-<li>Looking at the summary statistics, compare the mean to the median, and relate this to the shape of the distribution of average ratings. What would the distribution probably look like if the ordering of the mean and median were reversed?</li>
+<li><p>Fit a linear regression model of <code>Price</code> as a function of <code>Living.Area</code> using the code below.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod1 &lt;-<span class="st"> </span><span class="kw">lm</span>(Price <span class="op">~</span><span class="st"> </span>Living.Area, <span class="dt">data =</span> homes)
+<span class="kw">summary</span>(mod1)</code></pre></div></li>
+<li>The two numbers in the “Estimate” column of the output give the intercept and the slope for <code>Living.Area</code>. Interpret both of these numbers. Is the intercept meaningful?</li>
+<li><p>We can center <code>Living.Area</code> at a more reasonable value. Let’s use 1000 square feet. Complete the code below to create a centered version of <code>Living.Area</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">homes &lt;-<span class="st"> </span>homes <span class="op">%&gt;%</span>
+<span class="st">    </span>???(<span class="dt">Living.Area.Shifted =</span> Living.Area<span class="op">-</span><span class="dv">1000</span>)</code></pre></div></li>
+<li>You can actually determine the coefficients of the <code>Price ~ Living.Area.Shifted</code> model by hand. Based on the summary output of <code>mod1</code>, work out what these new coefficients should be.</li>
+<li><p>Now check your answer to part (d) by fitting the model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod2 &lt;-<span class="st"> </span><span class="kw">lm</span>(???)
+<span class="kw">summary</span>(mod2)</code></pre></div></li>
+<li><p>What is the <strong>residual</strong> for a $150,000 house that is 1000 square feet?</p></li>
 </ol>
-<p><br><br></p>
-</div>
-</div>
-<div id="part-2" class="section level3 unnumbered">
-<h3>Part 2</h3>
-<p>When we are sitting behind a computer screen analyzing data, it can be easy to get caught up in the code, methods, or findings, and lose track of the human impact of our analysis.</p>
-<p>The analysis we did in Part 1 actually foreshadows a rather serious ethical concern for faculty.</p>
-<p><br></p>
-<div id="exercise-4" class="section level4 unnumbered">
-<h4>Exercise 4</h4>
-<p>Suppose that you were asked to rate the overall quality of one of your Fall courses on a 5-point scale. What kinds of things would you think about in giving your rating? Do you think you would give the same rating on a different day? In your opinion, do you think other students are using the same criteria as you?</p>
 <p><br></p>
 </div>
-<div id="exercise-5" class="section level4 unnumbered">
-<h4>Exercise 5</h4>
-<p>In this last exercise, we’ll explore the misleading nature of the mean of Likert-scale responses.</p>
-<p>The datasets being read in below come from 3 different courses with 20 students each. For each student we have their rating of the overall course quality on the scale:</p>
-<ul>
-<li>1 = Poor</li>
-<li>2 = Weak</li>
-<li>3 = Fair</li>
-<li>4 = Good</li>
-<li>5 = Excellent</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Read in the course evaluation data</span>
-course1 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/qbw4ahys9mkxsqj/course1.csv?dl=1&quot;</span>)
-course2 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/tg8g0hchh435lx7/course2.csv?dl=1&quot;</span>)
-course3 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/b3cg2tdbpyjzwr6/course3.csv?dl=1&quot;</span>)</code></pre></div>
+<div id="exercise-4-3" class="section level3 unnumbered">
+<h3>Exercise 4</h3>
+<p>In this exercise, we’ll develop some intuition for ideas about how to quantify the quality of a model.</p>
 <ol style="list-style-type: lower-alpha">
-<li><p>For each course, make an appropriate plot showing the distribution of student ratings. Put yourself in the professor’s shoes and briefly summarize the information that the plot gives.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot the distribution of ratings for each course</span>
-???</code></pre></div></li>
-<li><p>Now compute the mean rating for each course. You can adapt the code from the Discussion section to replace <code>summary</code> with <code>mean</code> to display only the mean.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Compute the mean rating for each course</span>
-???</code></pre></div></li>
-<li><p>Consider a school policy that ranks professors based on this mean rating and uses the rankings for evaluative and promotion purposes. Based on your investigations so far, would such a policy be fair? Is there a potential for it creating injustice?</p></li>
+<li>Based on your plot from Exercise 2, do you think that our <code>Price ~ Living.Area</code> model is a good one? Explain by describing whether you think the variance of the residuals should be low or high for a good model.</li>
+<li><p>In the model summary output, there is a metric near the bottom called “Residual standard error”. The first number (ignore the “on XXXX degrees of freedom part”) is very close to the standard deviation of the residuals of the model. Verify this with the code below. Given that residual standard error is essentially a standard deviation, how do you think we can interpret this number?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">residuals</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sd</span>()</code></pre></div></li>
+<li>Do you think that the variance of the residuals could ever be larger than the variance of the house prices? Why or why not?</li>
+<li><p>There is a metric for linear regression models called <span class="math inline">\(R^2\)</span> which is displayed in the model summary output near the bottom just after “Multiple R-squared”. This number is computed as: 1 - Var(residuals)/Var(response). Do you think this number should be high or low for a good model?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># If you are curious about checking the calculation</span>
+<span class="dv">1</span><span class="op">-</span>(<span class="kw">var</span>(<span class="kw">residuals</span>(mod1))<span class="op">/</span><span class="kw">var</span>(homes<span class="op">$</span>Price))</code></pre></div></li>
 </ol>
-<p><br><br><br></p>
+<p><br></p>
 </div>
-</div>
-<div id="extra" class="section level3 unnumbered">
-<h3>Extra!</h3>
-<p>If you have time and want to explore more, try these exercises.</p>
-<ol style="list-style-type: decimal">
-<li>Make a plot showing the number of courses by department. Is it effective?</li>
-<li><p>Add the following to the end of the code for your last plot. What does this code do? Add this to your cheat sheet.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">hjust =</span> <span class="dv">1</span>))</code></pre></div></li>
-<li><p>Continue adding to the same plot the following code. What does it do? Modify it so that it is better suited to your plot. Add this to your cheat sheet.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;xxx&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;yyy&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;title&quot;</span>)</code></pre></div></li>
-</ol>
+<div id="exercise-5-2" class="section level3 unnumbered">
+<h3>Exercise 5</h3>
+<p>We only used a <strong>sample</strong> of Saratoga homes to estimate $113.123 as the slope for <code>Living.Area</code>. Based on your scatterplot from Exercise 2, how much do you think that slope estimate would change if we had a different sample of houses? A lot? A little? What are you thinking about as you formulate your opinion?</p>
 
 </div>
 </div>
@@ -379,8 +338,8 @@ course3 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span cla
           </div>
         </div>
       </div>
-<a href="welcome-and-motivation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="bivariate-visualization-part-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="bivariate-visualization-part-2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="modeling-concepts-part-2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
