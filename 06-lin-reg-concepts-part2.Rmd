@@ -8,7 +8,6 @@ knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
 
 - Practice simple linear regression modeling concepts: model formula, coefficient interpretations, predicted values, residuals
 - Develop two ideas of model quality: $R^2$ and residual standard error
-- Develop ideas of variation in estimates from sample to sample
 - Understand how categorical predictors are incorporated in linear regression models
 
 <br><br><br><br>
