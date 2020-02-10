@@ -65,6 +65,7 @@ $$ \hbox{Total variation} = \hbox{Unexplained variation} + \hbox{Explained varia
 
 - $R^2$: What fraction of total variation in the response is explained by the model?
     - Hopefully a lot. Which would mean that there is relatively little unexplained variation.
+    - Ranges from 0 to 1
 
 $$
 \begin{align*}

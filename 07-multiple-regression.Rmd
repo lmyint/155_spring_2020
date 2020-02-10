@@ -1,0 +1,191 @@
+```{r 07_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+
+# Multiple Linear Regression
+
+## Learning Goals {-}
+
+- Understand the predictive and causal viewpoints for including multiple predictor variables in regression models
+- Interpret the coefficients in multiple linear regression models
+- Graphically/geometrically describe the "pictures" implied by different multivariate models
+- Understand how to extend linear regression models with polynomial terms to model nonlinear relationships
+
+<br><br><br><br>
+
+## Discussion and Exercises {-}
+
+A template RMarkdown document that you can start from is available [here](template_rmds/07-multiple-regression.Rmd).
+
+**New data context:** diamond prices
+
+```{r}
+library(readr)
+library(ggplot2)
+library(dplyr)
+
+diamonds <- read_csv("https://www.dropbox.com/s/9c8jqda4pwaq8i1/diamonds.csv?dl=1")
+```
+
+**Research question:** How are different factors related to the price of a diamond?
+
+Let's familiarize ourselves with the data:
+
+```{r}
+# Display the dimensions and first few rows
+```
+
+Key variables:
+
+- `carat`: the weight of the diamond in carats (1 carat = 200 milligrams)
+- `price`: price in US dollars
+- `cut`: quality of the cut of the diamond (Fair, Good, Very Good, Premium, Ideal)
+- `color`: Level 1 (worst) to Level 7 (best)
+- `clarity`: Level 1 (worst) to Level 8 (best)
+- `x`, `y`, and `z`: length, width, and depth respectively (in mm)
+- `depth`: total depth percentage = z / mean(x, y)
+- `table`: width of top of diamond relative to widest point
+
+<br><br><br>
+
+**Exercise 1:** What are your expectations for how `price` and `clarity` will be related? Construct a visualization to see. (Clarity level 1 is deemed worst and level 8 is deemed best.)
+
+```{r}
+# Plot of price vs. clarity
+```
+
+<br><br><br>
+
+**Exercise 2:** Let's first fit a linear regression model with just `clarity` as a predictor of `price`.
+
+```{r}
+mod1 <- lm(price ~ clarity, data = diamonds)
+summary(mod1)
+```
+
+a. Why is there no coefficient for `clarityLevel_1`?
+
+b. Interpret the `clarityLevel_2` and `clarityLevel_5` coefficients.
+
+c. Based on this output, can you tell which clarity level has the highest mean price in this dataset? Explain.
+
+d. Relate the magnitudes of the coefficients to the trends that you see in your plot.
+
+<br><br><br><br>
+
+**Exercise 3:** What if the most clear diamonds happened to be quite small (low carat)? Would this explain why your plot looks the way it does?
+
+<br><br><br>
+
+Wouldn't it be nice if we could hold carat fixed and then compare diamonds of different clarity?
+
+<center>
+***We can with regression models.***
+</center>
+
+<br><br><br>
+
+If we want to examine average changes in the response while letting one variable change and holding the others fixed, we can add those other variables to the model:
+
+$$ E[\hbox{price}] = \beta_0 + \beta_1\hbox{clarityLevel_2} + \beta_2\hbox{clarityLevel_3} + \cdots + \beta_7\hbox{clarityLevel_8} + \beta_8\hbox{carat} $$
+
+Let's simplify this model to gain better understanding:
+
+- For clarity level 1:
+    $$ E[\hbox{price}] = \beta_0 + \beta_8\hbox{carat} $$
+    $\beta_0$ is the intercept    
+    $\beta_8$ is the `carat` coefficient (the slope for `carat`)
+
+- For clarity level 2:
+    $$
+    \begin{align*}
+    E[\hbox{price}] &= \beta_0 + \beta_1 \times 1 + \beta_8\hbox{carat} \\
+    &= (\beta_0 + \beta_1) + \beta_8\hbox{carat}
+    \end{align*}
+    $$
+    $\beta_0+\beta_1$ is the intercept    
+    $\beta_8$ is the `carat` coefficient (the slope for `carat`)
+
+- For clarity level 8:
+    $$
+    \begin{align*}
+    E[\hbox{price}] &= \beta_0 + \beta_7 \times 1 + \beta_8\hbox{carat} \\
+    &= (\beta_0 + \beta_7) + \beta_8\hbox{carat}
+    \end{align*}
+    $$
+    $\beta_0+\beta_7$ is the intercept    
+    $\beta_8$ is the `carat` coefficient (the slope for `carat`)
+
+<br><br>
+
+Observations about these clarity level-specific model formulas:
+
+- The `carat` coefficient is always the same: $\beta_8$
+- The intercept changes for each level of `clarity`
+    - $\beta_1$ to $\beta_7$ indicate **changes** in the intercept, compared to the reference category: clarity level 1
+- This model (`y ~ categorical+quantitative`) is called a **parallel lines model**.
+
+<br><br><br>
+
+**Exercise 4:** Add to your previous model by including `carat` as a predictor.
+
+```{r}
+mod2 <- lm(price ~ clarity+carat, data = diamonds)
+summary(mod2)
+```
+
+a. Write an expression for the average price of a clarity level 1 diamond that is zero carats. What coefficient does this allow you to interpret?
+
+b. Write an expression for the average price of a clarity level 1 diamond that is $C$ carats.
+
+c. Write an expression for the average price of a clarity level 2 diamond that is $C$ carats. Subtract your answer from part (b) from this expression. Based on this, give an interpretation of the `clarityLevel_2` coefficient.
+
+d. Write an expression for the average price of a clarity level 3 diamond that is $C$ carats. Subtract your answer from part (b) from this expression. Based on this, give an interpretation of the `clarityLevel_3` coefficient.
+
+e. Pick any clarity level. Write an expression for the average price of two diamonds of that clarity level: (1) one with $C$ carats and (2) one with $C+1$ carats. Subtract (1) from (2), and thus interpret the `carat` coefficient.
+
+f. Compare the values of the `clarityLevel` coefficients in `mod2` and `mod1` and form a conclusion about the relationship between `price` and `clarity`.
+
+<br><br><br>
+
+In general, a linear regression model with multiple predictors is called a **multiple linear regression model**.
+
+$$ E[y] = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p $$
+
+Interpreting $\beta_1$:
+
+- Case 1: $x_1 = a_1, \qquad x_2 = a_2, \ldots, x_p = a_p$
+
+$$ E[y_1] = \beta_0 + \beta_1 a_1 + \beta_2 a_2 + \cdots + \beta_p a_p $$
+
+<br>
+
+- Case 2: $x_1 = a_1 + 1, x_2 = a_2, \ldots, x_p = a_p$    
+    Value of $x_1$ is 1 unit higher, but otherwise exactly the same as Case 1.
+
+$$ E[y_2] = \beta_0 + \beta_1 (a_1+1) + \beta_2 a_2 + \cdots + \beta_p a_p $$
+
+<br>
+
+We can compare the expected (average) response for case 1 and case 2:
+
+$$ E[y_2] - E[y_1] = \beta_1 $$
+
+Thus, $\beta_1$ is the expected change in the response for every unit change in the predictor $x_1$, **holding constant the other predictors in the model**.
+
+On average, if we increase $x_1$ by 1, we expect the response to change by $\beta_1$, **holding constant the other predictors in the model**.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

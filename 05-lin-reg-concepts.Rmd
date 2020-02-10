@@ -28,7 +28,7 @@ In your new groups...
 
 ## Discussion {-}
 
-```{r echo=FALSE, eval=TRUE, fig.align="center", message=FALSE}
+```{r 05_home_scatter, echo=FALSE, eval=TRUE, fig.align="center", message=FALSE}
 library(readr)
 library(ggplot2)
 homes <- read_tsv("http://sites.williams.edu/rdeveaux/files/2014/09/Saratoga.txt")
@@ -73,7 +73,7 @@ $$ E[Y] = \beta_0 + \beta_1\,X $$
 
 **Fitting linear regression models in R**
 
-```{r}
+```{r 05_lm_demo}
 # Fit the model and store the resulting information in "mod"
 mod <- lm(y ~ x, data = your_dataset)
 

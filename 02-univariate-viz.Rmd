@@ -21,7 +21,7 @@ When you interpret a plot of a quantitative variable, I expect you to discuss th
 
 **Shape**: How are values distributed along the observed range? What does the **distribution** of the variable look like?
 
-```{r fig.width=9, fig.height=6, echo=FALSE, eval=TRUE}
+```{r 02_shapes, fig.width=9, fig.height=6, echo=FALSE, eval=TRUE}
 par(mfrow = c(2,3), mar = c(2,3,3,0.1))
 set.seed(22)
 n <- 1e6
@@ -37,7 +37,7 @@ plot(density(x4), xlab = "", ylab = "", main = "Bimodal", cex.main = 1.5)
 plot(density(x5), xlab = "", ylab = "", main = "Uniform (flat)", cex.main = 1.5)
 ```
 
-```{r eval=TRUE, message=FALSE, fig.width=6, fig.height=4, fig.align="center"}
+```{r 02_density, eval=TRUE, message=FALSE, fig.width=6, fig.height=4, fig.align="center"}
 games <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-12/board_games.csv")
 ggplot(games, aes(x = min_playtime)) +
     geom_density()
@@ -49,7 +49,7 @@ ggplot(games, aes(x = min_playtime)) +
 
 - Quantified with summary statistics like the **mean** and **median**.
 
-```{r eval=TRUE}
+```{r 02_summary_stats, eval=TRUE}
 summary(games$min_playtime)
 ```
 
@@ -61,7 +61,7 @@ summary(games$min_playtime)
 - Interpretation of the variance: it is the average (roughly) squared distance of each value to the mean. Units are the squared version of the original variable.
 - Interpretation of the standard deviation: square root of the variance. Measures spread on the same scale as the original variable (same units as the original variable).
 
-```{r eval=TRUE}
+```{r 02_spread_stats, eval=TRUE}
 var(games$min_playtime)
 sd(games$min_playtime)
 ```

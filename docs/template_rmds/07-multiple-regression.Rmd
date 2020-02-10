@@ -1,0 +1,112 @@
+---
+title: "Multiple Linear Regression"
+author: "Your Name"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+# Setup
+
+```{r}
+library(readr)
+library(ggplot2)
+library(dplyr)
+
+diamonds <- read_csv("https://www.dropbox.com/s/9c8jqda4pwaq8i1/diamonds.csv?dl=1")
+```
+
+**Research question:** How are different factors related to the price of a diamond?
+
+Let's familiarize ourselves with the data:
+
+```{r}
+# Display the dimensions and first few rows
+```
+
+Key variables:
+
+- `carat`: the weight of the diamond in carats (1 carat = 200 milligrams)
+- `price`: price in US dollars
+- `cut`: quality of the cut of the diamond (Fair, Good, Very Good, Premium, Ideal)
+- `color`: Level 1 (worst) to Level 7 (best)
+- `clarity`: Level 1 (worst) to Level 8 (best)
+- `x`, `y`, and `z`: length, width, and depth respectively (in mm)
+- `depth`: total depth percentage = z / mean(x, y)
+- `table`: width of top of diamond relative to widest point
+
+
+# Exercises
+
+## Exercise 1
+
+What are your expectations for how `price` and `clarity` will be related? Construct a visualization to see. (Clarity level 1 is deemed worst and level 8 is deemed best.)
+
+```{r}
+# Plot of price vs. clarity
+```
+
+
+
+
+
+
+## Exercise 2
+
+Let's first fit a linear regression model with just `clarity` as a predictor of `price`.
+
+```{r}
+mod1 <- lm(price ~ clarity, data = diamonds)
+summary(mod1)
+```
+
+a. Why is there no coefficient for `clarityLevel_1`?
+
+b. Interpret the `clarityLevel_2` and `clarityLevel_5` coefficients.
+
+c. Based on this output, can you tell which clarity level has the highest mean price in this dataset? Explain.
+
+d. Relate the magnitudes of the coefficients to the trends that you see in your plot.
+
+
+
+
+
+
+## Exercise 3
+
+What if the most clear diamonds happened to be quite small (low carat)? Would this explain why your plot looks the way it does?
+
+
+
+
+
+
+
+## Exercise 4
+
+Add to your previous model by including `carat` as a predictor.
+
+```{r}
+mod2 <- lm(price ~ clarity+carat, data = diamonds)
+summary(mod2)
+```
+
+a. Write an expression for the average price of a clarity level 1 diamond that is zero carats. What coefficient does this allow you to interpret?
+
+b. Write an expression for the average price of a clarity level 1 diamond that is $C$ carats.
+
+c. Write an expression for the average price of a clarity level 2 diamond that is $C$ carats. Subtract your answer from part (b) from this expression. Based on this, give an interpretation of the `clarityLevel_2` coefficient.
+
+d. Write an expression for the average price of a clarity level 3 diamond that is $C$ carats. Subtract your answer from part (b) from this expression. Based on this, give an interpretation of the `clarityLevel_3` coefficient.
+
+e. Pick any clarity level. Write an expression for the average price of two diamonds of that clarity level: (1) one with $C$ carats and (2) one with $C+1$ carats. Subtract (1) from (2), and thus interpret the `carat` coefficient.
+
+f. Compare the values of the `clarityLevel` coefficients in `mod2` and `mod1` and form a conclusion about the relationship between `price` and `clarity`.
+
+
+
+
+
+

@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="modeling-concepts-part-1.html"/>
-
+<link rel="next" href="multiple-linear-regression.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -181,6 +181,10 @@ code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="modeling-concepts-part-2.html"><a href="modeling-concepts-part-2.html#exercise-2-4"><i class="fa fa-check"></i>Exercise 2</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="7" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html"><i class="fa fa-check"></i><b>7</b> Multiple Linear Regression</a><ul>
+<li class="chapter" data-level="" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#learning-goals-5"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#discussion-and-exercises"><i class="fa fa-check"></i>Discussion and Exercises</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
 
@@ -214,7 +218,7 @@ code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="warm-up-1" class="section level2 unnumbered">
 <h2>Warm-up</h2>
-<p><img src="stat155_manual_files/figure-html/unnamed-chunk-51-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="stat155_manual_files/figure-html/unnamed-chunk-45-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod1 &lt;-<span class="st"> </span><span class="kw">lm</span>(Price <span class="op">~</span><span class="st"> </span>Age, <span class="dt">data =</span> homes)
 <span class="kw">summary</span>(mod1)</code></pre></div>
 <pre><code>## 
@@ -245,7 +249,7 @@ code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Inf
 <div id="discussion-2" class="section level2 unnumbered">
 <h2>Discussion</h2>
 <p><strong>What can we quantify about residuals to measure model quality?</strong></p>
-<p><img src="stat155_manual_files/figure-html/unnamed-chunk-53-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="stat155_manual_files/figure-html/unnamed-chunk-47-1.png" width="672" style="display: block; margin: auto;" /></p>
 <ul>
 <li>Not the sum or the mean of residuals (will always be zero)</li>
 <li><strong>Residual standard error</strong>: essentially equal to the standard deviation of the residuals</li>
@@ -260,6 +264,7 @@ code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Inf
 <li><span class="math inline">\(R^2\)</span>: What fraction of total variation in the response is explained by the model?
 <ul>
 <li>Hopefully a lot. Which would mean that there is relatively little unexplained variation.</li>
+<li>Ranges from 0 to 1</li>
 </ul></li>
 </ul>
 <p><span class="math display">\[
@@ -423,8 +428,8 @@ E[\hbox{Price}] &amp;= \beta_0 + \beta_1\,\hbox{Heat.Type3} + \beta_2\,\hbox{Hea
           </div>
         </div>
       </div>
-<a href="modeling-concepts-part-1.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="modeling-concepts-part-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="multiple-linear-regression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

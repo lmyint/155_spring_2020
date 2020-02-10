@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Topic 4 Bivariate Visualization - Part 2 | STAT 155: Introduction to Statistical Modeling</title>
+  <title>Topic 7 Multiple Linear Regression | STAT 155: Introduction to Statistical Modeling</title>
   <meta name="description" content="This is the class website for STAT 155 at Macalester College." />
   <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Topic 4 Bivariate Visualization - Part 2 | STAT 155: Introduction to Statistical Modeling" />
+  <meta property="og:title" content="Topic 7 Multiple Linear Regression | STAT 155: Introduction to Statistical Modeling" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="lmyint/155_spring_2020" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Topic 4 Bivariate Visualization - Part 2 | STAT 155: Introduction to Statistical Modeling" />
+  <meta name="twitter:title" content="Topic 7 Multiple Linear Regression | STAT 155: Introduction to Statistical Modeling" />
   
   <meta name="twitter:description" content="This is the class website for STAT 155 at Macalester College." />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="bivariate-visualization-part-1.html"/>
-<link rel="next" href="modeling-concepts-part-1.html"/>
+<link rel="prev" href="modeling-concepts-part-2.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -205,87 +205,134 @@ code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="bivariate-visualization---part-2" class="section level1">
-<h1><span class="header-section-number">Topic 4</span> Bivariate Visualization - Part 2</h1>
-<div id="learning-goals-2" class="section level2 unnumbered">
+<div id="multiple-linear-regression" class="section level1">
+<h1><span class="header-section-number">Topic 7</span> Multiple Linear Regression</h1>
+<div id="learning-goals-5" class="section level2 unnumbered">
 <h2>Learning Goals</h2>
 <ul>
-<li>Construct bivariate data visualizations of two quantiative variables</li>
-<li>Form ideas about the uses and building of statistical models</li>
-<li>Explain the uses, misuses, and limitations of the correlation coefficient</li>
+<li>Understand the predictive and causal viewpoints for including multiple predictor variables in regression models</li>
+<li>Interpret the coefficients in multiple linear regression models</li>
+<li>Graphically/geometrically describe the “pictures” implied by different multivariate models</li>
+<li>Understand how to extend linear regression models with polynomial terms to model nonlinear relationships</li>
 </ul>
 <p><br><br><br><br></p>
 </div>
-<div id="exercises-2" class="section level2 unnumbered">
-<h2>Exercises</h2>
-<p>A template RMarkdown document that you can start from is available <a href="template_rmds/04-bivariate-viz-part2.Rmd">here</a>.</p>
-<p>We’ll continue using the dataset for our first case study:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load required packages</span>
-<span class="kw">library</span>(readr)
+<div id="discussion-and-exercises" class="section level2 unnumbered">
+<h2>Discussion and Exercises</h2>
+<p>A template RMarkdown document that you can start from is available <a href="template_rmds/07-multiple-regression.Rmd">here</a>.</p>
+<p><strong>New data context:</strong> diamond prices</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readr)
 <span class="kw">library</span>(ggplot2)
 <span class="kw">library</span>(dplyr)
 
-<span class="co"># Read in the weightlifting data</span>
-lifts &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/n6jko5m7ygeasoj/openpowerlifting_subs.csv?dl=1&quot;</span>)
-
-<span class="co"># Try to create the SWR variable without looking at your cheat sheet</span>
-???</code></pre></div>
-<p><br></p>
-<div id="exercise-1-2" class="section level3 unnumbered">
-<h3>Exercise 1</h3>
-<ol style="list-style-type: lower-alpha">
-<li>Using the plotting examples that we have gone over so far, generalize the code structure to create a scatterplot of <code>SWR</code> (y-axis) vs. <code>BodyweightKg</code> (x-axis). For no reason at all, I’ll say the word “point”. Before running the code, write down what you expect the plot to look like.</li>
-<li>In a few sentences describe the direction, form, strength, and any unusual features of the plot.</li>
-<li>Now add the following after the scatterplot: <code>+ geom_smooth()</code>. What does this code do?</li>
-<li>Create another copy of your scatterplot code using <code>geom_smooth(method = &quot;lm&quot;)</code> instead of <code>geom_smooth()</code>. What does the <strong>argument</strong> <code>method = &quot;lm&quot;</code> do?</li>
-<li><p>Compute the correlation coefficient between these two variables using the following. Is the correlation coefficient appropriate for summarizing this relationship?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cor</span>(lifts<span class="op">$</span>SWR, lifts<span class="op">$</span>BodyweightKg)</code></pre></div></li>
-</ol>
-<p>Pause after this exercise, and we’ll discuss as a class.</p>
-<p><br></p>
-</div>
-<div id="exercise-2-2" class="section level3 unnumbered">
-<h3>Exercise 2</h3>
-<p>Using the plot from exercise 1, try to estimate by hand the equation of the line shown on the plot.</p>
-<p><br></p>
-</div>
-<div id="exercise-3-2" class="section level3 unnumbered">
-<h3>Exercise 3</h3>
-<p>Now use the code below to more precisely get the equation of the line. More specifically, this code <strong>fits</strong> a <strong>simple linear regression model</strong> to the data. There is a lot of output that gets printed, but focus only on the “Coefficients:” section and the “Estimate” column in that section.</p>
-<p>How does your estimated line compare?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod1 &lt;-<span class="st"> </span><span class="kw">lm</span>(SWR <span class="op">~</span><span class="st"> </span>BodyweightKg, <span class="dt">data =</span> lifts)
+diamonds &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/9c8jqda4pwaq8i1/diamonds.csv?dl=1&quot;</span>)</code></pre></div>
+<p><strong>Research question:</strong> How are different factors related to the price of a diamond?</p>
+<p>Let’s familiarize ourselves with the data:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Display the dimensions and first few rows</span></code></pre></div>
+<p>Key variables:</p>
+<ul>
+<li><code>carat</code>: the weight of the diamond in carats (1 carat = 200 milligrams)</li>
+<li><code>price</code>: price in US dollars</li>
+<li><code>cut</code>: quality of the cut of the diamond (Fair, Good, Very Good, Premium, Ideal)</li>
+<li><code>color</code>: Level 1 (worst) to Level 7 (best)</li>
+<li><code>clarity</code>: Level 1 (worst) to Level 8 (best)</li>
+<li><code>x</code>, <code>y</code>, and <code>z</code>: length, width, and depth respectively (in mm)</li>
+<li><code>depth</code>: total depth percentage = z / mean(x, y)</li>
+<li><code>table</code>: width of top of diamond relative to widest point</li>
+</ul>
+<p><br><br><br></p>
+<p><strong>Exercise 1:</strong> What are your expectations for how <code>price</code> and <code>clarity</code> will be related? Construct a visualization to see. (Clarity level 1 is deemed worst and level 8 is deemed best.)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot of price vs. clarity</span></code></pre></div>
+<p><br><br><br></p>
+<p><strong>Exercise 2:</strong> Let’s first fit a linear regression model with just <code>clarity</code> as a predictor of <code>price</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod1 &lt;-<span class="st"> </span><span class="kw">lm</span>(price <span class="op">~</span><span class="st"> </span>clarity, <span class="dt">data =</span> diamonds)
 <span class="kw">summary</span>(mod1)</code></pre></div>
+<ol style="list-style-type: lower-alpha">
+<li><p>Why is there no coefficient for <code>clarityLevel_1</code>?</p></li>
+<li><p>Interpret the <code>clarityLevel_2</code> and <code>clarityLevel_5</code> coefficients.</p></li>
+<li><p>Based on this output, can you tell which clarity level has the highest mean price in this dataset? Explain.</p></li>
+<li><p>Relate the magnitudes of the coefficients to the trends that you see in your plot.</p></li>
+</ol>
+<p><br><br><br><br></p>
+<p><strong>Exercise 3:</strong> What if the most clear diamonds happened to be quite small (low carat)? Would this explain why your plot looks the way it does?</p>
+<p><br><br><br></p>
+<p>Wouldn’t it be nice if we could hold carat fixed and then compare diamonds of different clarity?</p>
+<center>
+<strong><em>We can with regression models.</em></strong>
+</center>
+<p><br><br><br></p>
+<p>If we want to examine average changes in the response while letting one variable change and holding the others fixed, we can add those other variables to the model:</p>
+<p><span class="math display">\[ E[\hbox{price}] = \beta_0 + \beta_1\hbox{clarityLevel_2} + \beta_2\hbox{clarityLevel_3} + \cdots + \beta_7\hbox{clarityLevel_8} + \beta_8\hbox{carat} \]</span></p>
+<p>Let’s simplify this model to gain better understanding:</p>
+<ul>
+<li><p>For clarity level 1: <span class="math display">\[ E[\hbox{price}] = \beta_0 + \beta_8\hbox{carat} \]</span> <span class="math inline">\(\beta_0\)</span> is the intercept<br />
+<span class="math inline">\(\beta_8\)</span> is the <code>carat</code> coefficient (the slope for <code>carat</code>)</p></li>
+<li><p>For clarity level 2: <span class="math display">\[
+\begin{align*}
+E[\hbox{price}] &amp;= \beta_0 + \beta_1 \times 1 + \beta_8\hbox{carat} \\
+&amp;= (\beta_0 + \beta_1) + \beta_8\hbox{carat}
+\end{align*}
+\]</span> <span class="math inline">\(\beta_0+\beta_1\)</span> is the intercept<br />
+<span class="math inline">\(\beta_8\)</span> is the <code>carat</code> coefficient (the slope for <code>carat</code>)</p></li>
+<li><p>For clarity level 8: <span class="math display">\[
+\begin{align*}
+E[\hbox{price}] &amp;= \beta_0 + \beta_7 \times 1 + \beta_8\hbox{carat} \\
+&amp;= (\beta_0 + \beta_7) + \beta_8\hbox{carat}
+\end{align*}
+\]</span> <span class="math inline">\(\beta_0+\beta_7\)</span> is the intercept<br />
+<span class="math inline">\(\beta_8\)</span> is the <code>carat</code> coefficient (the slope for <code>carat</code>)</p></li>
+</ul>
+<p><br><br></p>
+<p>Observations about these clarity level-specific model formulas:</p>
+<ul>
+<li>The <code>carat</code> coefficient is always the same: <span class="math inline">\(\beta_8\)</span></li>
+<li>The intercept changes for each level of <code>clarity</code>
+<ul>
+<li><span class="math inline">\(\beta_1\)</span> to <span class="math inline">\(\beta_7\)</span> indicate <strong>changes</strong> in the intercept, compared to the reference category: clarity level 1</li>
+</ul></li>
+<li>This model (<code>y ~ categorical+quantitative</code>) is called a <strong>parallel lines model</strong>.</li>
+</ul>
+<p><br><br><br></p>
+<p><strong>Exercise 4:</strong> Add to your previous model by including <code>carat</code> as a predictor.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod2 &lt;-<span class="st"> </span><span class="kw">lm</span>(price <span class="op">~</span><span class="st"> </span>clarity<span class="op">+</span>carat, <span class="dt">data =</span> diamonds)
+<span class="kw">summary</span>(mod2)</code></pre></div>
+<ol style="list-style-type: lower-alpha">
+<li><p>Write an expression for the average price of a clarity level 1 diamond that is zero carats. What coefficient does this allow you to interpret?</p></li>
+<li><p>Write an expression for the average price of a clarity level 1 diamond that is <span class="math inline">\(C\)</span> carats.</p></li>
+<li><p>Write an expression for the average price of a clarity level 2 diamond that is <span class="math inline">\(C\)</span> carats. Subtract your answer from part (b) from this expression. Based on this, give an interpretation of the <code>clarityLevel_2</code> coefficient.</p></li>
+<li><p>Write an expression for the average price of a clarity level 3 diamond that is <span class="math inline">\(C\)</span> carats. Subtract your answer from part (b) from this expression. Based on this, give an interpretation of the <code>clarityLevel_3</code> coefficient.</p></li>
+<li><p>Pick any clarity level. Write an expression for the average price of two diamonds of that clarity level: (1) one with <span class="math inline">\(C\)</span> carats and (2) one with <span class="math inline">\(C+1\)</span> carats. Subtract (1) from (2), and thus interpret the <code>carat</code> coefficient.</p></li>
+<li><p>Compare the values of the <code>clarityLevel</code> coefficients in <code>mod2</code> and <code>mod1</code> and form a conclusion about the relationship between <code>price</code> and <code>clarity</code>.</p></li>
+</ol>
+<p><br><br><br></p>
+<p>In general, a linear regression model with multiple predictors is called a <strong>multiple linear regression model</strong>.</p>
+<p><span class="math display">\[ E[y] = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p \]</span></p>
+<p>Interpreting <span class="math inline">\(\beta_1\)</span>:</p>
+<ul>
+<li>Case 1: <span class="math inline">\(x_1 = a_1, \qquad x_2 = a_2, \ldots, x_p = a_p\)</span></li>
+</ul>
+<p><span class="math display">\[ E[y_1] = \beta_0 + \beta_1 a_1 + \beta_2 a_2 + \cdots + \beta_p a_p \]</span></p>
 <p><br></p>
-</div>
-<div id="exercise-4-2" class="section level3 unnumbered">
-<h3>Exercise 4</h3>
-<p>Do you think the simple linear regression model is any good? What features of the plot contribute to your decision? Using tools that we’ve learned so far, how might you try to quantify the quality of this model? How could we make the model better? What’s missing from it?</p>
+<ul>
+<li>Case 2: <span class="math inline">\(x_1 = a_1 + 1, x_2 = a_2, \ldots, x_p = a_p\)</span><br />
+Value of <span class="math inline">\(x_1\)</span> is 1 unit higher, but otherwise exactly the same as Case 1.</li>
+</ul>
+<p><span class="math display">\[ E[y_2] = \beta_0 + \beta_1 (a_1+1) + \beta_2 a_2 + \cdots + \beta_p a_p \]</span></p>
 <p><br></p>
-</div>
-<div id="exercise-5-1" class="section level3 unnumbered">
-<h3>Exercise 5</h3>
-<p>Your client for this case study is interested in learning how height is related to athlete strength (as measured by <code>SWR</code> or <code>Wilks</code>. However, height is not recorded in the data. Plan: how might we address this issue?</p>
-<p><br></p>
-</div>
-<div id="exercise-6" class="section level3 unnumbered">
-<h3>Exercise 6</h3>
-<p>This last exercise takes a step away from our <code>lifts</code> dataset. Load the <code>anscombe</code> dataset using:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(anscombe)</code></pre></div>
-<p>There are 4 sets of data within this dataset. <code>x1</code> and <code>y1</code>, <code>x2</code> and <code>y2</code>, <code>x3</code> and <code>y3</code>, and <code>x4</code> and <code>y4</code>. Compute the correlation coefficient between each of these pairs, and also make a scatterplot for each of these pairs. What is the message of this last exercise?</p>
+<p>We can compare the expected (average) response for case 1 and case 2:</p>
+<p><span class="math display">\[ E[y_2] - E[y_1] = \beta_1 \]</span></p>
+<p>Thus, <span class="math inline">\(\beta_1\)</span> is the expected change in the response for every unit change in the predictor <span class="math inline">\(x_1\)</span>, <strong>holding constant the other predictors in the model</strong>.</p>
+<p>On average, if we increase <span class="math inline">\(x_1\)</span> by 1, we expect the response to change by <span class="math inline">\(\beta_1\)</span>, <strong>holding constant the other predictors in the model</strong>.</p>
 
 </div>
 </div>
-</div>
-
-
-
             </section>
 
           </div>
         </div>
       </div>
-<a href="bivariate-visualization-part-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="modeling-concepts-part-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="modeling-concepts-part-2.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
