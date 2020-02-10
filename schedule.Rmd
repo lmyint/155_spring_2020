@@ -26,13 +26,13 @@ Homework 1 (on Moodle) is due Friday, January 31 at midnight.
 - **Friday:** Quiz 1 in class
 
 <span style="color:red">
-Homework 2 (on Moodle) is due Wednesday, February 12 at midnight.
+Homework 2 (on Moodle) is due Thursday, February 13 at midnight.
 </span>
 
 ## Week 4: 2/10 - 2/14 {-}
 
 <span style="color:red">
-Reminder: Homework 2 (on Moodle) is due Wednesday, February 12 at midnight.
+Reminder: Homework 2 (on Moodle) is due Thursday, February 13 at midnight.
 </span>
 
 - **Monday:** Multiple linear regression models    
