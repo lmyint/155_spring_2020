@@ -234,7 +234,7 @@ diamonds &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span cl
 <li><code>carat</code>: the weight of the diamond in carats (1 carat = 200 milligrams)</li>
 <li><code>price</code>: price in US dollars</li>
 <li><code>cut</code>: quality of the cut of the diamond (Fair, Good, Very Good, Premium, Ideal)</li>
-<li><code>color</code>: Level 1 (worst) to Level 7 (best)</li>
+<li><code>color</code>: Level 1 (best) to Level 7 (worst)</li>
 <li><code>clarity</code>: Level 1 (worst) to Level 8 (best)</li>
 <li><code>x</code>, <code>y</code>, and <code>z</code>: length, width, and depth respectively (in mm)</li>
 <li><code>depth</code>: total depth percentage = z / mean(x, y)</li>
@@ -323,6 +323,50 @@ Value of <span class="math inline">\(x_1\)</span> is 1 unit higher, but otherwis
 <p><span class="math display">\[ E[y_2] - E[y_1] = \beta_1 \]</span></p>
 <p>Thus, <span class="math inline">\(\beta_1\)</span> is the expected change in the response for every unit change in the predictor <span class="math inline">\(x_1\)</span>, <strong>holding constant the other predictors in the model</strong>.</p>
 <p>On average, if we increase <span class="math inline">\(x_1\)</span> by 1, we expect the response to change by <span class="math inline">\(\beta_1\)</span>, <strong>holding constant the other predictors in the model</strong>.</p>
+<p><br><br><br></p>
+<p><strong>General strategy for interpreting regression coefficients</strong></p>
+<ul>
+<li>Interpreting a coefficient on a quantiative variable <span class="math inline">\(x\)</span>
+<ul>
+<li>Write an expression for the expected outcome for (1) a case that has <span class="math inline">\(x = a\)</span> and (2) a case that has <span class="math inline">\(x = a+1\)</span></li>
+<li>Make all <em>other</em> predictors have the same value for the two cases</li>
+<li>Compare the expected outcomes for the two cases to interpret the coefficient</li>
+</ul></li>
+<li>Interpreting a coefficient for an indicator variable for a categorical variable <span class="math inline">\(x\)</span>
+<ul>
+<li>Write an expression for the expected outcome for (1) a case that has <span class="math inline">\(x\)</span> equal to the reference category and (2) a case that has <span class="math inline">\(x\)</span> equal to the category of interest (the one corresponding to the coefficient)</li>
+<li>Make all <em>other</em> predictors have the same value for the two cases</li>
+<li>Compare the expected outcomes for the two cases to interpret the coefficient</li>
+</ul></li>
+</ul>
+<p><br><br><br></p>
+<p><strong>Exercise 5:</strong> What are we assuming about the form of the relationship between <code>price</code> and <code>carat</code> by including it in the model <code>mod2</code>? Make an appropriate plot to check. (Make sure to add <code>+ geom_smooth()</code> to your plot.)</p>
+<p><br><br><br></p>
+<p><strong>Exercise 6:</strong> We can model nonlinear trends with linear regression models by adding <strong>polynomial terms</strong>. The code below fits the model</p>
+<p><span class="math display">\[ E[\hbox{price}] = \beta_0 + \beta_1\hbox{clarityLevel_2} + \cdots + \beta_7\hbox{clarityLevel_8} + \beta_8\hbox{carat} + \beta_9\hbox{carat}^2 \]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod3 &lt;-<span class="st"> </span><span class="kw">lm</span>(price <span class="op">~</span><span class="st"> </span>clarity <span class="op">+</span><span class="st"> </span><span class="kw">poly</span>(carat, <span class="dt">degree =</span> <span class="dv">2</span>, <span class="dt">raw =</span> <span class="ot">TRUE</span>), <span class="dt">data =</span> diamonds)
+<span class="kw">summary</span>(mod3)</code></pre></div>
+<p>The coefficients <code>poly(carat, degree = 2, raw = TRUE)1</code> and <code>poly(carat, degree = 2, raw = TRUE)2</code> represent <span class="math inline">\(\beta_8\)</span> and <span class="math inline">\(\beta_9\)</span> respectively and aren’t really interpretable anymore. But the <code>clarityLevel</code> coefficients still have the same interpretation as in <code>mod2</code>.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Do you reach the same conclusions about the relationship between <code>clarity</code> and <code>price</code> here as in <code>mod2</code>?</p></li>
+<li><p>How does the residual standard error compare in <code>mod2</code> and <code>mod3</code> and what does this indicate about the quality of the two models? (We can’t compare the Multiple R-squared, but we can compare the Adjusted R-squared. Coming up later!)</p></li>
+</ol>
+<p><br><br><br></p>
+<p><strong>Exercise 7:</strong> Now let’s consider <code>color</code> (Level 1 is best, and Level 7 is worst.)</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>What do you expect the relationship between <code>color</code> and <code>price</code> to be. Make a plot to check.</p></li>
+<li><p>Fit a multiple linear regression model of <code>price</code> with <code>clarity</code>, <code>carat</code>, and <code>color</code> (Level 1 is best, and Level 7 is worst.)</p></li>
+<li><p>Interpret the intercept, <code>clarityLevel_2</code>, <code>carat</code>, and <code>colorLevel_2</code> coefficients. If the intercept is not meaningful, what could we do to make it meaningful?</p></li>
+<li><p>For <code>carat</code> to confound the relationship between <code>color</code> and <code>price</code>, what two properties must it have? Contextually, do you think that is plausible? Make plots to check if the data support that hypothesis. Do the same for <code>carat</code> confounding the relationship between <code>clarity</code> and <code>price</code>.</p></li>
+<li><p>Write a few sentences summarizing the nature of the confounding role of <code>carat</code> in the <code>clarity</code> vs. <code>price</code> and <code>color</code> vs. <code>price</code> relationships.</p></li>
+</ol>
+<p><br><br><br></p>
+<p><strong>Exercise 8:</strong> (Extra practice if you have time.)</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Fit a multiple linear regression model of <code>price</code> with <code>clarity</code>, <code>carat</code>, <code>color</code>, and <code>cut</code>.</p></li>
+<li><p>Interpret the intercept, <code>clarityLevel_2</code>, <code>carat</code>, <code>colorLevel_2</code>, and <code>cut2_Good</code> coefficients.</p></li>
+<li><p>Summarize your overall findings from this model, and appropriately compare its quality to the previous models.</p></li>
+</ol>
 
 </div>
 </div>

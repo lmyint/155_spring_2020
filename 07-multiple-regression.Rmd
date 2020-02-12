@@ -40,7 +40,7 @@ Key variables:
 - `carat`: the weight of the diamond in carats (1 carat = 200 milligrams)
 - `price`: price in US dollars
 - `cut`: quality of the cut of the diamond (Fair, Good, Very Good, Premium, Ideal)
-- `color`: Level 1 (worst) to Level 7 (best)
+- `color`: Level 1 (best) to Level 7 (worst)
 - `clarity`: Level 1 (worst) to Level 8 (best)
 - `x`, `y`, and `z`: length, width, and depth respectively (in mm)
 - `depth`: total depth percentage = z / mean(x, y)
@@ -174,6 +174,67 @@ $$ E[y_2] - E[y_1] = \beta_1 $$
 Thus, $\beta_1$ is the expected change in the response for every unit change in the predictor $x_1$, **holding constant the other predictors in the model**.
 
 On average, if we increase $x_1$ by 1, we expect the response to change by $\beta_1$, **holding constant the other predictors in the model**.
+
+<br><br><br>
+
+**General strategy for interpreting regression coefficients**
+
+- Interpreting a coefficient on a quantiative variable $x$
+    - Write an expression for the expected outcome for (1) a case that has $x = a$ and (2) a case that has $x = a+1$
+    - Make all *other* predictors have the same value for the two cases
+    - Compare the expected outcomes for the two cases to interpret the coefficient
+
+- Interpreting a coefficient for an indicator variable for a categorical variable $x$
+    - Write an expression for the expected outcome for (1) a case that has $x$ equal to the reference category and (2) a case that has $x$ equal to the category of interest (the one corresponding to the coefficient)
+    - Make all *other* predictors have the same value for the two cases
+    - Compare the expected outcomes for the two cases to interpret the coefficient
+
+<br><br><br>
+
+**Exercise 5:** What are we assuming about the form of the relationship between `price` and `carat` by including it in the model `mod2`? Make an appropriate plot to check. (Make sure to add `+ geom_smooth()` to your plot.)
+
+<br><br><br>
+
+**Exercise 6:** We can model nonlinear trends with linear regression models by adding **polynomial terms**. The code below fits the model
+
+$$ E[\hbox{price}] = \beta_0 + \beta_1\hbox{clarityLevel_2} + \cdots + \beta_7\hbox{clarityLevel_8} + \beta_8\hbox{carat} + \beta_9\hbox{carat}^2 $$
+
+```{r}
+mod3 <- lm(price ~ clarity + poly(carat, degree = 2, raw = TRUE), data = diamonds)
+summary(mod3)
+```
+
+The coefficients `poly(carat, degree = 2, raw = TRUE)1` and `poly(carat, degree = 2, raw = TRUE)2` represent $\beta_8$ and $\beta_9$ respectively and aren't really interpretable anymore. But the `clarityLevel` coefficients still have the same interpretation as in `mod2`.
+
+a. Do you reach the same conclusions about the relationship between `clarity` and `price` here as in `mod2`?
+
+b. How does the residual standard error compare in `mod2` and `mod3` and what does this indicate about the quality of the two models? (We can't compare the Multiple R-squared, but we can compare the Adjusted R-squared. Coming up later!)
+
+<br><br><br>
+
+**Exercise 7:** Now let's consider `color` (Level 1 is best, and Level 7 is worst.)
+
+a. What do you expect the relationship between `color` and `price` to be. Make a plot to check.
+
+b. Fit a multiple linear regression model of `price` with `clarity`, `carat`, and `color` (Level 1 is best, and Level 7 is worst.)
+
+c. Interpret the intercept, `clarityLevel_2`, `carat`, and `colorLevel_2` coefficients. If the intercept is not meaningful, what could we do to make it meaningful?
+
+d. For `carat` to confound the relationship between `color` and `price`, what two properties must it have? Contextually, do you think that is plausible? Make plots to check if the data support that hypothesis. Do the same for `carat` confounding the relationship between `clarity` and `price`.
+
+e. Write a few sentences summarizing the nature of the confounding role of `carat` in the `clarity` vs. `price` and `color` vs. `price` relationships.
+
+<br><br><br>
+
+**Exercise 8:** (Extra practice if you have time.)
+
+a. Fit a multiple linear regression model of `price` with `clarity`, `carat`, `color`, and `cut`.
+
+b. Interpret the intercept, `clarityLevel_2`, `carat`, `colorLevel_2`, and `cut2_Good` coefficients.
+
+c. Summarize your overall findings from this model, and appropriately compare its quality to the previous models.
+
+
 
 
 
