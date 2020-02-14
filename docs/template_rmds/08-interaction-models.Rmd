@@ -1,0 +1,86 @@
+---
+title: "Interaction Models"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+# Setup
+
+```{r}
+library(readr)
+library(ggplot2)
+library(dplyr)
+
+diamonds <- read_csv("https://www.dropbox.com/s/9c8jqda4pwaq8i1/diamonds.csv?dl=1")
+```
+
+- `carat`: the weight of the diamond in carats (1 carat = 200 milligrams)
+- `price`: price in US dollars
+- `cut`: quality of the cut of the diamond (Fair, Good, Very Good, Premium, Ideal)
+- `color`: Level 1 (best) to Level 7 (worst)
+- `clarity`: Level 1 (worst) to Level 8 (best)
+- `x`, `y`, and `z`: length, width, and depth respectively (in mm)
+- `depth`: total depth percentage = z / mean(x, y)
+- `table`: width of top of diamond relative to widest point
+
+# Discussion and Exercises
+
+## Exercise 1
+
+We looked at a scatterplot of `price` versus `carat` and boxplots of `price` versus `clarity`, but we haven't looked at all three variables simultaneously. Let's enrich the scatterplot to additionally show `clarity`.
+
+We've seen that we can have `x`, `y`, `color`, and `fill` aesthetics (inside the `aes()`). How might we adapt the code below to show different color trend lines corresponding to the 8 clarity levels?
+
+```{r}
+ggplot(diamonds, aes(x = carat, y = price)) +
+    geom_point() +
+    geom_smooth()
+```
+
+
+
+## Exercise 2
+
+Fit a model with interaction between `clarity` and `carat` for the full diamonds dataset.
+
+a. Write out the model formulas for clarity level 1, 2, ... diamonds until you get the hang of it.
+
+b. Draw a picture with the model lines for clarity level 1, 2, ... 8 diamonds. Annotate this picture with the model coefficients.
+
+c. Interpret the `clarityLevel_3` and `clarityLevel_3:carat` coefficients. Repeat for level 4 and onwards until you get the hang of it.
+
+d. For which clarity level is a carat worth the most? How much is a carat worth on average?
+
+
+
+
+
+
+## Exercise 3
+
+Now let's consider diamond color (Level 1 is best and Level 7 is worst).
+
+a. What research question are you exploring when you fit a model with interaction between `color` and `carat`? Generalize this to a broader context.
+
+b. Make a plot that allows you to explore potential interaction between `color` and `carat`. What are you looking to see in the plot? Do you think an interaction model is appropriate?
+
+c. Fit the interaction model, and focus on the coefficients of substantive interest. Summarize your overall conclusions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

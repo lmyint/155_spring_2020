@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>STAT 155: Introduction to Statistical Modeling</title>
+  <title>Topic 8 Interaction Models | STAT 155: Introduction to Statistical Modeling</title>
   <meta name="description" content="This is the class website for STAT 155 at Macalester College." />
   <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="STAT 155: Introduction to Statistical Modeling" />
+  <meta property="og:title" content="Topic 8 Interaction Models | STAT 155: Introduction to Statistical Modeling" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="lmyint/155_spring_2020" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="STAT 155: Introduction to Statistical Modeling" />
+  <meta name="twitter:title" content="Topic 8 Interaction Models | STAT 155: Introduction to Statistical Modeling" />
   
   <meta name="twitter:description" content="This is the class website for STAT 155 at Macalester College." />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
+<link rel="prev" href="multiple-linear-regression.html"/>
 
-<link rel="next" href="schedule.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -209,32 +209,151 @@ code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">STAT 155: Introduction to Statistical Modeling</h1>
+<div id="interaction-models" class="section level1">
+<h1><span class="header-section-number">Topic 8</span> Interaction Models</h1>
+<div id="learning-goals-6" class="section level2 unnumbered">
+<h2>Learning Goals</h2>
+<ul>
+<li>Understand what research questions can be answered with interaction models</li>
+<li>Interpret coefficients in interaction models</li>
+<li>Connect visualizations to the coefficient estimates in interaction models</li>
+<li>Graphically/geometrically describe the “pictures” implied by different types of interaction models</li>
+</ul>
+<p><br><br><br><br></p>
 </div>
-<div id="welcome" class="section level1 unnumbered">
-<h1>Welcome!</h1>
-<center>
-<p><img src="https://imgs.xkcd.com/comics/curve_fitting.png"></p>
-Image source: <a href="https://xkcd.com/2048/">xkcd</a>
-</center>
+<div id="discussion-and-exercises-1" class="section level2 unnumbered">
+<h2>Discussion and Exercises</h2>
+<p>A template RMarkdown document that you can start from is available <a href="template_rmds/08-interaction-models.Rmd">here</a>.</p>
+<p>We will continue looking at the <code>diamonds</code> dataset.</p>
+<ul>
+<li><code>carat</code>: the weight of the diamond in carats (1 carat = 200 milligrams)</li>
+<li><code>price</code>: price in US dollars</li>
+<li><code>cut</code>: quality of the cut of the diamond (Fair, Good, Very Good, Premium, Ideal)</li>
+<li><code>color</code>: Level 1 (best) to Level 7 (worst)</li>
+<li><code>clarity</code>: Level 1 (worst) to Level 8 (best)</li>
+<li><code>x</code>, <code>y</code>, and <code>z</code>: length, width, and depth respectively (in mm)</li>
+<li><code>depth</code>: total depth percentage = z / mean(x, y)</li>
+<li><code>table</code>: width of top of diamond relative to widest point</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readr)
+<span class="kw">library</span>(ggplot2)
+<span class="kw">library</span>(dplyr)
+
+diamonds &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/9c8jqda4pwaq8i1/diamonds.csv?dl=1&quot;</span>)</code></pre></div>
+<p><br><br><br></p>
+<p><strong>Warm-up:</strong> Consider the model of <code>price</code> as a function of <code>clarity</code> and <code>carat</code>.</p>
+<p><span class="math display">\[ E[\hbox{price}] = \beta_0 + \beta_1\hbox{clarityLevel_2} + \beta_2\hbox{clarityLevel_3} + \cdots + \beta_7\hbox{clarityLevel_8} + \beta_8\hbox{carat} \]</span></p>
+<ul>
+<li>Why was this called a <strong>parallel lines model</strong>?</li>
+<li>Draw a picture of the relationships that this model implies and label the picture with the coefficients of the model.</li>
+</ul>
+<p><br><br><br></p>
+<p><strong>Exercise 1:</strong> We looked at a scatterplot of <code>price</code> versus <code>carat</code> and boxplots of <code>price</code> versus <code>clarity</code>, but we haven’t looked at all three variables simultaneously. Let’s enrich the scatterplot to additionally show <code>clarity</code>.</p>
+<p>We’ve seen that we can have <code>x</code>, <code>y</code>, <code>color</code>, and <code>fill</code> aesthetics (inside the <code>aes()</code>). How might we adapt the code below to show different color trend lines corresponding to the 8 clarity levels?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> carat, <span class="dt">y =</span> price)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_smooth</span>()</code></pre></div>
+<p><br><br><br></p>
+<p>If the relationship between the response <span class="math inline">\(y\)</span> and predictor <span class="math inline">\(x_1\)</span> differs depending on the value / categories of another predictor <span class="math inline">\(x_2\)</span>, we say that <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> <strong>interact</strong>. We capture this in our models with an <strong>interaction term</strong>: <span class="math inline">\(x_1 \times x_2\)</span>.</p>
+<p><span class="math display">\[ E[y] = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 \times x_2 \]</span></p>
+<p>The coefficient <span class="math inline">\(\beta_3\)</span> in front of the interaction term is called the <strong>interaction coefficient</strong>.</p>
+<p><br><br><br></p>
+<p>For now, let’s work with a subset of the data that just has two clarity levels.</p>
+<p><span class="math display">\[ E[\hbox{price}] = \beta_0 + \beta_1\hbox{clarity2} + \beta_2\hbox{carat} + \beta_3\hbox{clarity2}\times\hbox{carat} \]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">diamonds_sub &lt;-<span class="st"> </span>diamonds <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(clarity <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Level_1&quot;</span>, <span class="st">&quot;Level_2&quot;</span>))
+
+mod1 &lt;-<span class="st"> </span><span class="kw">lm</span>(price <span class="op">~</span><span class="st"> </span>clarity<span class="op">*</span>carat, <span class="dt">data =</span> diamonds_sub)
+<span class="kw">summary</span>(mod1)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = price ~ clarity * carat, data = diamonds_sub)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -6051.1  -645.7  -112.8   485.6  6304.1 
+## 
+## Coefficients:
+##                      Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)          -1480.56     103.76  -14.27   &lt;2e-16 ***
+## clarityLevel_2       -1937.78     108.04  -17.94   &lt;2e-16 ***
+## carat                 4209.79      72.51   58.06   &lt;2e-16 ***
+## clarityLevel_2:carat  3660.46      76.76   47.69   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1247 on 9931 degrees of freedom
+## Multiple R-squared:  0.911,  Adjusted R-squared:  0.9109 
+## F-statistic: 3.387e+04 on 3 and 9931 DF,  p-value: &lt; 2.2e-16</code></pre>
+<ul>
+<li><strong>Note:</strong> When you see a colon between two variables, the colon means a multiplication sign. (<code>clarityLevel_2:carat</code> is the product of the <code>clarityLevel_2</code> indicator variable and the <code>carat</code> variable.)</li>
+</ul>
 <p><br></p>
-<p>This is the class manual for Introduction to Statistical Modeling (STAT 155) at Macalester College for the Spring 2020 semester. The content here was developed by <a href="https://lmyint.github.io">Leslie Myint</a> and draws upon material developed by the Macalester statistics faculty.</p>
-<p><br> <br> <br></p>
-<div class="figure">
-<img src="images/cc_license_button.png" />
+<p><strong>Model formula</strong></p>
+<p><span class="math display">\[
+\begin{align*}
+E[\hbox{price}] &amp;= \beta_0 + \beta_1\hbox{clarity2} + \beta_2\hbox{carat} + \beta_3\hbox{clarity2}\times\hbox{carat} \\
+&amp;= -1480.56 - 1937.78\,\hbox{clarity2} + 4209.79\,\hbox{carat} + 3660.46\,\hbox{clarity2}\times\hbox{carat}
+\end{align*}
+\]</span></p>
+<p><br></p>
+<p><strong>Model formula for clarity level 1</strong></p>
+<p><span class="math display">\[
+\begin{align*}
+E[\hbox{price}] &amp;= -1480.56 - 1937.78\times 0 + 4209.79\,\hbox{carat} + 3660.46\times 0 \times\hbox{carat} \\
+&amp;= -1480.56 + 4209.79\,\hbox{carat}
+\end{align*}
+\]</span></p>
+<p><br></p>
+<p><strong>Model formula for clarity level 2</strong></p>
+<p><span class="math display">\[
+\begin{align*}
+E[\hbox{price}] &amp;= -1480.56 - 1937.78\times 1 + 4209.79\,\hbox{carat} + 3660.46\times 1 \times\hbox{carat} \\
+&amp;= (-1480.56 - 1937.78) + (4209.79 + 3660.46)\,\hbox{carat} \\
+&amp;= -3418.34 + 7870.25\,\hbox{carat}
+\end{align*}
+\]</span></p>
+<p><br></p>
+<p><strong>It is very helpful to draw a picture labeled with the coefficients.</strong></p>
+<p><br></p>
+<p>Coefficient interpretations:</p>
+<ul>
+<li><p>Intercept <span class="math inline">\(\beta_0\)</span>: -1480.56<br />
+The average price for a zero carat, level 1 clarity diamond. (Could have made more meaningful by centering <code>carat</code>, but generally not interested in the intercept.)</p></li>
+<li><p><span class="math inline">\(\beta_2\)</span> for <code>carat</code>: 4209.79<br />
+The slope for the clarity level 1 model. On average, diamond price increases by $4209.79 per carat increase <strong>in level 1 clarity diamonds</strong>. (This rate of change is different for clarity level 2 diamonds.)</p></li>
+<li><p><span class="math inline">\(\beta_1\)</span> for <code>clarityLevel_2</code>: -1937.78<br />
+The change in y-intercept going from clarity level 1 to 2.<br />
+On average, zero carat diamonds that are clarity level 2 are worth $1937.78 less than zero carat, clarity level 1 diamonds.</p></li>
+<li><p><span class="math inline">\(\beta_3\)</span> for the interaction term (<code>clarityLevel_2:carat</code>): 3660.46<br />
+The change in slope for the clarity level 2 vs. the clarity level 1 model. The average change in price per carat increase is 3660.46 ($/carat) higher for clarity level 2 vs. clarity level 1 diamonds.<br />
+The slope is steeper for level 2. A carat is worth more for a level 2 clarity diamond.</p></li>
+</ul>
+<p><br><br><br></p>
+<p><strong>Exercise 2:</strong> Fit a model with interaction between <code>clarity</code> and <code>carat</code> for the full diamonds dataset.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Write out the model formulas for clarity level 1, 2, … diamonds until you get the hang of it.</p></li>
+<li><p>Draw a picture with the model lines for clarity level 1, 2, … 8 diamonds. Annotate this picture with the model coefficients.</p></li>
+<li><p>Interpret the <code>clarityLevel_3</code> and <code>clarityLevel_3:carat</code> coefficients. Repeat for level 4 and onwards until you get the hang of it.</p></li>
+<li><p>For which clarity level is a carat worth the most? How much is a carat worth on average?</p></li>
+</ol>
+<p><br><br><br></p>
+<p><strong>Exercise 3:</strong> Now let’s consider diamond color (Level 1 is best and Level 7 is worst).</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>What research question are you exploring when you fit a model with interaction between <code>color</code> and <code>carat</code>? Generalize this to a broader context.</p></li>
+<li><p>Make a plot that allows you to explore potential interaction between <code>color</code> and <code>carat</code>. What are you looking to see in the plot? Do you think an interaction model is appropriate?</p></li>
+<li><p>Fit the interaction model, and focus on the coefficients of substantive interest. Summarize your overall conclusions.</p></li>
+</ol>
 
 </div>
-<p>This work is licensed under a <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</p>
-
 </div>
             </section>
 
           </div>
         </div>
       </div>
+<a href="multiple-linear-regression.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-<a href="schedule.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

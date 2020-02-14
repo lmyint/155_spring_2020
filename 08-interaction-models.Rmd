@@ -1,0 +1,165 @@
+```{r 08_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+
+# Interaction Models
+
+## Learning Goals {-}
+
+- Understand what research questions can be answered with interaction models
+- Interpret coefficients in interaction models
+- Connect visualizations to the coefficient estimates in interaction models
+- Graphically/geometrically describe the "pictures" implied by different types of interaction models
+
+<br><br><br><br>
+
+## Discussion and Exercises {-}
+
+A template RMarkdown document that you can start from is available [here](template_rmds/08-interaction-models.Rmd).
+
+We will continue looking at the `diamonds` dataset.
+
+- `carat`: the weight of the diamond in carats (1 carat = 200 milligrams)
+- `price`: price in US dollars
+- `cut`: quality of the cut of the diamond (Fair, Good, Very Good, Premium, Ideal)
+- `color`: Level 1 (best) to Level 7 (worst)
+- `clarity`: Level 1 (worst) to Level 8 (best)
+- `x`, `y`, and `z`: length, width, and depth respectively (in mm)
+- `depth`: total depth percentage = z / mean(x, y)
+- `table`: width of top of diamond relative to widest point
+
+```{r eval=TRUE, message=FALSE}
+library(readr)
+library(ggplot2)
+library(dplyr)
+
+diamonds <- read_csv("https://www.dropbox.com/s/9c8jqda4pwaq8i1/diamonds.csv?dl=1")
+```
+
+<br><br><br>
+
+**Warm-up:** Consider the model of `price` as a function of `clarity` and `carat`.
+
+$$ E[\hbox{price}] = \beta_0 + \beta_1\hbox{clarityLevel_2} + \beta_2\hbox{clarityLevel_3} + \cdots + \beta_7\hbox{clarityLevel_8} + \beta_8\hbox{carat} $$
+
+- Why was this called a **parallel lines model**?
+- Draw a picture of the relationships that this model implies and label the picture with the coefficients of the model.
+
+
+<br><br><br>
+
+**Exercise 1:** We looked at a scatterplot of `price` versus `carat` and boxplots of `price` versus `clarity`, but we haven't looked at all three variables simultaneously. Let's enrich the scatterplot to additionally show `clarity`.
+
+We've seen that we can have `x`, `y`, `color`, and `fill` aesthetics (inside the `aes()`). How might we adapt the code below to show different color trend lines corresponding to the 8 clarity levels?
+
+```{r}
+ggplot(diamonds, aes(x = carat, y = price)) +
+    geom_point() +
+    geom_smooth()
+```
+
+<br><br><br>
+
+If the relationship between the response $y$ and predictor $x_1$ differs depending on the value / categories of another predictor $x_2$, we say that $x_1$ and $x_2$ **interact**. We capture this in our models with an **interaction term**: $x_1 \times x_2$.
+
+$$ E[y] = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 \times x_2 $$
+
+The coefficient $\beta_3$ in front of the interaction term is called the **interaction coefficient**.
+
+<br><br><br>
+
+For now, let's work with a subset of the data that just has two clarity levels.
+
+$$ E[\hbox{price}] = \beta_0 + \beta_1\hbox{clarity2} + \beta_2\hbox{carat} + \beta_3\hbox{clarity2}\times\hbox{carat} $$
+
+```{r eval=TRUE}
+diamonds_sub <- diamonds %>%
+    filter(clarity %in% c("Level_1", "Level_2"))
+
+mod1 <- lm(price ~ clarity*carat, data = diamonds_sub)
+summary(mod1)
+```
+
+- **Note:** When you see a colon between two variables, the colon means a multiplication sign. (`clarityLevel_2:carat` is the product of the `clarityLevel_2` indicator variable and the `carat` variable.)
+
+<br>
+
+**Model formula**
+
+$$
+\begin{align*}
+E[\hbox{price}] &= \beta_0 + \beta_1\hbox{clarity2} + \beta_2\hbox{carat} + \beta_3\hbox{clarity2}\times\hbox{carat} \\
+&= -1480.56 - 1937.78\,\hbox{clarity2} + 4209.79\,\hbox{carat} + 3660.46\,\hbox{clarity2}\times\hbox{carat}
+\end{align*}
+$$
+
+<br>
+
+**Model formula for clarity level 1**
+
+$$
+\begin{align*}
+E[\hbox{price}] &= -1480.56 - 1937.78\times 0 + 4209.79\,\hbox{carat} + 3660.46\times 0 \times\hbox{carat} \\
+&= -1480.56 + 4209.79\,\hbox{carat}
+\end{align*}
+$$
+
+<br>
+
+**Model formula for clarity level 2**
+
+$$
+\begin{align*}
+E[\hbox{price}] &= -1480.56 - 1937.78\times 1 + 4209.79\,\hbox{carat} + 3660.46\times 1 \times\hbox{carat} \\
+&= (-1480.56 - 1937.78) + (4209.79 + 3660.46)\,\hbox{carat} \\
+&= -3418.34 + 7870.25\,\hbox{carat}
+\end{align*}
+$$
+
+<br>
+
+**It is very helpful to draw a picture labeled with the coefficients.**
+
+<br>
+
+Coefficient interpretations:
+
+- Intercept $\beta_0$: -1480.56    
+    The average price for a zero carat, level 1 clarity diamond. (Could have made more meaningful by centering `carat`, but generally not interested in the intercept.)
+
+- $\beta_2$ for `carat`: 4209.79    
+    The slope for the clarity level 1 model. On average, diamond price increases by \$4209.79 per carat increase **in level 1 clarity diamonds**. (This rate of change is different for clarity level 2 diamonds.)
+
+- $\beta_1$ for `clarityLevel_2`: -1937.78    
+    The change in y-intercept going from clarity level 1 to 2.   
+    On average, zero carat diamonds that are clarity level 2 are worth \$1937.78 less than zero carat, clarity level 1 diamonds.
+
+- $\beta_3$ for the interaction term (`clarityLevel_2:carat`): 3660.46    
+    The change in slope for the clarity level 2 vs. the clarity level 1 model. The average change in price per carat increase is 3660.46 ($/carat) higher for clarity level 2 vs. clarity level 1 diamonds.    
+    The slope is steeper for level 2. A carat is worth more for a level 2 clarity diamond.
+
+
+<br><br><br>
+
+**Exercise 2:** Fit a model with interaction between `clarity` and `carat` for the full diamonds dataset.
+
+a. Write out the model formulas for clarity level 1, 2, ... diamonds until you get the hang of it.
+
+b. Draw a picture with the model lines for clarity level 1, 2, ... 8 diamonds. Annotate this picture with the model coefficients.
+
+c. Interpret the `clarityLevel_3` and `clarityLevel_3:carat` coefficients. Repeat for level 4 and onwards until you get the hang of it.
+
+d. For which clarity level is a carat worth the most? How much is a carat worth on average?
+
+<br><br><br>
+
+**Exercise 3:** Now let's consider diamond color (Level 1 is best and Level 7 is worst).
+
+a. What research question are you exploring when you fit a model with interaction between `color` and `carat`? Generalize this to a broader context.
+
+b. Make a plot that allows you to explore potential interaction between `color` and `carat`. What are you looking to see in the plot? Do you think an interaction model is appropriate?
+
+c. Fit the interaction model, and focus on the coefficients of substantive interest. Summarize your overall conclusions.
+
+
+

@@ -1,6 +1,6 @@
 book_filename: "stat155_manual"
 output_dir: docs
-rmd_files: ["index.Rmd", "schedule.Rmd", "software_setup.Rmd", "01-motivation-viz.Rmd", "02-univariate-viz.Rmd", "03-bivariate-viz-part1.Rmd", "04-bivariate-viz-part2.Rmd", "05-lin-reg-concepts.Rmd", "06-lin-reg-concepts-part2.Rmd", "07-multiple-regression.Rmd"]
+rmd_files: ["index.Rmd", "schedule.Rmd", "software_setup.Rmd", "01-motivation-viz.Rmd", "02-univariate-viz.Rmd", "03-bivariate-viz-part1.Rmd", "04-bivariate-viz-part2.Rmd", "05-lin-reg-concepts.Rmd", "06-lin-reg-concepts-part2.Rmd", "07-multiple-regression.Rmd", "08-interaction-models.Rmd"]
 language:
   ui:
     chapter_name: "Topic "
