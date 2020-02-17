@@ -161,5 +161,88 @@ b. Make a plot that allows you to explore potential interaction between `color` 
 
 c. Fit the interaction model, and focus on the coefficients of substantive interest. Summarize your overall conclusions.
 
+<br><br><br>
+
+The remainder of these exercises don't require R.
+
+<br>
+
+**Exercise 4:** We've seen interaction between a categorical and a quantitative variable. Two categorical variables can interact as well. Consider the model
+
+$$
+\begin{align*}
+E[\hbox{winpercent}] = \beta_0 &+ \beta_1\hbox{chocolateTRUE} \\
+&+ \beta_2\hbox{peanutyalmondyTRUE} + \beta_3\hbox{chocolateTRUE}\times\hbox{peanutyalmondyTRUE}
+\end{align*}
+$$
+
+```{r message=FALSE, echo=FALSE, eval=TRUE}
+library(fivethirtyeight)
+library(dplyr)
+data(candy_rankings)
+candy <- candy_rankings
+```
+
+a. Write out the model formulas for the non-chocolate candies and for the chocolate candies. Leave `peanutyalmondyTRUE` as-is without plugging in anything for it. (Similar to leaving `carat` as-is in the diamonds context.)
+
+b. From part (a), interpret $\beta_0$ and $\beta_2$. Then interpret $\beta_0+\beta_1$ and $\beta_2+\beta_3$.
+
+c. The mean `winpercent`s in all four combinations of `chocolate` and `peanutyalmondy` are shown below. From this information, determine the values of the model coefficients.    
+    ```{r eval=TRUE}
+    candy %>%
+        dplyr::group_by(chocolate, peanutyalmondy) %>%
+        summarize(mean_winpercent = mean(winpercent))
+    ```
+
+d. Now interpret $\beta_0$, $\beta_2$, $\beta_0+\beta_1$, and $\beta_2+\beta_3$ in a contextually meaningful way. Is nuttiness (`peanutyalmondy`) "better" in chocolate candies or in non-chocolate candies?
+
+
+<br><br><br>
+
+
+**Exercise 5:** Two quantitative variables can interact as well. In a model of `Price`, the `Mileage` and `Age` of a used car interact: the relationship between mileage and price differs depending upon the age of the car. Below, the yellow lines represent the relationship between price and mileage for 1 year old, 5 year old, and 10 year old used cars.
+
+![](images/fords.png)
+
+a. Based on this plot, what do you anticipate about the signs of the coefficients in the interaction model? (Don't look ahead to the output below yet.)
+
+$$ E[\hbox{Price}] = \beta_0 + \beta_1 \hbox{Age} + \beta_2 \hbox{Mileage} + \beta_1 \hbox{Age}\times\hbox{Mileage} $$
+
+b. Based on the model output below, write the model formulas relating `Price` to `Mileage` for cars that are 0 years (new), 5 years, and 12 years old.
+
+
+```{r message=FALSE, eval=TRUE}
+fords <- read_csv("https://www.dropbox.com/s/wmb6ktyaw5c5jwf/Fords.csv?dl=1")
+fords_mod <- lm(Price ~ Age*Mileage, data = fords)
+summary(fords_mod)
+```
+
+c. Given (b), what does the interaction coefficient help us learn about the relationship between `Price` and `Mileage`?
+
+d. *Extra (not required but good practice):* Interpret each of the coefficients in the above model.
+
+
+<br><br><br>
+
+
+**Interlude:** Take a moment to think about the theme of these interaction exercises. In all of them, we have used interaction terms to describe how the relationship between a variable and the response is **modified** by the value of another variable. For this reason, interaction is also called **effect modification**.
+
+- Diamond clarity and color modify the effect of size on price. Note that effect modification/interaction is symmetric, so we can also say that diamond size modifies the effect of clarity and color on price. However, usually with interaction between a quantitative and a categorical variable, we describe it in the first way.
+- Chocolatiness modifies the effect of nuttiness on candy popularity. Symmetrically, nuttiness modifies the effect of chocolatiness on candy popularity.
+
+
+<br><br><br>
+
+
+**Exercise 6:** Confounding and interaction are not the same idea.
+
+a. Draw or describe how the situation below could arise:    
+    - `carat` does confound the relationship between `clarity` and `price`.
+    - There is no interaction between `carat` and `clarity`.
+
+b. Draw or describe how the situation below could arise:    
+    - `carat` does not confound the relationship between `clarity` and `price`.
+    - There is interaction between `carat` and `clarity`.
+
 
 

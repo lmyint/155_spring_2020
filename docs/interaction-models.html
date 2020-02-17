@@ -345,6 +345,94 @@ The slope is steeper for level 2. A carat is worth more for a level 2 clarity di
 <li><p>Make a plot that allows you to explore potential interaction between <code>color</code> and <code>carat</code>. What are you looking to see in the plot? Do you think an interaction model is appropriate?</p></li>
 <li><p>Fit the interaction model, and focus on the coefficients of substantive interest. Summarize your overall conclusions.</p></li>
 </ol>
+<p><br><br><br></p>
+<p>The remainder of these exercises don’t require R.</p>
+<p><br></p>
+<p><strong>Exercise 4:</strong> We’ve seen interaction between a categorical and a quantitative variable. Two categorical variables can interact as well. Consider the model</p>
+<p><span class="math display">\[
+\begin{align*}
+E[\hbox{winpercent}] = \beta_0 &amp;+ \beta_1\hbox{chocolateTRUE} \\
+&amp;+ \beta_2\hbox{peanutyalmondyTRUE} + \beta_3\hbox{chocolateTRUE}\times\hbox{peanutyalmondyTRUE}
+\end{align*}
+\]</span></p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Write out the model formulas for the non-chocolate candies and for the chocolate candies. Leave <code>peanutyalmondyTRUE</code> as-is without plugging in anything for it. (Similar to leaving <code>carat</code> as-is in the diamonds context.)</p></li>
+<li><p>From part (a), interpret <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_2\)</span>. Then interpret <span class="math inline">\(\beta_0+\beta_1\)</span> and <span class="math inline">\(\beta_2+\beta_3\)</span>.</p></li>
+<li><p>The mean <code>winpercent</code>s in all four combinations of <code>chocolate</code> and <code>peanutyalmondy</code> are shown below. From this information, determine the values of the model coefficients.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">candy <span class="op">%&gt;%</span>
+<span class="st">    </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(chocolate, peanutyalmondy) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">summarize</span>(<span class="dt">mean_winpercent =</span> <span class="kw">mean</span>(winpercent))</code></pre></div>
+<pre><code>## # A tibble: 4 x 3
+## # Groups:   chocolate [2]
+##   chocolate peanutyalmondy mean_winpercent
+##   &lt;lgl&gt;     &lt;lgl&gt;                    &lt;dbl&gt;
+## 1 FALSE     FALSE                     42.5
+## 2 FALSE     TRUE                      34.9
+## 3 TRUE      FALSE                     57.3
+## 4 TRUE      TRUE                      68.5</code></pre></li>
+<li><p>Now interpret <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_2\)</span>, <span class="math inline">\(\beta_0+\beta_1\)</span>, and <span class="math inline">\(\beta_2+\beta_3\)</span> in a contextually meaningful way. Is nuttiness (<code>peanutyalmondy</code>) “better” in chocolate candies or in non-chocolate candies?</p></li>
+</ol>
+<p><br><br><br></p>
+<p><strong>Exercise 5:</strong> Two quantitative variables can interact as well. In a model of <code>Price</code>, the <code>Mileage</code> and <code>Age</code> of a used car interact: the relationship between mileage and price differs depending upon the age of the car. Below, the yellow lines represent the relationship between price and mileage for 1 year old, 5 year old, and 10 year old used cars.</p>
+<div class="figure">
+<img src="images/fords.png" />
+
+</div>
+<ol style="list-style-type: lower-alpha">
+<li>Based on this plot, what do you anticipate about the signs of the coefficients in the interaction model? (Don’t look ahead to the output below yet.)</li>
+</ol>
+<p><span class="math display">\[ E[\hbox{Price}] = \beta_0 + \beta_1 \hbox{Age} + \beta_2 \hbox{Mileage} + \beta_1 \hbox{Age}\times\hbox{Mileage} \]</span></p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Based on the model output below, write the model formulas relating <code>Price</code> to <code>Mileage</code> for cars that are 0 years (new), 5 years, and 12 years old.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fords &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/wmb6ktyaw5c5jwf/Fords.csv?dl=1&quot;</span>)
+fords_mod &lt;-<span class="st"> </span><span class="kw">lm</span>(Price <span class="op">~</span><span class="st"> </span>Age<span class="op">*</span>Mileage, <span class="dt">data =</span> fords)
+<span class="kw">summary</span>(fords_mod)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Price ~ Age * Mileage, data = fords)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -6950.1 -1254.4   -35.5  1124.6  7355.2 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  1.932e+04  2.256e+02   85.65   &lt;2e-16 ***
+## Age         -1.523e+03  6.042e+01  -25.21   &lt;2e-16 ***
+## Mileage     -1.349e-01  4.835e-03  -27.91   &lt;2e-16 ***
+## Age:Mileage  1.320e-02  6.488e-04   20.34   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1899 on 606 degrees of freedom
+##   (25 observations deleted due to missingness)
+## Multiple R-squared:  0.8342, Adjusted R-squared:  0.8334 
+## F-statistic:  1016 on 3 and 606 DF,  p-value: &lt; 2.2e-16</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li><p>Given (b), what does the interaction coefficient help us learn about the relationship between <code>Price</code> and <code>Mileage</code>?</p></li>
+<li><p><em>Extra (not required but good practice):</em> Interpret each of the coefficients in the above model.</p></li>
+</ol>
+<p><br><br><br></p>
+<p><strong>Interlude:</strong> Take a moment to think about the theme of these interaction exercises. In all of them, we have used interaction terms to describe how the relationship between a variable and the response is <strong>modified</strong> by the value of another variable. For this reason, interaction is also called <strong>effect modification</strong>.</p>
+<ul>
+<li>Diamond clarity and color modify the effect of size on price. Note that effect modification/interaction is symmetric, so we can also say that diamond size modifies the effect of clarity and color on price. However, usually with interaction between a quantitative and a categorical variable, we describe it in the first way.</li>
+<li>Chocolatiness modifies the effect of nuttiness on candy popularity. Symmetrically, nuttiness modifies the effect of chocolatiness on candy popularity.</li>
+</ul>
+<p><br><br><br></p>
+<p><strong>Exercise 6:</strong> Confounding and interaction are not the same idea.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Draw or describe how the situation below could arise:
+<ul>
+<li><code>carat</code> does confound the relationship between <code>clarity</code> and <code>price</code>.</li>
+<li>There is no interaction between <code>carat</code> and <code>clarity</code>.</li>
+</ul></li>
+<li>Draw or describe how the situation below could arise:
+<ul>
+<li><code>carat</code> does not confound the relationship between <code>clarity</code> and <code>price</code>.</li>
+<li>There is interaction between <code>carat</code> and <code>clarity</code>.</li>
+</ul></li>
+</ol>
 
 </div>
 </div>

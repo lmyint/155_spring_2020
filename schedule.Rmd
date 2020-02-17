@@ -47,7 +47,7 @@ Reminder: Homework 2 (on Moodle) is due Thursday, February 13 at midnight.
 No new readings this week.
 
 <span style="color:red">
-Reminder: Homework 3 is due Sunday, February 23 at midnight.
+Homework 3 is due Sunday, February 23 at midnight.
 </span>
 
 - **Monday:** Review multiple linear regression models and interaction.
