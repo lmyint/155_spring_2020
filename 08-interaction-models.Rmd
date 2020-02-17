@@ -206,7 +206,7 @@ d. Now interpret $\beta_0$, $\beta_2$, $\beta_0+\beta_1$, and $\beta_2+\beta_3$ 
 
 a. Based on this plot, what do you anticipate about the signs of the coefficients in the interaction model? (Don't look ahead to the output below yet.)
 
-$$ E[\hbox{Price}] = \beta_0 + \beta_1 \hbox{Age} + \beta_2 \hbox{Mileage} + \beta_1 \hbox{Age}\times\hbox{Mileage} $$
+$$ E[\hbox{Price}] = \beta_0 + \beta_1 \hbox{Age} + \beta_2 \hbox{Mileage} + \beta_3 \hbox{Age}\times\hbox{Mileage} $$
 
 b. Based on the model output below, write the model formulas relating `Price` to `Mileage` for cars that are 0 years (new), 5 years, and 12 years old.
 
