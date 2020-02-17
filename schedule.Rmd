@@ -42,4 +42,18 @@ Reminder: Homework 2 (on Moodle) is due Thursday, February 13 at midnight.
 - **Friday:** Interaction models    
     **Before class:** Read section 3.8.2 (Interaction Variables) in the [STAT 155 Notes](https://bcheggeseth.github.io/Stat155Notes/index.html), and answer the Moodle questions under Reading Checks > Interaction Models.
 
+## Week 5: 2/17 - 2/21 {-}
+
+No new readings this week.
+
+<span style="color:red">
+Reminder: Homework 3 is due Sunday, February 23 at midnight.
+</span>
+
+- **Monday:** Review multiple linear regression models and interaction.
+- **Wednesday:** Variable redundancy, multicollinearity, and adjusted R-squared.
+- **Friday:** Quiz 2 in class
+
+We'll shift to new groups next week.
+
 
