@@ -229,6 +229,7 @@ d. *Extra (not required but good practice):* Interpret each of the coefficients 
 
 - Diamond clarity and color modify the effect of size on price. Note that effect modification/interaction is symmetric, so we can also say that diamond size modifies the effect of clarity and color on price. However, usually with interaction between a quantitative and a categorical variable, we describe it in the first way.
 - Chocolatiness modifies the effect of nuttiness on candy popularity. Symmetrically, nuttiness modifies the effect of chocolatiness on candy popularity.
+- Car age modifies the effect of mileage on price. Symmetrically, mileage modifies the effect of care age on its price.
 
 
 <br><br><br>

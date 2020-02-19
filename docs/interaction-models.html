@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="multiple-linear-regression.html"/>
-
+<link rel="next" href="redundancy-multicollinearity-and-adjusted-r-squared.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -189,6 +189,10 @@ code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="8" data-path="interaction-models.html"><a href="interaction-models.html"><i class="fa fa-check"></i><b>8</b> Interaction Models</a><ul>
 <li class="chapter" data-level="" data-path="interaction-models.html"><a href="interaction-models.html#learning-goals-6"><i class="fa fa-check"></i>Learning Goals</a></li>
 <li class="chapter" data-level="" data-path="interaction-models.html"><a href="interaction-models.html#discussion-and-exercises-1"><i class="fa fa-check"></i>Discussion and Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="redundancy-multicollinearity-and-adjusted-r-squared.html"><a href="redundancy-multicollinearity-and-adjusted-r-squared.html"><i class="fa fa-check"></i><b>9</b> Redundancy, Multicollinearity, and Adjusted R-squared</a><ul>
+<li class="chapter" data-level="" data-path="redundancy-multicollinearity-and-adjusted-r-squared.html"><a href="redundancy-multicollinearity-and-adjusted-r-squared.html#learning-goals-7"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="redundancy-multicollinearity-and-adjusted-r-squared.html"><a href="redundancy-multicollinearity-and-adjusted-r-squared.html#discussion-3"><i class="fa fa-check"></i>Discussion</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
@@ -418,6 +422,7 @@ fords_mod &lt;-<span class="st"> </span><span class="kw">lm</span>(Price <span c
 <ul>
 <li>Diamond clarity and color modify the effect of size on price. Note that effect modification/interaction is symmetric, so we can also say that diamond size modifies the effect of clarity and color on price. However, usually with interaction between a quantitative and a categorical variable, we describe it in the first way.</li>
 <li>Chocolatiness modifies the effect of nuttiness on candy popularity. Symmetrically, nuttiness modifies the effect of chocolatiness on candy popularity.</li>
+<li>Car age modifies the effect of mileage on price. Symmetrically, mileage modifies the effect of care age on its price.</li>
 </ul>
 <p><br><br><br></p>
 <p><strong>Exercise 6:</strong> Confounding and interaction are not the same idea.</p>
@@ -441,8 +446,8 @@ fords_mod &lt;-<span class="st"> </span><span class="kw">lm</span>(Price <span c
           </div>
         </div>
       </div>
-<a href="multiple-linear-regression.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="multiple-linear-regression.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="redundancy-multicollinearity-and-adjusted-r-squared.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
