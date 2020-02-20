@@ -230,11 +230,11 @@ p5 <- ggplot(bodyfat_subs, aes(x = abdomen, y = fat)) + geom_point() + geom_line
 grid.arrange(p1,p2,p3,p4,p5, nrow = 2, ncol = 3)
 ```
 
-- Degree 1: Multiple R-squared = `r summary(poly_mod1)$r.squared`. Adjusted R-squared = `r summary(poly_mod1)$adj.r.squared`.
-- Degree 2: Multiple R-squared = `r summary(poly_mod2)$r.squared`. Adjusted R-squared = `r summary(poly_mod2)$adj.r.squared`.
-- Degree 3: Multiple R-squared = `r summary(poly_mod3)$r.squared`. Adjusted R-squared = `r summary(poly_mod3)$adj.r.squared`.
-- Degree 4: Multiple R-squared = `r summary(poly_mod4)$r.squared`. Adjusted R-squared = `r summary(poly_mod4)$adj.r.squared`.
-- Degree 5: Multiple R-squared = `r summary(poly_mod5)$r.squared`. Adjusted R-squared = `r summary(poly_mod5)$adj.r.squared`.
+- Degree 1: Multiple $R^2$ = `r summary(poly_mod1)$r.squared`. Adjusted $R^2$ = `r summary(poly_mod1)$adj.r.squared`.
+- Degree 2: Multiple $R^2$ = `r summary(poly_mod2)$r.squared`. Adjusted $R^2$ = `r summary(poly_mod2)$adj.r.squared`.
+- Degree 3: Multiple $R^2$ = `r summary(poly_mod3)$r.squared`. Adjusted $R^2$ = `r summary(poly_mod3)$adj.r.squared`.
+- Degree 4: Multiple $R^2$ = `r summary(poly_mod4)$r.squared`. Adjusted $R^2$ = `r summary(poly_mod4)$adj.r.squared`.
+- Degree 5: Multiple $R^2$ = `r summary(poly_mod5)$r.squared`. Adjusted $R^2$ = `r summary(poly_mod5)$adj.r.squared`.
 
 <br>
 
