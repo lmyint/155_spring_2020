@@ -56,4 +56,19 @@ Homework 3 is due Sunday, February 23 at midnight.
 
 We'll shift to new groups next week.
 
+## Week 6: 2/24 - 2/28 {-}
+
+New groups starting this week.
+
+For class on Monday, bring a pair of earbuds/headphones, and come prepared to listen to some loud music as part of an experiment!
+
+<span style="color:red">
+No class on Friday, but you must go to 2 capstone talks and submit a short response. On Moodle see Homework > Capstone Days.
+</span>
+
+- **Monday:** Class experiment! Quantifying uncertainty    
+    **Before class:** Read sections 2.7.3 (Is this a Real Difference?) and 3.8.5 (Is the Difference Real?) in the [STAT 155 Notes](https://bcheggeseth.github.io/Stat155Notes/index.html), and answer the Moodle questions under Reading Checks > Quantifying Uncertainty.
+- **Wednesday:** Causal inference    
+    **Before class:** Read sections 1.6 (Causal Inference) and 3.8.3 (Causation) in the [STAT 155 Notes](https://bcheggeseth.github.io/Stat155Notes/index.html), and answer the Moodle questions under Reading Checks > Causal Inference.
+
 
