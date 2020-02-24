@@ -1,0 +1,24 @@
+```{r 10_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=TRUE)
+```
+
+# Review
+
+## Task {-}
+
+Get to know your new group mates. Share your preferred pronouns, year in school, majors, minors, hobbies, and anything else important to you.
+
+<br><br><br>
+
+Together, create one Google Doc that you will work on together (to be shared with the instructor). This document will be a strategy guide to correctly using regression models. In it, you should do the following:
+
+- For all types of linear regression models we've discussed, what are the general interpretations of the coefficients? What research questions do these models try to answer?
+    - Simple linear regression models with one quantitative or one categorical predictor
+    - Multiple regression models (no interaction) with a mix of quantitative and categorical predictors
+    - Interaction models with an interaction between (1) one quantitative and one categorical variable, (2) two categorical variables, (3) two quantitative variables. (Only two predictors in these models, and they were both involved in the interaction.)
+- Write a quiz question that tests the concept of confounding. Make up a data example and provide the solution to the question.
+- Write a quiz question that tests the concept of interaction. Make up a data example and provide the solution to the question.
+
+<br><br><br>
+
+You'll get feedback on this group work.
