@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Topic 9 Redundancy, Multicollinearity, and Adjusted R-squared | STAT 155: Introduction to Statistical Modeling</title>
+  <title>Topic 11 Experiment! | STAT 155: Introduction to Statistical Modeling</title>
   <meta name="description" content="This is the class website for STAT 155 at Macalester College." />
   <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Topic 9 Redundancy, Multicollinearity, and Adjusted R-squared | STAT 155: Introduction to Statistical Modeling" />
+  <meta property="og:title" content="Topic 11 Experiment! | STAT 155: Introduction to Statistical Modeling" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="lmyint/155_spring_2020" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Topic 9 Redundancy, Multicollinearity, and Adjusted R-squared | STAT 155: Introduction to Statistical Modeling" />
+  <meta name="twitter:title" content="Topic 11 Experiment! | STAT 155: Introduction to Statistical Modeling" />
   
   <meta name="twitter:description" content="This is the class website for STAT 155 at Macalester College." />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="interaction-models.html"/>
-<link rel="next" href="review.html"/>
+<link rel="prev" href="review.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -228,226 +228,115 @@ code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="redundancy-multicollinearity-and-adjusted-r-squared" class="section level1">
-<h1><span class="header-section-number">Topic 9</span> Redundancy, Multicollinearity, and Adjusted R-squared</h1>
-<div id="learning-goals-7" class="section level2 unnumbered">
-<h2>Learning Goals</h2>
-<ul>
-<li>Explain when variables are redundant or multicollinear</li>
-<li>Relate redundancy and multicollinearity to coefficient estimates and <span class="math inline">\(R^2\)</span></li>
-<li>Explain why adjusted <span class="math inline">\(R^2\)</span> is preferable to multiple <span class="math inline">\(R^2\)</span> when comparing models with different numbers of predictors</li>
-</ul>
+<div id="experiment" class="section level1">
+<h1><span class="header-section-number">Topic 11</span> Experiment!</h1>
+<div id="motivation" class="section level2 unnumbered">
+<h2>Motivation</h2>
+<p>When you drive, bike, or walk (or commute in some other way), you need to be able to react quickly to avoid various hazards.</p>
+<p>How much can distraction affect your reaction times?</p>
+<p><br><br></p>
+<p>Choice: Use <a href="https://youtu.be/kBsF-XoOgfg?t=11">distracting music</a> that your instructor found OR have loud, distracting conversations where you intentionally try to distract your classmates?</p>
 <p><br><br><br><br></p>
 </div>
-<div id="discussion-3" class="section level2 unnumbered">
-<h2>Discussion</h2>
-<p><strong>A reminder of why we care about all of this…</strong></p>
-<center>
-<blockquote class="twitter-tweet">
-<p lang="en" dir="ltr">
-By the end of the flight, he had made several requests, initiated several times, &amp; his behaviors had reduced quite a bit. The father was astounded – clearly no one had ever tried an AAC approach with him. I gave him the paper &amp; showed him how to use it, and he nearly cried. 6/
-</p>
-— Rachel R. Romeo (<span class="citation">@RachelRRomeo</span>) <a href="https://twitter.com/RachelRRomeo/status/1166817559611658240?ref_src=twsrc%5Etfw">August 28, 2019</a>
-</blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-</center>
-<p><br></p>
-<center>
-<span style="font-size: 20px">Models help us make <b>useful comparisons</b>.</span>
-</center>
-<p><br><br><br><br></p>
-<p><strong>Why are multiple regression models so useful?</strong></p>
-<p>Adding predictors to models…</p>
+<div id="experiment-1" class="section level2 unnumbered">
+<h2>Experiment</h2>
+<p><strong>Part 1: Random assignment</strong></p>
 <ul>
-<li>Predictive viewpoint: Helps us better predict the response</li>
-<li>Descriptive viewpoint: Helps us better understand the isolated (causal) effect of a variable by holding constant confounders</li>
-</ul>
-<p>BUT we can’t throw in predictors indiscriminately.</p>
-<p><br><br><br><br></p>
-<p><strong>Context:</strong> Measuring body fat accurately is difficult. It would be nice to be able We have a dataset of physical measurements on males (height, neck, thigh, etc.)</p>
-<p>Below we create an inches version of the <code>abdomen</code> variable:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bodyfat &lt;-<span class="st"> </span>bodyfat <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">abdomenInches =</span> abdomen<span class="op">/</span><span class="fl">2.54</span>)</code></pre></div>
-<p>Consider the following 3 models. What do you think the Multiple <span class="math inline">\(R^2\)</span> values will look like?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod1 &lt;-<span class="st"> </span><span class="kw">lm</span>(fat <span class="op">~</span><span class="st"> </span>abdomen, <span class="dt">data =</span> bodyfat)
-mod2 &lt;-<span class="st"> </span><span class="kw">lm</span>(fat <span class="op">~</span><span class="st"> </span>abdomenInches, <span class="dt">data =</span> bodyfat)
-mod3 &lt;-<span class="st"> </span><span class="kw">lm</span>(fat <span class="op">~</span><span class="st"> </span>abdomen<span class="op">+</span>abdomenInches, <span class="dt">data =</span> bodyfat)</code></pre></div>
-<p><br><br><br><br></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(mod1)<span class="op">$</span>r.squared</code></pre></div>
-<pre><code>## [1] 0.6616721</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(mod2)<span class="op">$</span>r.squared</code></pre></div>
-<pre><code>## [1] 0.6616721</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(mod3)<span class="op">$</span>r.squared</code></pre></div>
-<pre><code>## [1] 0.6616721</code></pre>
-<p>They’re all the same! This is because <code>abdomen</code> and <code>abdomenInches</code> are <strong>redundant</strong>. They contain exactly the same information and predict each other in a perfect line:</p>
-<p><img src="stat155_manual_files/figure-html/unnamed-chunk-68-1.png" width="672" /></p>
-<p>Let’s look at the summary output for <code>mod3</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(mod3)</code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = fat ~ abdomen + abdomenInches, data = bodyfat)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -19.0160  -3.7557   0.0554   3.4215  12.9007 
-## 
-## Coefficients: (1 not defined because of singularities)
-##                Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   -39.28018    2.66034  -14.77   &lt;2e-16 ***
-## abdomen         0.63130    0.02855   22.11   &lt;2e-16 ***
-## abdomenInches        NA         NA      NA       NA    
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 4.877 on 250 degrees of freedom
-## Multiple R-squared:  0.6617, Adjusted R-squared:  0.6603 
-## F-statistic: 488.9 on 1 and 250 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p><strong>Question:</strong> The <code>NA</code>’s for the <code>abdomenInches</code> coefficient can be read as “cannot be computed”. Why do you think that is?</p>
-<p><br><br><br><br></p>
-<p>The dataset also contains a <code>hip</code> variable giving hip circumference in centimeters. Consider the following 3 models:</p>
+<li>Pick two group members at each table.</li>
+<li>Randomly assign these two group members to the Treatment or the Control group by rolling the die:
 <ul>
-<li><code>mod1</code>: <code>fat ~ abdomen</code> (R-squared = 0.66)</li>
-<li><code>mod4</code>: <code>fat ~ hip</code> (R-squared = 0.39)</li>
-<li><code>mod5</code>: <code>fat ~ abdomen + hip</code></li>
-</ul>
-<p>What do you think the R-squared for <code>mod5</code> will be?</p>
-<ol style="list-style-type: lower-alpha">
-<li>Close to 1</li>
-<li>Close to 0.66</li>
-<li>Close to 0.39</li>
-<li>Midway from 0.66 to 1</li>
-</ol>
-<p><br><br><br><br></p>
-<p>Abdomen and hip circumference are not perfectly linearly related but they are very similar. For this reason, we describe <code>abdomen</code> and <code>hip</code> as being <strong>multicollinear</strong>.</p>
-<p><img src="stat155_manual_files/figure-html/unnamed-chunk-71-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(mod5)</code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = fat ~ abdomen + hip, data = bodyfat)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -12.4170  -3.4849  -0.2697   3.1331  12.6522 
-## 
-## Coefficients:
-##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) -19.68017    4.65242  -4.230 3.28e-05 ***
-## abdomen       0.87790    0.05611  15.647  &lt; 2e-16 ***
-## hip          -0.42464    0.08445  -5.028 9.47e-07 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 4.657 on 249 degrees of freedom
-## Multiple R-squared:  0.6929, Adjusted R-squared:  0.6904 
-## F-statistic: 280.9 on 2 and 249 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p><strong>Question:</strong> How can we interpret the <code>hip</code> coefficient in <code>mod5</code>? Does this makes sense?</p>
-<p><br><br><br><br></p>
-<p><strong>Takeaway messages: redundancy and multicollinearity</strong></p>
-<ul>
-<li>Adding a redundant predictor to a model…
-<ul>
-<li>Does nothing to the <span class="math inline">\(R^2\)</span></li>
-<li>Results in a senseless coefficient (that cannot even be estimated)</li>
+<li>Even: Treatment (loud distractions)</li>
+<li>Odd: Control (complete quiet in the room)</li>
 </ul></li>
-<li>Adding a multicollinear predictor to a model…
-<ul>
-<li>Minimally increases the <span class="math inline">\(R^2\)</span></li>
-<li>Creates some concern over the interpretability of the coefficients</li>
-</ul></li>
+<li>The other group members will be in the opposite group.</li>
 </ul>
 <p><br><br><br><br></p>
-<p><strong>What’s wrong with the multiple R-squared?</strong></p>
-<p>Adding a multicollinear predictor minimally increases <span class="math inline">\(R^2\)</span> but what about a useless predictor?</p>
-<p>For illustration purposes, we’ll look at a random sample of 10 of the males from the dataset:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bodyfat_subs &lt;-<span class="st"> </span>bodyfat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dv">10</span>)</code></pre></div>
-<p>Let’s see if we can get our <span class="math inline">\(R^2\)</span> up to 1!</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">great_model &lt;-<span class="st"> </span><span class="kw">lm</span>(fat <span class="op">~</span><span class="st"> </span>abdomen<span class="op">+</span>hip<span class="op">+</span>thigh<span class="op">+</span>knee<span class="op">+</span>ankle<span class="op">+</span>biceps<span class="op">+</span>forearm<span class="op">+</span>wrist, <span class="dt">data =</span> bodyfat_subs)
-<span class="kw">summary</span>(great_model)</code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = fat ~ abdomen + hip + thigh + knee + ankle + biceps + 
-##     forearm + wrist, data = bodyfat_subs)
-## 
-## Residuals:
-##       1       2       3       4       5       6       7       8       9 
-##  1.6847  1.1226 -2.1510 -0.5134 -6.0221 -0.5407 -0.5896 -0.3084  0.2276 
-##      10 
-##  7.0903 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)  81.3987   337.6274   0.241    0.849
-## abdomen      -3.8043     8.8751  -0.429    0.742
-## hip           1.7024     5.4926   0.310    0.809
-## thigh         5.3014    13.6454   0.389    0.764
-## knee         -0.4697     7.4011  -0.063    0.960
-## ankle       -23.1111    46.1612  -0.501    0.704
-## biceps        2.1005     8.8396   0.238    0.851
-## forearm       1.7760     2.8428   0.625    0.645
-## wrist        12.8804    28.3614   0.454    0.729
-## 
-## Residual standard error: 9.814 on 1 degrees of freedom
-## Multiple R-squared:  0.8273, Adjusted R-squared:  -0.5542 
-## F-statistic: 0.5988 on 8 and 1 DF,  p-value: 0.7677</code></pre>
-<p>Darn! We probably just needed the magic predictor! Let’s make it…</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bodyfat_subs &lt;-<span class="st"> </span>bodyfat_subs <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">magic =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>))</code></pre></div>
-<p>…and fit the model:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">best_model &lt;-<span class="st"> </span><span class="kw">lm</span>(fat <span class="op">~</span><span class="st"> </span>abdomen<span class="op">+</span>hip<span class="op">+</span>thigh<span class="op">+</span>knee<span class="op">+</span>ankle<span class="op">+</span>biceps<span class="op">+</span>forearm<span class="op">+</span>wrist<span class="op">+</span>magic, <span class="dt">data =</span> bodyfat_subs)
-<span class="kw">summary</span>(best_model)</code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = fat ~ abdomen + hip + thigh + knee + ankle + biceps + 
-##     forearm + wrist + magic, data = bodyfat_subs)
-## 
-## Residuals:
-## ALL 10 residuals are 0: no residual degrees of freedom!
-## 
-## Coefficients:
-##              Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept) -218.0921         NA      NA       NA
-## abdomen        3.5342         NA      NA       NA
-## hip            2.1323         NA      NA       NA
-## thigh         -4.0071         NA      NA       NA
-## knee          -6.9763         NA      NA       NA
-## ankle         11.0245         NA      NA       NA
-## biceps        -5.0921         NA      NA       NA
-## forearm        3.6325         NA      NA       NA
-## wrist         -0.1533         NA      NA       NA
-## magic          3.3883         NA      NA       NA
-## 
-## Residual standard error: NaN on 0 degrees of freedom
-## Multiple R-squared:      1,  Adjusted R-squared:    NaN 
-## F-statistic:   NaN on 9 and 0 DF,  p-value: NA</code></pre>
-<p><br><br></p>
-<p>The multiple R-squared always goes up when a non-redundant variable is added to a model, even if that predictor is useless!</p>
-<p>For this reason, using the multiple R-squared to compare models with different numbers of predictors is not fair. It is better to use <strong>adjusted R-squared</strong>:</p>
-<p><span class="math display">\[ \hbox{Adj } R^2 = 1 - (1-R^2)\frac{n-1}{n-p-1} = R^2 - \hbox{penalty} \]</span></p>
-<p><span class="math inline">\(n\)</span> is the sample size, and <span class="math inline">\(p\)</span> is the number of non-intercept coefficients.</p>
-<p><strong>Key takeaway:</strong></p>
+<p>Quiet phase first!</p>
 <ul>
-<li>The magnitude of the penalty increases as the number of predictors increases.</li>
-<li>So the adjusted R-squared won’t increase unless the predictor increases the multiple R-squared sufficiently to surpass this penalty.</li>
-<li>Adjusted R-squared allows us to fairly compare the predictive ability of models with different numbers of predictors.</li>
+<li>For those in the Control group, go to:</li>
+</ul>
+<p><a href="https://www.humanbenchmark.com/tests/reactiontime/" class="uri">https://www.humanbenchmark.com/tests/reactiontime/</a></p>
+<ul>
+<li>Read the instructions, and click to start the trial.</li>
+<li>Record the reaction time from the first trial <a href="https://forms.gle/Y538d9KofjEMvoNZ9">here</a>.</li>
 </ul>
 <p><br><br><br><br></p>
-<p>We have to take care when using polynomial terms to model nonlinearity:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">poly_mod1 &lt;-<span class="st"> </span><span class="kw">lm</span>(fat <span class="op">~</span><span class="st"> </span>abdomen, <span class="dt">data =</span> bodyfat_subs)
-poly_mod2 &lt;-<span class="st"> </span><span class="kw">lm</span>(fat <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(abdomen, <span class="dt">degree=</span><span class="dv">2</span>, <span class="dt">raw=</span><span class="ot">TRUE</span>), <span class="dt">data =</span> bodyfat_subs)
-poly_mod3 &lt;-<span class="st"> </span><span class="kw">lm</span>(fat <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(abdomen, <span class="dt">degree=</span><span class="dv">3</span>, <span class="dt">raw=</span><span class="ot">TRUE</span>), <span class="dt">data =</span> bodyfat_subs)
-poly_mod4 &lt;-<span class="st"> </span><span class="kw">lm</span>(fat <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(abdomen, <span class="dt">degree=</span><span class="dv">4</span>, <span class="dt">raw=</span><span class="ot">TRUE</span>), <span class="dt">data =</span> bodyfat_subs)
-poly_mod5 &lt;-<span class="st"> </span><span class="kw">lm</span>(fat <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(abdomen, <span class="dt">degree=</span><span class="dv">5</span>, <span class="dt">raw=</span><span class="ot">TRUE</span>), <span class="dt">data =</span> bodyfat_subs)</code></pre></div>
-<p><img src="stat155_manual_files/figure-html/unnamed-chunk-79-1.png" width="1440" /></p>
+<p>Noisy phase!</p>
 <ul>
-<li>Degree 1: Multiple <span class="math inline">\(R^2\)</span> = 0.4596936. Adjusted <span class="math inline">\(R^2\)</span> = 0.3921553.</li>
-<li>Degree 2: Multiple <span class="math inline">\(R^2\)</span> = 0.5835658. Adjusted <span class="math inline">\(R^2\)</span> = 0.4645846.</li>
-<li>Degree 3: Multiple <span class="math inline">\(R^2\)</span> = 0.5839466. Adjusted <span class="math inline">\(R^2\)</span> = 0.3759198.</li>
-<li>Degree 4: Multiple <span class="math inline">\(R^2\)</span> = 0.6612701. Adjusted <span class="math inline">\(R^2\)</span> = 0.3902862.</li>
-<li>Degree 5: Multiple <span class="math inline">\(R^2\)</span> = 0.6899167. Adjusted <span class="math inline">\(R^2\)</span> = 0.3023125.</li>
+<li>For those in the Treatment group, go to:</li>
+</ul>
+<p><a href="https://www.humanbenchmark.com/tests/reactiontime/" class="uri">https://www.humanbenchmark.com/tests/reactiontime/</a></p>
+<ul>
+<li>Read the instructions, and click to start the trial.</li>
+<li>Record the reaction time from the first trial <a href="https://forms.gle/Y538d9KofjEMvoNZ9">here</a>.</li>
 </ul>
 <p><br></p>
-<p>This phenomenon of fitting the data too closely is called <strong>overfitting</strong>. If you’re interested in learning how to build models for purely predictive (not descriptive) purposes, take <em>Statistical Machine Learning</em>!</p>
+</div>
+<div id="analysis-and-discussion" class="section level2 unnumbered">
+<h2>Analysis and Discussion</h2>
+<p>A template RMarkdown document that you can start from is available <a href="template_rmds/11-experiment.Rmd">here</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readr)
+<span class="kw">library</span>(ggplot2)
+<span class="kw">library</span>(dplyr)
 
+experiment &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/cwhhr0vjibw64tx/experiment_spring_2020.csv?dl=1&quot;</span>)</code></pre></div>
+<p>A little bit of data management (cleaning):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colnames</span>(experiment) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;timestamp&quot;</span>, <span class="st">&quot;arm&quot;</span>, <span class="st">&quot;rtime&quot;</span>, <span class="st">&quot;vid_games&quot;</span>, <span class="st">&quot;sports&quot;</span>, <span class="st">&quot;drive&quot;</span>, <span class="st">&quot;hand&quot;</span>)</code></pre></div>
+<div id="part-1-comparing-the-groups" class="section level3 unnumbered">
+<h3>Part 1: Comparing the groups</h3>
+<p>We can calculate the observed difference in mean reaction time between the treatment and conrol groups:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Use the pipe %&gt;% to chain together a series of commands</span>
+<span class="co"># First: group the data by experiment arm (treatment and control)</span>
+<span class="co"># Second: compute the mean reaction time in each arm</span>
+experiment_summ &lt;-<span class="st"> </span>experiment <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>(arm) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">summarize</span>(<span class="dt">mean_rtime =</span> <span class="kw">mean</span>(rtime))
+
+<span class="co"># Display the data summary</span>
+experiment_summ
+
+<span class="co"># Observed difference in means</span>
+experiment_summ<span class="op">$</span>mean_rtime[<span class="dv">2</span>] <span class="op">-</span><span class="st"> </span>experiment_summ<span class="op">$</span>mean_rtime[<span class="dv">1</span>]</code></pre></div>
+<p>Fit a linear regression model that would also give this result, and display the summary output:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">experiment_mod &lt;-<span class="st"> </span><span class="kw">lm</span>(???)</code></pre></div>
+<p><br><br><br></p>
+</div>
+<div id="part-2-is-this-a-real-difference" class="section level3 unnumbered">
+<h3>Part 2: Is this a real difference?</h3>
+<p>We performed this experiment on a <strong>sample</strong> of people at Macalester, but we conducted our study in the hopes of understanding a result in a broader population.</p>
+<p><em>Question for thought:</em> How different would our data (and results) look if we had used a different sample of people?</p>
+<p>We often don’t have the luxury (or resources) to get many different samples. Let’s instead <strong>resample our own data</strong> to get an answer to that question.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Sample size of the experiment</span>
+n &lt;-<span class="st"> </span><span class="kw">nrow</span>(experiment)
+
+<span class="co"># How many times will we resample?</span>
+num_resamples &lt;-<span class="st"> </span><span class="dv">1000</span>
+
+<span class="co"># Resample the data and estimate the difference</span>
+resampled_coeffs &lt;-<span class="st"> </span><span class="kw">replicate</span>(num_resamples, {
+    experiment_resampled &lt;-<span class="st"> </span>experiment <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dt">size =</span> n, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
+    mod &lt;-<span class="st"> </span><span class="kw">lm</span>(rtime <span class="op">~</span><span class="st"> </span>arm, <span class="dt">data =</span> experiment_resampled)
+    <span class="kw">coefficients</span>(mod)[<span class="st">&quot;armTreatment&quot;</span>]
+})
+
+<span class="co"># Look at the first few resampled coefficients</span>
+<span class="kw">head</span>(resampled_coeffs)
+
+<span class="co"># Put the resampled coefficients into a dataset and plot</span>
+data_resampled &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">coefficients =</span> resampled_coeffs)
+<span class="kw">ggplot</span>(data_resampled, <span class="kw">aes</span>(<span class="dt">x =</span> coefficients)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_histogram</span>()</code></pre></div>
+<p>What information does this histogram give you? Is there evidence for a real difference in the broader population of adults?</p>
+<p>This procedure of resampling the data and estimating a quantity of interest is called <strong>bootstrapping</strong>. Can you think of how this procedure might be of general use for us?</p>
+<p><br><br><br></p>
+</div>
+<div id="part-3-study-design" class="section level3 unnumbered">
+<h3>Part 3: Study design</h3>
+<p>Are the treatment and control groups similar in every respect except the distraction? Were the classroom conditions exactly the same for both groups? Make plots to check if the groups were similar in their video game playing, sports participation, driving frequency, and handedness.</p>
+<p>How might you improve the design of the experiment?</p>
+<p>What is the importance of the random assignment to the treatment or control group? What might be a concern if people were allowed to self-select into the treatment or control group? Draw a causal diagram to describe this (similar to the diagrams we’ve drawn for confounding).</p>
+
+</div>
 </div>
 </div>
             </section>
@@ -455,8 +344,8 @@ poly_mod5 &lt;-<span class="st"> </span><span class="kw">lm</span>(fat <span cla
           </div>
         </div>
       </div>
-<a href="interaction-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="review.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="review.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

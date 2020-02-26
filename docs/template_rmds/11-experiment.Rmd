@@ -1,0 +1,106 @@
+---
+title: "Interaction Models"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+## Setup
+
+```{r}
+library(readr)
+library(ggplot2)
+library(dplyr)
+
+experiment <- read_csv("https://www.dropbox.com/s/cwhhr0vjibw64tx/experiment_spring_2020.csv?dl=1")
+```
+
+A little bit of data management (cleaning):
+
+```{r}
+colnames(experiment) <- c("timestamp", "arm", "rtime", "vid_games", "sports", "drive", "hand")
+```
+
+## Part 1: Comparing the groups
+
+We can calculate the observed difference in mean reaction time between the treatment and conrol groups:
+
+```{r}
+# Use the pipe %>% to chain together a series of commands
+# First: group the data by experiment arm (treatment and control)
+# Second: compute the mean reaction time in each arm
+experiment_summ <- experiment %>%
+    group_by(arm) %>%
+    summarize(mean_rtime = mean(rtime))
+
+# Display the data summary
+experiment_summ
+
+# Observed difference in means
+experiment_summ$mean_rtime[2] - experiment_summ$mean_rtime[1]
+```
+
+Fit a linear regression model that would also give this result, and display the summary output:
+
+```{r}
+experiment_mod <- lm(???)
+```
+
+
+
+
+
+## Part 2: Is this a real difference?
+
+We performed this experiment on a **sample** of people at Macalester, but we conducted our study in the hopes of understanding a result in a broader population.
+
+*Question for thought:* How different would our data (and results) look if we had used a different sample of people?
+
+We often don't have the luxury (or resources) to get many different samples. Let's instead **resample our own data** to get an answer to that question.
+
+```{r}
+# Sample size of the experiment
+n <- nrow(experiment)
+
+# How many times will we resample?
+num_resamples <- 1000
+
+# Resample the data and estimate the difference
+resampled_coeffs <- replicate(num_resamples, {
+    experiment_resampled <- experiment %>% sample_n(size = n, replace = TRUE)
+    mod <- lm(rtime ~ arm, data = experiment_resampled)
+    coefficients(mod)["armTreatment"]
+})
+
+# Look at the first few resampled coefficients
+head(resampled_coeffs)
+
+# Put the resampled coefficients into a dataset and plot
+data_resampled <- data.frame(coefficients = resampled_coeffs)
+ggplot(data_resampled, aes(x = coefficients)) +
+    geom_histogram()
+```
+
+What information does this histogram give you? Is there evidence for a real difference in the broader population of adults?
+
+This procedure of resampling the data and estimating a quantity of interest is called **bootstrapping**. Can you think of how this procedure might be of general use for us?
+
+
+
+
+
+## Part 3: Study design
+
+Are the treatment and control groups similar in every respect except the distraction? Were the classroom conditions exactly the same for both groups? Make plots to check if the groups were similar in their video game playing, sports participation, driving frequency, and handedness.
+
+How might you improve the design of the experiment?
+
+What is the importance of the random assignment to the treatment or control group? What might be a concern if people were allowed to self-select into the treatment or control group? Draw a causal diagram to describe this (similar to the diagrams we've drawn for confounding).
+
+
+
+
+
+
+
