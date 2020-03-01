@@ -71,4 +71,12 @@ No class on Friday, but you must go to 2 capstone talks and submit a short respo
 - **Wednesday:** Causal inference    
     **Before class:** Read sections 1.6 (Causal Inference) and 3.8.3 (Causation) in the [STAT 155 Notes](https://bcheggeseth.github.io/Stat155Notes/index.html), and answer the Moodle questions under Reading Checks > Causal Inference.
 
+## Week 7: 3/2 - 3/6 {-}
+
+No new readings this week - same topics that you had readings for last week.
+
+- **Monday:** Bootstrapping and causal inference.
+- **Wednesday:** Bootstrapping and causal inference.
+- **Friday:** Quiz 3 in class
+
 

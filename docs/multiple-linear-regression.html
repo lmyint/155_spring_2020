@@ -112,6 +112,7 @@ code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="schedule.html"><a href="schedule.html#week-4-210---214"><i class="fa fa-check"></i>Week 4: 2/10 - 2/14</a></li>
 <li class="chapter" data-level="" data-path="schedule.html"><a href="schedule.html#week-5-217---221"><i class="fa fa-check"></i>Week 5: 2/17 - 2/21</a></li>
 <li class="chapter" data-level="" data-path="schedule.html"><a href="schedule.html#week-6-224---228"><i class="fa fa-check"></i>Week 6: 2/24 - 2/28</a></li>
+<li class="chapter" data-level="" data-path="schedule.html"><a href="schedule.html#week-7-32---36"><i class="fa fa-check"></i>Week 7: 3/2 - 3/6</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="software-setup.html"><a href="software-setup.html"><i class="fa fa-check"></i>Software Setup</a><ul>
 <li class="chapter" data-level="" data-path="software-setup.html"><a href="software-setup.html#troubleshooting"><i class="fa fa-check"></i>Troubleshooting</a></li>
@@ -278,6 +279,10 @@ diamonds &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span cl
 </ol>
 <p><br><br><br><br></p>
 <p><strong>Exercise 3:</strong> What if the most clear diamonds happened to be quite small (low carat)? Would this explain why your plot looks the way it does?</p>
+<p><br><br><br></p>
+<p>We can picture the relationship between <code>clarity</code>, <code>carat</code>, and <code>price</code> with a <strong>causal diagram</strong>. Exercise 3 is getting us to think about <code>carat</code> being a <strong>confounding variable</strong> in the relationship between <code>clarity</code> and <code>price</code>. A confounding variable is a cause of both the variable of interest (<code>clarity</code>) and of the response variable (<code>price</code>):</p>
+<p><img src="stat155_manual_files/figure-html/unnamed-chunk-56-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><code>carat</code> being a cause of <code>clarity</code> tells us that there is potential for the most clear diamonds to be of systematically different sizes (likely smaller) than less clear diamonds. This idea with the fact that <code>carat</code> is a cause of price leads to the initially misleading relationship between <code>clarity</code> and <code>price</code>.</p>
 <p><br><br><br></p>
 <p>Wouldn’t it be nice if we could hold carat fixed and then compare diamonds of different clarity?</p>
 <center>
