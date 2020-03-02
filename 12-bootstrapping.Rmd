@@ -119,17 +119,21 @@ There are two main methods to quantify the amount of sampling variation.
 **Method 1:** Use the middle 95% of these coefficients
 
 ```{r echo=TRUE, eval=TRUE}
+# The $ pulls out the armTreatment variable
 quantile(bootstrap_data$armTreatment, probs = c(0.025,0.975))
+
+# The [["armTreatment"]] also pulls out the armTreatment variable
+quantile(bootstrap_data[["armTreatment"]], probs = c(0.025,0.975))
 ```
 
 - Middle 95% is the range from -7.6 to 77.8 ms.
 - This is the **95% bootstrap confidence interval**.
-- This interval can be interpreted as a range of plausible values for the true population value (difference in reaction times: Treament - Control).
+- This interval can be interpreted as a range of plausible values for the true population value (difference in reaction times: Treatment - Control).
     - After all, it represents a range of estimates from "other samples".
     - A sample's estimate is our best guess for the true population value.
 - Do we have evidence for a real difference?
     - What is our criteria for a real difference? Not zero?
-        - We do not have evidence for a real difference.
+        - We *do not* have evidence for a real difference.
         - Zero is a plausible value for the true population difference because it is in the interval.
 
 <br>
@@ -137,10 +141,10 @@ quantile(bootstrap_data$armTreatment, probs = c(0.025,0.975))
 Suppose our 95% bootstrap confidence interval (CI) had been (90, 200)
 
 - Criterion: a real difference is not zero
-    - We do have evidence for a real difference.
+    - We *do* have evidence for a real difference.
     - Zero is not a plausible value for the true population value because it is not in the interval.
 - Another criterion: a real difference is at least 100 ms.
-    - We do not have evidence for a real difference because it is plausible that 
+    - We *do not* have evidence for a real difference because it is plausible that the true difference in the broader population is a value less than 100 ms (e.g., 90, 91, 92 are all plausible because they are in the interval).
 
 <br><br>
 
@@ -174,9 +178,8 @@ Method 1 is the most general (preferred way). We'll see Method 2 in another way 
     - Too little and we won't get a good estimate of sampling variation.
     - Too large and the process will take too long.
 - Why the middle 95% instead of 100% (the full range)?
-    - Technically, we should not have stopped at 1000 resamples.
-    - There are infinitely many possible samples, and we should have tried them all.
-    - The full distribution (approximated by the histogram) goes from $-\infty$ to $+\infty$!
+    - Ideally, we want the histogram above to show *every possible sample* from the broader population -- there are infinitely many of these!
+    - The full distribution (which is only approximated by the histogram) goes from $-\infty$ to $+\infty$!
     - The 100% range would tell us: a plausible set of values for the true population value is $(-\infty, +\infty)$.
     - Not very useful!
 

@@ -367,13 +367,18 @@ bootstrap_data &lt;-<span class="st"> </span>resampled_coeffs <span class="op">%
 <p><br></p>
 <p>There are two main methods to quantify the amount of sampling variation.</p>
 <p><strong>Method 1:</strong> Use the middle 95% of these coefficients</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">quantile</span>(bootstrap_data<span class="op">$</span>armTreatment, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="fl">0.025</span>,<span class="fl">0.975</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The $ pulls out the armTreatment variable</span>
+<span class="kw">quantile</span>(bootstrap_data<span class="op">$</span>armTreatment, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="fl">0.025</span>,<span class="fl">0.975</span>))</code></pre></div>
+<pre><code>##      2.5%     97.5% 
+## -7.614275 77.785810</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The [[&quot;armTreatment&quot;]] also pulls out the armTreatment variable</span>
+<span class="kw">quantile</span>(bootstrap_data[[<span class="st">&quot;armTreatment&quot;</span>]], <span class="dt">probs =</span> <span class="kw">c</span>(<span class="fl">0.025</span>,<span class="fl">0.975</span>))</code></pre></div>
 <pre><code>##      2.5%     97.5% 
 ## -7.614275 77.785810</code></pre>
 <ul>
 <li>Middle 95% is the range from -7.6 to 77.8 ms.</li>
 <li>This is the <strong>95% bootstrap confidence interval</strong>.</li>
-<li>This interval can be interpreted as a range of plausible values for the true population value (difference in reaction times: Treament - Control).
+<li>This interval can be interpreted as a range of plausible values for the true population value (difference in reaction times: Treatment - Control).
 <ul>
 <li>After all, it represents a range of estimates from “other samples”.</li>
 <li>A sample’s estimate is our best guess for the true population value.</li>
@@ -382,7 +387,7 @@ bootstrap_data &lt;-<span class="st"> </span>resampled_coeffs <span class="op">%
 <ul>
 <li>What is our criteria for a real difference? Not zero?
 <ul>
-<li>We do not have evidence for a real difference.</li>
+<li>We <em>do not</em> have evidence for a real difference.</li>
 <li>Zero is a plausible value for the true population difference because it is in the interval.</li>
 </ul></li>
 </ul></li>
@@ -392,12 +397,12 @@ bootstrap_data &lt;-<span class="st"> </span>resampled_coeffs <span class="op">%
 <ul>
 <li>Criterion: a real difference is not zero
 <ul>
-<li>We do have evidence for a real difference.</li>
+<li>We <em>do</em> have evidence for a real difference.</li>
 <li>Zero is not a plausible value for the true population value because it is not in the interval.</li>
 </ul></li>
 <li>Another criterion: a real difference is at least 100 ms.
 <ul>
-<li>We do not have evidence for a real difference because it is plausible that</li>
+<li>We <em>do not</em> have evidence for a real difference because it is plausible that the true difference in the broader population is a value less than 100 ms (e.g., 90, 91, 92 are all plausible because they are in the interval).</li>
 </ul></li>
 </ul>
 <p><br><br></p>
@@ -447,9 +452,8 @@ bootstrap_data &lt;-<span class="st"> </span>resampled_coeffs <span class="op">%
 </ul></li>
 <li>Why the middle 95% instead of 100% (the full range)?
 <ul>
-<li>Technically, we should not have stopped at 1000 resamples.</li>
-<li>There are infinitely many possible samples, and we should have tried them all.</li>
-<li>The full distribution (approximated by the histogram) goes from <span class="math inline">\(-\infty\)</span> to <span class="math inline">\(+\infty\)</span>!</li>
+<li>Ideally, we want the histogram above to show <em>every possible sample</em> from the broader population – there are infinitely many of these!</li>
+<li>The full distribution (which is only approximated by the histogram) goes from <span class="math inline">\(-\infty\)</span> to <span class="math inline">\(+\infty\)</span>!</li>
 <li>The 100% range would tell us: a plausible set of values for the true population value is <span class="math inline">\((-\infty, +\infty)\)</span>.</li>
 <li>Not very useful!</li>
 </ul></li>
