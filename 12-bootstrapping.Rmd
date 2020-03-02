@@ -228,13 +228,13 @@ experiment <- experiment %>%
 
 ### Exercise 1 {-}
 
-a. Could being a video gamer, athlete, regular driver, and handedness confound the relationship between treatment and reaction time? Make plots to justify.
+a. Could being a video gamer, athlete, or regular driver confound the relationship between treatment and reaction time? Make plots to justify.
 
 b. If we had performed this experiment in a much larger sample, would you expect these variables to be confounders? Explain. (Note: we'll revisit the study design aspect (randomized experiment) in more detail next class.)
 
 c. Based on your investigations, fit a model that will allow you to estimate the isolated (causal) effect of loud distractions on reaction times.
 
-d. Obtain a 95% bootstrap confidence interval for this isolated (causal) effect. In order to ensure that your bootstrapping results don't keep changing each time you run the code, put `set.seed(155)` at the top of the code chunk where you perform bootstrapping.
+d. Obtain a 95% bootstrap confidence interval for this isolated (causal) effect. In order to ensure that your bootstrapping results don't keep changing each time you run the code, put `set.seed(155)` at the top of the code chunk where you perform bootstrapping. If you get an error about missing values, add `, na.rm = TRUE` to the `quantile()` function.
 
 e. What is the magnitude of a real, meaningful difference to you? Does your confidence interval provide evidence for a real difference? Briefly explain.
 
@@ -244,9 +244,9 @@ e. What is the magnitude of a real, meaningful difference to you? Does your conf
 
 **Research question:** Does the isolated (causal) effect of distractions differ among video gamers and non-gamers?
 
-a. Answering this question involves a more complex model than we have seen before. Fit the model below, and first make sure that you understand how the R syntax `rtime ~ arm*vid_games + sports + hand` translates to the coefficients that result in the full model formula.
+a. Answering this question involves a more complex model than we have seen before. Fit the model below, and first make sure that you understand how the R syntax `rtime ~ arm*vid_games + sports` translates to the coefficients that result in the full model formula.
     ```{r}
-    mod_interact <- lm(rtime ~ arm*vid_games + sports + hand, data = experiment)
+    mod_interact <- lm(rtime ~ arm*vid_games + sports, data = experiment)
     summary(mod_interact)
     ```
 
@@ -254,7 +254,7 @@ b. Write the simpler model formulas for (1) non-gamers and (2) video gamers. Ver
 
 c. Interpret the `armTreatment` coefficient in the non-gamer and the gamer model formulas. Based on this, explain why the `armTreatment:vid_gamesYes` coefficient answers this research question.
 
-d. Obtain a 95% bootstrap confidence interval for the `armTreatment:vid_gamesYes` coefficient. (Use `set.seed(155)` again in your code chunk.)
+d. Obtain a 95% bootstrap confidence interval for the `armTreatment:vid_gamesYes` coefficient. (Use `set.seed(155)` again in your code chunk. If you get an error about missing values, add `, na.rm = TRUE` to the `quantile()` function.)
 
 e. What is the magnitude of a real, meaningful difference in the causal effect for you? Does your confidence interval provide evidence for a real difference? Briefly explain.
 
