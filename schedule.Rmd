@@ -75,8 +75,8 @@ No class on Friday, but you must go to 2 capstone talks and submit a short respo
 
 No new readings this week - same topics that you had readings for last week.
 
-- **Monday:** Bootstrapping and causal inference.
-- **Wednesday:** Bootstrapping and causal inference.
+- **Monday:** Bootstrapping.
+- **Wednesday:** Causal inference.
 - **Friday:** Quiz 3 in class
 
 
