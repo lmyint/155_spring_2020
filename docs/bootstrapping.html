@@ -325,22 +325,24 @@ code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Inf
 <li>Don’t care about the center of the estimates from sample to sample. (Because we’re resampling our sample, the center will essentially be equal to our original estimate.)</li>
 </ul></li>
 </ul>
-<p><br></p>
+<p><br><br><br><br></p>
 <p><strong>The bootstrapping procedure</strong></p>
 <ul>
-<li>Step 1: Resample the sample a large number <span class="math inline">\(B\)</span> (<span class="math inline">\(\approx\)</span> 1000) times.
+<li>Step 1: Resample our sample a large number <span class="math inline">\(B\)</span> (<span class="math inline">\(\approx\)</span> 1000) times.
 <ul>
-<li>The resamples must be <strong>of the same size</strong> as the original. (Changing sample size changes the amount of sampling variation.)</li>
+<li>The resamples must be <strong>of the same size</strong> as the original. (Increasing the sample size decreases the amount of sampling variation.)</li>
 <li>This resampling must be done <strong>with replacement</strong>. (Otherwise we’ll get the same resample every time.)</li>
 </ul></li>
 <li>Step 2: Fit the model of interest in each of the <span class="math inline">\(B\)</span> resamples.</li>
-<li><p>Step 3: Obtain the coefficients of interest.</p></li>
-<li><p>We now have <span class="math inline">\(B\)</span> (1000) sets of coefficients.</p></li>
+<li>Step 3: Obtain the coefficients of interest.</li>
 </ul>
+<p><br></p>
+<p>We now have <span class="math inline">\(B\)</span> (1000) sets of coefficients.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Resample the data and estimate the difference</span>
 <span class="kw">set.seed</span>(<span class="dv">89</span>)
 resampled_coeffs &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, {
-    experiment_resampled &lt;-<span class="st"> </span>experiment <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dt">size =</span> <span class="kw">nrow</span>(experiment), <span class="dt">replace =</span> <span class="ot">TRUE</span>)
+    experiment_resampled &lt;-<span class="st"> </span>experiment <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">sample_n</span>(<span class="dt">size =</span> <span class="kw">nrow</span>(experiment), <span class="dt">replace =</span> <span class="ot">TRUE</span>)
     mod &lt;-<span class="st"> </span><span class="kw">lm</span>(rtime <span class="op">~</span><span class="st"> </span>arm, <span class="dt">data =</span> experiment_resampled)
     <span class="kw">coefficients</span>(mod)
 })
@@ -476,6 +478,23 @@ bootstrap_data &lt;-<span class="st"> </span>resampled_coeffs <span class="op">%
 <p>A template RMarkdown document that you can start from is available <a href="template_rmds/12-bootstrapping.Rmd">here</a>.</p>
 <div id="data-setup" class="section level3 unnumbered">
 <h3>Data setup</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readr)
+<span class="kw">library</span>(ggplot2)
+<span class="kw">library</span>(dplyr)
+
+experiment &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/cwhhr0vjibw64tx/experiment_spring_2020.csv?dl=1&quot;</span>)
+
+<span class="co"># Rename the variables</span>
+<span class="kw">colnames</span>(experiment) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;timestamp&quot;</span>, <span class="st">&quot;arm&quot;</span>, <span class="st">&quot;rtime&quot;</span>, <span class="st">&quot;vid_games&quot;</span>, <span class="st">&quot;sports&quot;</span>, <span class="st">&quot;drive&quot;</span>, <span class="st">&quot;hand&quot;</span>)
+
+<span class="co"># Clean up the &quot;hand&quot; variable labels</span>
+experiment &lt;-<span class="st"> </span>experiment <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(
+        <span class="dt">hand =</span> <span class="kw">case_when</span>(
+            hand<span class="op">==</span><span class="st">&quot;Right-handed&quot;</span> <span class="op">~</span><span class="st"> &quot;Right&quot;</span>,
+            hand<span class="op">==</span><span class="st">&quot;Left-handed&quot;</span> <span class="op">~</span><span class="st"> &quot;Left&quot;</span>
+        )
+    )</code></pre></div>
 </div>
 <div id="exercise-1-5" class="section level3 unnumbered">
 <h3>Exercise 1</h3>

@@ -77,24 +77,26 @@ summary(original_model)
     - Think range, standard deviation as metrics
     - Don't care about the center of the estimates from sample to sample. (Because we're resampling our sample, the center will essentially be equal to our original estimate.)
 
-<br>
+<br><br><br><br>
 
 **The bootstrapping procedure**
 
-- Step 1: Resample the sample a large number $B$ ($\approx$ 1000) times.
-    - The resamples must be **of the same size** as the original. (Changing sample size changes the amount of sampling variation.)
+- Step 1: Resample our sample a large number $B$ ($\approx$ 1000) times.
+    - The resamples must be **of the same size** as the original. (Increasing the sample size decreases the amount of sampling variation.)
     - This resampling must be done **with replacement**. (Otherwise we'll get the same resample every time.)
 - Step 2: Fit the model of interest in each of the $B$ resamples.
 - Step 3: Obtain the coefficients of interest.
 
+<br>
 
-- We now have $B$ (1000) sets of coefficients.
+We now have $B$ (1000) sets of coefficients.
 
 ```{r echo=TRUE, eval=TRUE}
 # Resample the data and estimate the difference
 set.seed(89)
 resampled_coeffs <- replicate(1000, {
-    experiment_resampled <- experiment %>% sample_n(size = nrow(experiment), replace = TRUE)
+    experiment_resampled <- experiment %>%
+        sample_n(size = nrow(experiment), replace = TRUE)
     mod <- lm(rtime ~ arm, data = experiment_resampled)
     coefficients(mod)
 })
@@ -204,7 +206,7 @@ A template RMarkdown document that you can start from is available [here](templa
 
 ### Data setup {-}
 
-```{r echo=FALSE, eval=TRUE, message=FALSE}
+```{r}
 library(readr)
 library(ggplot2)
 library(dplyr)
