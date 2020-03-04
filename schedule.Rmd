@@ -79,4 +79,11 @@ No new readings this week - same topics that you had readings for last week.
 - **Wednesday:** Causal inference.
 - **Friday:** Quiz 3 in class
 
+## Week 8: 3/9 - 3/13 {-}
+
+- **Monday:** Bootstrapping.    
+    **Before class:** Please read the article [How racial discrimination in law enforcement actually works](https://www.vox.com/2014/12/1/7311417/race-law-controls) and watch this video (not made/linked yet!) on probability.
+- **Wednesday:** Review for the midterm.
+- **Friday:** Midterm in class
+
 
