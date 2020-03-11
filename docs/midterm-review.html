@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>STAT 155: Introduction to Statistical Modeling</title>
+  <title>Topic 14 Midterm Review | STAT 155: Introduction to Statistical Modeling</title>
   <meta name="description" content="This is the class website for STAT 155 at Macalester College." />
   <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="STAT 155: Introduction to Statistical Modeling" />
+  <meta property="og:title" content="Topic 14 Midterm Review | STAT 155: Introduction to Statistical Modeling" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="lmyint/155_spring_2020" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="STAT 155: Introduction to Statistical Modeling" />
+  <meta name="twitter:title" content="Topic 14 Midterm Review | STAT 155: Introduction to Statistical Modeling" />
   
   <meta name="twitter:description" content="This is the class website for STAT 155 at Macalester College." />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
+<link rel="prev" href="causal-inference.html"/>
 
-<link rel="next" href="schedule.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -257,32 +257,77 @@ code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">STAT 155: Introduction to Statistical Modeling</h1>
+<div id="midterm-review" class="section level1">
+<h1><span class="header-section-number">Topic 14</span> Midterm Review</h1>
+<div id="core-themes" class="section level2 unnumbered">
+<h2>Core Themes</h2>
+<p>Misleading</p>
+<ul>
+<li>Visualizations: How do different visualizations hide / fail to show certain aspects of the data?</li>
+<li>Summary statistics: How do summary statistics hide / fail to show certain aspects of the data?</li>
+<li>Coefficients in simple linear regression models</li>
+<li>Multiple R-squared</li>
+<li>Multicollinearity</li>
+<li>Confounders and mediators</li>
+</ul>
+<p><br><br></p>
+<p>Prediction vs. Explanation</p>
+<ul>
+<li>Metrics for predictive quality</li>
+<li>Goal: prediction
+<ul>
+<li>Include all variables that actually predict the response</li>
+<li>Does multicollinearity / redundancy matter?</li>
+<li>Do confounders / mediators matter?</li>
+</ul></li>
+<li>Goal: explanation
+<ul>
+<li>Does multicollinearity / redundancy matter?</li>
+<li>Do confounders / mediators matter?</li>
+</ul></li>
+</ul>
+<p><br><br><br><br></p>
 </div>
-<div id="welcome" class="section level1 unnumbered">
-<h1>Welcome!</h1>
-<center>
-<p><img src="https://imgs.xkcd.com/comics/curve_fitting.png"></p>
-Image source: <a href="https://xkcd.com/2048/">xkcd</a>
-</center>
-<p><br></p>
-<p>This is the class manual for Introduction to Statistical Modeling (STAT 155) at Macalester College for the Spring 2020 semester. The content here was developed by <a href="https://lmyint.github.io">Leslie Myint</a> and draws upon material developed by the Macalester statistics faculty.</p>
-<p><br> <br> <br></p>
-<div class="figure">
-<img src="images/cc_license_button.png" />
+<div id="additional-exercises" class="section level2 unnumbered">
+<h2>Additional Exercises</h2>
+<div id="exercise-1-7" class="section level3 unnumbered">
+<h3>Exercise 1</h3>
+<p>Suppose that we want to know the causal effect of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span>, and there is a single confounder <span class="math inline">\(c\)</span>.</p>
+<ul>
+<li>Can the model <code>y ~ x+c</code> answer this research question?</li>
+<li>Can the model <code>y ~ x*c</code> answer this research question?</li>
+</ul>
+<p>Make sure that you know how to interpret the coefficients in both of the above models regardless of the type of variable <span class="math inline">\(x\)</span> and <span class="math inline">\(c\)</span> are.</p>
+<p><br><br></p>
+</div>
+<div id="exercise-2-7" class="section level3 unnumbered">
+<h3>Exercise 2</h3>
+<p>Consider a categorical predictor of interest <span class="math inline">\(x\)</span>, response <span class="math inline">\(y\)</span>, and a quantitative confounder <span class="math inline">\(c\)</span>. Consider the following 3 situations:</p>
+<ul>
+<li><strong>Situation 1:</strong> No confounding, but there is interaction.</li>
+<li><strong>Situation 2:</strong> There is confounding, but no interaction.</li>
+<li><strong>Situation 3:</strong> Both confounding and interaction.</li>
+</ul>
+<p>For each situation draw a <strong>single</strong> plot that <strong>clearly</strong> shows the situation. After you draw these single plots, think about what the plots would look like if the situation weren’t so clear and about what additional plots would be helpful in that circumstance.</p>
+<p><br><br></p>
+</div>
+<div id="exercise-3-5" class="section level3 unnumbered">
+<h3>Exercise 3</h3>
+<ol style="list-style-type: lower-alpha">
+<li><p>Consider the process of performing bootstrapping. Identify all points in the process that could be performed incorrectly and describe the implications of such errors.</p></li>
+<li><p>We view our bootstrap confidence intervals as ranges of plausible values for the true population value. What is the rationale for this?</p></li>
+</ol>
 
 </div>
-<p>This work is licensed under a <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</p>
-
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
+<a href="causal-inference.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-<a href="schedule.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
