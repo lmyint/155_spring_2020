@@ -1,4 +1,4 @@
-```{r review_midterm_setup, include=FALSE}
+```{r 14_setup, include=FALSE}
 knitr::opts_chunk$set(echo=TRUE, eval=TRUE)
 ```
 
@@ -36,22 +36,23 @@ Prediction vs. Explanation
 
 ### Exercise 1 {-}
 
-Suppose that we want to know the causal effect of $x$ on $y$, and there is a single confounder $c$.
+Suppose that we want to know the causal effect of $X$ on $Y$, and there is a single confounder $C$.
 
-- Can the model `y ~ x+c` answer this research question?
-- Can the model `y ~ x*c` answer this research question?
+- Can the model `Y ~ X+C` answer this research question?
+- Can the model `Y ~ X*C` answer this research question?
 
-Make sure that you know how to interpret the coefficients in both of the above models regardless of the type of variable $x$ and $c$ are.
+Make sure that you know how to interpret the coefficients in both of the above models regardless of the type of variable $X$ and $C$ are.
 
 <br><br>
 
 ### Exercise 2 {-}
 
-Consider a categorical predictor of interest $x$, response $y$, and a quantitative confounder $c$. Consider the following 3 situations:
+Consider a categorical predictor of interest $X$, response $Y$, and a quantitative confounder $C$. Consider the following 3 situations:
 
-- **Situation 1:** No confounding, but there is interaction.
-- **Situation 2:** There is confounding, but no interaction.
-- **Situation 3:** Both confounding and interaction.
+- **Situation 1:** Confounding: no. Interaction: yes.
+- **Situation 2:** Confounding: yes. Interaction: no.
+- **Situation 3:** Confounding: yes. Interaction: yes.
+- **Situation 4:** Confounding: no. Interaction: no.
 
 For each situation draw a **single** plot that **clearly** shows the situation. After you draw these single plots, think about what the plots would look like if the situation weren't so clear and about what additional plots would be helpful in that circumstance.
 

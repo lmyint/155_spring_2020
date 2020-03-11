@@ -292,21 +292,22 @@ code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Inf
 <h2>Additional Exercises</h2>
 <div id="exercise-1-7" class="section level3 unnumbered">
 <h3>Exercise 1</h3>
-<p>Suppose that we want to know the causal effect of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span>, and there is a single confounder <span class="math inline">\(c\)</span>.</p>
+<p>Suppose that we want to know the causal effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span>, and there is a single confounder <span class="math inline">\(C\)</span>.</p>
 <ul>
-<li>Can the model <code>y ~ x+c</code> answer this research question?</li>
-<li>Can the model <code>y ~ x*c</code> answer this research question?</li>
+<li>Can the model <code>Y ~ X+C</code> answer this research question?</li>
+<li>Can the model <code>Y ~ X*C</code> answer this research question?</li>
 </ul>
-<p>Make sure that you know how to interpret the coefficients in both of the above models regardless of the type of variable <span class="math inline">\(x\)</span> and <span class="math inline">\(c\)</span> are.</p>
+<p>Make sure that you know how to interpret the coefficients in both of the above models regardless of the type of variable <span class="math inline">\(X\)</span> and <span class="math inline">\(C\)</span> are.</p>
 <p><br><br></p>
 </div>
 <div id="exercise-2-7" class="section level3 unnumbered">
 <h3>Exercise 2</h3>
-<p>Consider a categorical predictor of interest <span class="math inline">\(x\)</span>, response <span class="math inline">\(y\)</span>, and a quantitative confounder <span class="math inline">\(c\)</span>. Consider the following 3 situations:</p>
+<p>Consider a categorical predictor of interest <span class="math inline">\(X\)</span>, response <span class="math inline">\(Y\)</span>, and a quantitative confounder <span class="math inline">\(C\)</span>. Consider the following 3 situations:</p>
 <ul>
-<li><strong>Situation 1:</strong> No confounding, but there is interaction.</li>
-<li><strong>Situation 2:</strong> There is confounding, but no interaction.</li>
-<li><strong>Situation 3:</strong> Both confounding and interaction.</li>
+<li><strong>Situation 1:</strong> Confounding: no. Interaction: yes.</li>
+<li><strong>Situation 2:</strong> Confounding: yes. Interaction: no.</li>
+<li><strong>Situation 3:</strong> Confounding: yes. Interaction: yes.</li>
+<li><strong>Situation 4:</strong> Confounding: no. Interaction: no.</li>
 </ul>
 <p>For each situation draw a <strong>single</strong> plot that <strong>clearly</strong> shows the situation. After you draw these single plots, think about what the plots would look like if the situation weren’t so clear and about what additional plots would be helpful in that circumstance.</p>
 <p><br><br></p>
