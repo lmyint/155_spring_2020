@@ -86,4 +86,21 @@ No new readings this week - same topics that you had readings for last week.
 - **Wednesday:** Review for the midterm.
 - **Friday:** Midterm in class
 
+## Spring Break: 3/16 - 3/27 {-}
+
+## Week 9: 3/30 - 4/3 {-}
+
+<span style="color:red">
+If Google/YouTube access is a problem, all videos and slides are also available on Moodle in the "Videos & Slides" section. All Moodle questions are in the "Reading / Video Checks" section.
+</span>
+
+- **Monday:** Probability and odds.    
+    - Video: Probability Essentials ([YouTube link](https://youtu.be/O0voTrgOtQw), [Slides](https://drive.google.com/file/d/1gSOEzbvQKJBf9ozJGdowaVPLNFh-XdUC/view?usp=sharing))
+    - Moodle questions: Probability Essentials
+- **Wednesday:** Introduction to logistic regression.    
+    - Video: Logistic Regression ([YouTube link](https://youtu.be/yi7I2vmxbiQ), [Slides](https://drive.google.com/file/d/1o5WwSnShEazkV_HTWtOCeK4W0snrsep3/view?usp=sharing))
+    - Moodle questions: Logistic Regression
+- **Friday:** Continuing with logistic regression. No new video or Moodle questions.
+
+
 
