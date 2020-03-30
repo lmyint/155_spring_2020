@@ -1,0 +1,116 @@
+```{r 15_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=TRUE)
+```
+
+# (PART) Logistic Regression Modeling {-}
+
+# Probability Essentials
+
+## Learning Goals {-}
+
+- Use and interpret unconditional and conditional proabilities
+- Use and interpret odds as another form of measuring chances
+
+<br><br><br><br>
+
+## Exercises {-}
+
+### Exercise 1: Binary responses {-}
+
+Binary (2 category) response variables are common in statistical applications. Name some possible predictors for each response variable below.
+
+- y = voted / didn't vote    
+    x:
+
+- y = an email message is spam / not spam    
+    x:
+
+- y = an individual develops / does not develop disease    
+    x:
+
+<br><br>
+
+### Exercise 2: Probability {-}
+
+Identify examples of events for which:
+
+- $p = 0$
+- $p = 0.5$
+- $p = 1$
+
+<br><br>
+
+### Exercise 3: Odds from probability {-}
+
+Calculate the odds of each event below where the events are listed in order of most to least likely:
+
+|**event**|$p =$ **event probability**|**odds**|
+|-----------|-----------------------------|----------|
+|it rains tomorrow|0.99| |
+|roll a 6-sided die & see 1, 2, 3, or 4|4/6| |
+|flip a coin & see Heads|0.5| |
+|roll a 6-sided die & see 5 or 6|2/6| |
+|tomorrow is above freezing|0.01| |
+
+Interpret one of the odds that is less than 1, and interpret one of the odds that is greater than 1.
+
+<br><br>
+
+### Exercise 4: Probability from odds {-}
+
+Note that if given odds, we can obtain probabilities with:
+
+$$ \hbox{p} = \frac{\hbox{odds}}{1+\hbox{odds}} $$
+
+a. Suppose that sports analysts give a certain team a 2-to-1 odds of winning the next game.
+    - Before doing any calculations, what does this imply about the corresponding probability of the team winning: is it less than, equal to, or greater than 0.5?
+    - Calculate the corresponding probability of the team winning.
+
+b. A story in [National Geographic](https://news.nationalgeographic.com/news/2004/06/flash-facts-about-lightning/) places the odds of being struck by lightning in one's lifetime at 1-to-3000.
+    - Before doing any calculations, what does this imply about the corresponding probability of being struck by lightning: is it less than, equal to, or greater than 0.5?
+    - Calculate the corresponding probability of being struck by lightning.
+
+c. (Extra) Verify the algebra behind the probability from odds formula above.
+
+<br><br>
+
+### Exercise 5: Maryland Renaissance Fair {-}
+
+At 2017 Maryland Renaissance Fair, your instructor was attending a magic show in which the magician announced that he would magically pull out an audience member's chosen card from a 52 card deck. He in fact did so (cool!) but indicated emphatically at the end, "What are the odds of that? 1 in 52. Pretty amazing huh?" (not cool!)
+
+Your instructor wanted to exclaim "....!"
+
+Fill in the dots with an appropriate exclamation for the magician.
+
+<br><br>
+
+### Exercise 6: Disease screening {-}
+
+The diagnostic tests used to screen for disease are used for all different types of disease (infectious, chronic, long-term). In this exercise, we'll use probability tools to evaluate the accuracy of such tests.
+
+Suppose that we have the following information about the rarity of the disease ($D = 1$ if someone has the disease and $D = 0$ otherwise) and characteristics of the diagnostic test (e.g., a blood test):
+
+- $P(D = 1) = 20\%$: also known as the **prevalence** of the disease
+- $P(\hbox{Test positive} \mid D = 1) = 99\%$: also known as the **sensitivity** of the test
+- $P(\hbox{Test negative} \mid D = 0) = 95\%$: also known as the **specificity** of the test
+
+
+a. Give a contextual interpretation of the sensitivity and specificity of the diagnostic test.
+
+b. Suppose that there are 10,000 people in the population.
+    - Fill out a table with 2 rows (test positive and test negative) and 2 columns (has disease, no disease) giving the numbers of people expected to be in these 4 categories.
+    - Calculate and interpret $P(D = 1 \mid \hbox{Test positive})$. (Also known as the **positive predictive value (PPV)** of the test.)
+    - Calculate and interpret $P(D = 0 \mid \hbox{Test negative})$. (Also known as the **negative predictive value (NPV)** of the test.)
+
+c. Repeat part (b) except supoose that the disease is more rare: $P(D = 1) = 1\%$.
+
+d. For doctors and patients who are viewing diagnostic test results, do you think that sensitivity and specificity are more useful or that PPV and NPV are more useful for making clinical decisions?
+
+e. Make a general conclusion about how the rarity of the disease affects the PPV and NPV and why this is important.
+
+
+
+
+
+
+
