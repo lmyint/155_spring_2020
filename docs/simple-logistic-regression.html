@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Topic 12 Bootstrapping | STAT 155: Introduction to Statistical Modeling</title>
+  <title>Topic 16 Simple Logistic Regression | STAT 155: Introduction to Statistical Modeling</title>
   <meta name="description" content="This is the class website for STAT 155 at Macalester College." />
   <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Topic 12 Bootstrapping | STAT 155: Introduction to Statistical Modeling" />
+  <meta property="og:title" content="Topic 16 Simple Logistic Regression | STAT 155: Introduction to Statistical Modeling" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="lmyint/155_spring_2020" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Topic 12 Bootstrapping | STAT 155: Introduction to Statistical Modeling" />
+  <meta name="twitter:title" content="Topic 16 Simple Logistic Regression | STAT 155: Introduction to Statistical Modeling" />
   
   <meta name="twitter:description" content="This is the class website for STAT 155 at Macalester College." />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="experiment.html"/>
-<link rel="next" href="causal-inference.html"/>
+<link rel="prev" href="probability-essentials.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -280,291 +280,118 @@ code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="bootstrapping" class="section level1">
-<h1><span class="header-section-number">Topic 12</span> Bootstrapping</h1>
-<div id="learning-goals-8" class="section level2 unnumbered">
+<div id="simple-logistic-regression" class="section level1">
+<h1><span class="header-section-number">Topic 16</span> Simple Logistic Regression</h1>
+<div id="learning-goals-11" class="section level2 unnumbered">
 <h2>Learning Goals</h2>
 <ul>
-<li>Explain the idea of the true population value for a quantity</li>
-<li>Describe the steps and assumptions of the bootstrapping procedure and how it estimates sampling variation</li>
-<li>Use bootstrap confidence intervals to answer research questions</li>
+<li>Construct simple logistic regression models in R</li>
+<li>Interpret coefficients in simple logistic regression models</li>
 </ul>
 <p><br><br><br><br></p>
 </div>
-<div id="discussion-4" class="section level2 unnumbered">
-<h2>Discussion</h2>
-<blockquote>
-<p><strong>Research question:</strong> What is the causal effect of loud distractions on reaction times?</p>
-</blockquote>
-<ul>
-<li>More on the “causal” part next time.</li>
-<li>But for now, we will express “causal” as meaning: there is no influence of confounding variables.
-<ul>
-<li>Is this true? (You’ll check in the exercises.)</li>
-</ul></li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">original_model &lt;-<span class="st"> </span><span class="kw">lm</span>(rtime <span class="op">~</span><span class="st"> </span>arm, <span class="dt">data =</span> experiment)
-<span class="kw">summary</span>(original_model)</code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = rtime ~ arm, data = experiment)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -117.09  -51.26   -2.09   37.74  324.91 
-## 
-## Coefficients:
-##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)    318.26      13.35  23.843   &lt;2e-16 ***
-## armTreatment    32.83      20.72   1.585    0.119    
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 74.32 on 51 degrees of freedom
-## Multiple R-squared:  0.04693,    Adjusted R-squared:  0.02824 
-## F-statistic: 2.511 on 1 and 51 DF,  p-value: 0.1192</code></pre>
-<ul>
-<li>On average, those in the Treatment group (loud distractions) had reaction times that were 32.83 milliseconds higher than those in the Control group.</li>
-<li>Is a difference of 32.83 ms a “real difference”?</li>
-</ul>
-<p><br><br><br><br></p>
-<p><strong>What do we mean by “real difference”?</strong></p>
-<ul>
-<li>We <em>estimated</em> this difference based on our class <em>sample</em>.
-<ul>
-<li>This is why the <code>summary()</code> output from R labels the column <code>Estimate</code>.</li>
-</ul></li>
-<li>In reality, we care about understanding a general truth about the broader adult population.</li>
-<li><strong>True population value:</strong> the value of the model coefficient that we would observe if we fit the model using the entire population of interest.
-<ul>
-<li>Remember that model coefficients give us changes/comparisons of interest.</li>
-</ul></li>
-<li>“Real difference” means a <em>meaningful</em> difference in the broader population
-<ul>
-<li>Maybe a meaningful difference is simply not zero.</li>
-<li>Maybe a meaningful difference is one that is of a certain magnitude or higher. e.g., at least 100 ms.</li>
-</ul></li>
-</ul>
-<p><br><br><br><br></p>
-<p><strong>What is our best guess of the true population value?</strong></p>
-<ul>
-<li>Our estimate itself! (Our estimate from our sample.)</li>
-<li>Hmm…but what if our sample was weird/peculiar somehow?</li>
-<li>Would most other samples have generated similar estimates?
-<ul>
-<li>Another way of expressing this: how much do estimates vary from sample to sample?</li>
-<li>If a lot: many samples estimate a difference with the opposite sign as mine! Not reassuring!</li>
-<li>If not a lot: most samples at least agree on the sign of the difference. More reassuring that I got the sign of the true population value correct.</li>
-</ul></li>
-</ul>
-<p><br><br><br><br></p>
-<p><strong>Bootstrapping to estimate sampling variation</strong></p>
-<ul>
-<li>Can’t resample the population (easily), so let’s resample our sample!</li>
-<li><strong>Goal:</strong> Only care about measuring <em>variation</em> in estimates from sample to sample.
-<ul>
-<li>Think range, standard deviation as metrics</li>
-<li>Don’t care about the center of the estimates from sample to sample. (Because we’re resampling our sample, the center will essentially be equal to our original estimate.)</li>
-</ul></li>
-</ul>
-<p><br><br><br><br></p>
-<p><strong>The bootstrapping procedure</strong></p>
-<ul>
-<li>Step 1: Resample our sample a large number <span class="math inline">\(B\)</span> (<span class="math inline">\(\approx\)</span> 1000) times.
-<ul>
-<li>The resamples must be <strong>of the same size</strong> as the original. (Increasing the sample size decreases the amount of sampling variation.)</li>
-<li>This resampling must be done <strong>with replacement</strong>. (Otherwise we’ll get the same resample every time.)</li>
-</ul></li>
-<li>Step 2: Fit the model of interest in each of the <span class="math inline">\(B\)</span> resamples.</li>
-<li>Step 3: Obtain the coefficients of interest.</li>
-</ul>
-<p><br></p>
-<p>We now have <span class="math inline">\(B\)</span> (1000) sets of coefficients.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Resample the data and estimate the difference</span>
-<span class="kw">set.seed</span>(<span class="dv">89</span>)
-resampled_coeffs &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, {
-    experiment_resampled &lt;-<span class="st"> </span>experiment <span class="op">%&gt;%</span>
-<span class="st">        </span><span class="kw">sample_n</span>(<span class="dt">size =</span> <span class="kw">nrow</span>(experiment), <span class="dt">replace =</span> <span class="ot">TRUE</span>)
-    mod &lt;-<span class="st"> </span><span class="kw">lm</span>(rtime <span class="op">~</span><span class="st"> </span>arm, <span class="dt">data =</span> experiment_resampled)
-    <span class="kw">coefficients</span>(mod)
-})
-
-<span class="co"># Put the resampled coefficients into a dataset</span>
-bootstrap_data &lt;-<span class="st"> </span>resampled_coeffs <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">t</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>()
-
-<span class="co"># What does bootstrap_data look like?</span>
-<span class="kw">head</span>(bootstrap_data)</code></pre></div>
-<pre><code>##   (Intercept) armTreatment
-## 1    324.0714    19.648571
-## 2    318.7273    37.122727
-## 3    327.3182    19.843109
-## 4    314.7429     6.090476
-## 5    313.8077    21.896011
-## 6    331.3784    37.621622</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot the distribution of the coefficient of interest</span>
-<span class="kw">ggplot</span>(bootstrap_data, <span class="kw">aes</span>(<span class="dt">x =</span> armTreatment)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_histogram</span>()</code></pre></div>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="stat155_manual_files/figure-html/unnamed-chunk-88-1.png" width="672" /></p>
-<p><br></p>
-<p>There are two main methods to quantify the amount of sampling variation.</p>
-<p><strong>Method 1:</strong> Use the middle 95% of these coefficients</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The $ pulls out the armTreatment variable</span>
-<span class="kw">quantile</span>(bootstrap_data<span class="op">$</span>armTreatment, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="fl">0.025</span>,<span class="fl">0.975</span>))</code></pre></div>
-<pre><code>##      2.5%     97.5% 
-## -7.614275 77.785810</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The [[&quot;armTreatment&quot;]] also pulls out the armTreatment variable</span>
-<span class="kw">quantile</span>(bootstrap_data[[<span class="st">&quot;armTreatment&quot;</span>]], <span class="dt">probs =</span> <span class="kw">c</span>(<span class="fl">0.025</span>,<span class="fl">0.975</span>))</code></pre></div>
-<pre><code>##      2.5%     97.5% 
-## -7.614275 77.785810</code></pre>
-<ul>
-<li>Middle 95% is the range from -7.6 to 77.8 ms.</li>
-<li>This is the <strong>95% bootstrap confidence interval</strong>.</li>
-<li>This interval can be interpreted as a range of plausible values for the true population value (difference in reaction times: Treatment - Control).
-<ul>
-<li>After all, it represents a range of estimates from “other samples”.</li>
-<li>A sample’s estimate is our best guess for the true population value.</li>
-</ul></li>
-<li>Do we have evidence for a real difference?
-<ul>
-<li>What is our criteria for a real difference? Not zero?
-<ul>
-<li>We <em>do not</em> have evidence for a real difference.</li>
-<li>Zero is a plausible value for the true population difference because it is in the interval.</li>
-</ul></li>
-</ul></li>
-</ul>
-<p><br></p>
-<p>Suppose our 95% bootstrap confidence interval (CI) had been (90, 200)</p>
-<ul>
-<li>Criterion: a real difference is not zero
-<ul>
-<li>We <em>do</em> have evidence for a real difference.</li>
-<li>Zero is not a plausible value for the true population value because it is not in the interval.</li>
-</ul></li>
-<li>Another criterion: a real difference is at least 100 ms.
-<ul>
-<li>We <em>do not</em> have evidence for a real difference because it is plausible that the true difference in the broader population is a value less than 100 ms (e.g., 90, 91, 92 are all plausible because they are in the interval).</li>
-</ul></li>
-</ul>
-<p><br><br></p>
-<p><strong>Method 2:</strong> If the 1000 coefficients <strong>follow a normal distribution</strong>…</p>
-<ul>
-<li>The middle 95% is given by: -2 SDs to +2 SDs</li>
-<li>SD = standard deviation of the 1000 coefficients.</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># SD measures the spread of the coefficient estimates across samples</span>
-<span class="kw">sd</span>(bootstrap_data<span class="op">$</span>armTreatment)</code></pre></div>
-<pre><code>## [1] 21.87694</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># It&#39;s quite close to the Standard Error (Std. Error)!</span>
-<span class="co"># Not a coincidence!</span>
-<span class="kw">summary</span>(original_model)</code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = rtime ~ arm, data = experiment)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -117.09  -51.26   -2.09   37.74  324.91 
-## 
-## Coefficients:
-##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)    318.26      13.35  23.843   &lt;2e-16 ***
-## armTreatment    32.83      20.72   1.585    0.119    
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 74.32 on 51 degrees of freedom
-## Multiple R-squared:  0.04693,    Adjusted R-squared:  0.02824 
-## F-statistic: 2.511 on 1 and 51 DF,  p-value: 0.1192</code></pre>
-<p>Method 1 is the most general (preferred way). We’ll see Method 2 in another way later in the semester.</p>
-<p><br><br><br><br></p>
-<p><strong>Bootstrapping FAQ</strong></p>
-<ul>
-<li>Isn’t it a problem that we could sample the same case multiple times?
-<ul>
-<li>e.g., Case 12 is sampled 3 times.</li>
-<li>This just means that Case 12 is representative of 3 people in this sample.</li>
-</ul></li>
-<li>What’s the magic number of resamples?
-<ul>
-<li>1000 will be good enough for us.</li>
-<li>Too little and we won’t get a good estimate of sampling variation.</li>
-<li>Too large and the process will take too long.</li>
-</ul></li>
-<li>Why the middle 95% instead of 100% (the full range)?
-<ul>
-<li>Ideally, we want the histogram above to show <em>every possible sample</em> from the broader population – there are infinitely many of these!</li>
-<li>The full distribution (which is only approximated by the histogram) goes from <span class="math inline">\(-\infty\)</span> to <span class="math inline">\(+\infty\)</span>!</li>
-<li>The 100% range would tell us: a plausible set of values for the true population value is <span class="math inline">\((-\infty, +\infty)\)</span>.</li>
-<li>Not very useful!</li>
-</ul></li>
-</ul>
-<p><br><br><br><br></p>
-<p><strong>Assumptions of bootstrapping</strong> (<em>as described by the procedure above</em>)</p>
-<ul>
-<li>We assume that our sample is representative of the broader population.</li>
-<li>We assume that our cases are <strong>independent</strong>.
-<ul>
-<li>More precisely, we assume that our <em>residuals</em> are independent.</li>
-<li>Once we subtract off the “explainable part” of the response (leaving the residual), these errors (residuals) for different cases are not related to each other.</li>
-</ul></li>
-<li>Examples of violations of independence:
-<ul>
-<li>Cases are repeated measurements for an individual. (e.g., health measurements at multiple time points)</li>
-<li>Cases share some spatial relatedness.</li>
-<li>Cases share some temporal relatedness.</li>
-</ul></li>
-<li>Want to know more? Take Correlated Data at Mac!</li>
-</ul>
-<p><br><br><br><br></p>
-</div>
-<div id="exercises-5" class="section level2 unnumbered">
+<div id="exercises-8" class="section level2 unnumbered">
 <h2>Exercises</h2>
-<p>A template RMarkdown document that you can start from is available <a href="template_rmds/12-bootstrapping.Rmd">here</a>.</p>
-<div id="data-setup" class="section level3 unnumbered">
-<h3>Data setup</h3>
+<p>A template RMarkdown document that you can start from is available <a href="template_rmds/16-simple-logistic-regression.Rmd">here</a>.</p>
+<p>We’ll look at the O-ring data described in the video. Load the data and necessary packages as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readr)
-<span class="kw">library</span>(ggplot2)
 <span class="kw">library</span>(dplyr)
+<span class="kw">library</span>(ggplot2)
 
-experiment &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/cwhhr0vjibw64tx/experiment_spring_2020.csv?dl=1&quot;</span>)
+oring &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.macalester.edu/~ajohns24/data/NASA.csv&quot;</span>)</code></pre></div>
+<p>Let’s get acquainted with the data and make a few exploratory plots:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(oring)
+<span class="kw">head</span>(oring)
 
-<span class="co"># Rename the variables</span>
-<span class="kw">colnames</span>(experiment) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;timestamp&quot;</span>, <span class="st">&quot;arm&quot;</span>, <span class="st">&quot;rtime&quot;</span>, <span class="st">&quot;vid_games&quot;</span>, <span class="st">&quot;sports&quot;</span>, <span class="st">&quot;drive&quot;</span>, <span class="st">&quot;hand&quot;</span>)
+<span class="co"># Univariate visualization of Broken</span>
 
-<span class="co"># Clean up the &quot;hand&quot; variable labels</span>
-experiment &lt;-<span class="st"> </span>experiment <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">mutate</span>(
-        <span class="dt">hand =</span> <span class="kw">case_when</span>(
-            hand<span class="op">==</span><span class="st">&quot;Right-handed&quot;</span> <span class="op">~</span><span class="st"> &quot;Right&quot;</span>,
-            hand<span class="op">==</span><span class="st">&quot;Left-handed&quot;</span> <span class="op">~</span><span class="st"> &quot;Left&quot;</span>
-        )
-    )</code></pre></div>
-</div>
-<div id="exercise-1-5" class="section level3 unnumbered">
+
+<span class="co"># Univariate visualization of Temp</span>
+
+
+<span class="co"># Visualization of Broken and Temp</span></code></pre></div>
+<div id="exercise-1-8" class="section level3 unnumbered">
 <h3>Exercise 1</h3>
 <ol style="list-style-type: lower-alpha">
-<li><p>Could being a video gamer, athlete, or regular driver confound the relationship between treatment and reaction time? Make plots to justify.</p></li>
-<li><p>If we had performed this experiment in a much larger sample, would you expect these variables to be confounders? Explain. (Note: we’ll revisit the study design aspect (randomized experiment) in more detail next class.)</p></li>
-<li><p>Based on your investigations, fit a model that will allow you to estimate the isolated (causal) effect of loud distractions on reaction times.</p></li>
-<li><p>Obtain a 95% bootstrap confidence interval for this isolated (causal) effect. In order to ensure that your bootstrapping results don’t keep changing each time you run the code, put <code>set.seed(155)</code> at the top of the code chunk where you perform bootstrapping. If you get an error about missing values, add <code>, na.rm = TRUE</code> to the <code>quantile()</code> function.</p></li>
-<li><p>What is the magnitude of a real, meaningful difference to you? Does your confidence interval provide evidence for a real difference? Briefly explain.</p></li>
+<li><p>We want to model <code>Broken</code> as a function of <code>Temp</code>. Write down the logistic regression model formula. Try to do these without referring to notes.</p></li>
+<li><p>We can fit logistic regression models in R using the <code>glm()</code> function. The “lm” part of “glm” stands for “linear model” (just like the <code>lm()</code> function), and the “g” stands for “generalized”. (The left hand side of the model has been made more general than just <span class="math inline">\(E[Y]\)</span>.) Also note that we need to supply the argument <code>family = &quot;binomial&quot;</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">oring_mod &lt;-<span class="st"> </span><span class="kw">glm</span>(Broken <span class="op">~</span><span class="st"> </span>Temp, <span class="dt">data =</span> oring, <span class="dt">family =</span> <span class="st">&quot;binomial&quot;</span>)
+<span class="kw">summary</span>(oring_mod)</code></pre></div>
+<p>We’ll focus primarily on the output in the coefficients table. Interpret the intercept and the temperature coefficient on the log scale in a contextually meaningful way. What concern arises in interpreting the intercept?</p></li>
+<li><p>Interpret the coefficients <em>on the natural scale</em> by exponentiating. Use the <code>exp()</code> function to do this. (e.g., <code>exp(3)</code> gives <span class="math inline">\(e^3\)</span>.)</p></li>
+<li>Use this model to make predictions about a 60 degree day:
+<ul>
+<li>Predict the log odds of O-ring failure</li>
+<li>Predict the odds of O-ring failure</li>
+<li>Predict the probability of O-ring failure. Also write this probability using conditional probability notation.</li>
+</ul></li>
 </ol>
 <p><br><br></p>
 </div>
-<div id="exercise-2-5" class="section level3 unnumbered">
+<div id="exercise-2-8" class="section level3 unnumbered">
 <h3>Exercise 2</h3>
-<p><strong>Research question:</strong> Does the isolated (causal) effect of distractions differ among video gamers and non-gamers?</p>
 <ol style="list-style-type: lower-alpha">
-<li><p>Answering this question involves a more complex model than we have seen before. Fit the model below, and first make sure that you understand how the R syntax <code>rtime ~ arm*vid_games + sports</code> translates to the coefficients that result in the full model formula.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod_interact &lt;-<span class="st"> </span><span class="kw">lm</span>(rtime <span class="op">~</span><span class="st"> </span>arm<span class="op">*</span>vid_games <span class="op">+</span><span class="st"> </span>sports, <span class="dt">data =</span> experiment)
-<span class="kw">summary</span>(mod_interact)</code></pre></div></li>
-<li><p>Write the simpler model formulas for (1) non-gamers and (2) video gamers. Verify that these model formulas are multiple linear regression models. (Before, when our interaction models only included the two variables that were interacting, this process would give us simple linear regression models.)</p></li>
-<li><p>Interpret the <code>armTreatment</code> coefficient in the non-gamer and the gamer model formulas. Based on this, explain why the <code>armTreatment:vid_gamesYes</code> coefficient answers this research question.</p></li>
-<li><p>Obtain a 95% bootstrap confidence interval for the <code>armTreatment:vid_gamesYes</code> coefficient. (Use <code>set.seed(155)</code> again in your code chunk. If you get an error about missing values, add <code>, na.rm = TRUE</code> to the <code>quantile()</code> function.)</p></li>
-<li><p>What is the magnitude of a real, meaningful difference in the causal effect for you? Does your confidence interval provide evidence for a real difference? Briefly explain.</p></li>
+<li><p>When you use <code>glm()</code>, R by default will use <code>Broken = 1</code> as the event of interest (as opposed to <code>Broken = 0</code>). Suppose that we were to fit the logistic regression model where <code>Broken = 0</code> became the event of interest. Mathematically work out what the new values of the model coefficients will be.</p></li>
+<li><p>Check your work by replacing the <code>glm()</code> model formula with <code>Broken==0 ~ Temp</code>.</p></li>
 </ol>
+<p><br><br></p>
+</div>
+<div id="exercise-3-6" class="section level3 unnumbered">
+<h3>Exercise 3</h3>
+<p>Let’s visualize the model’s predictions.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>The code below adds the predicted log odds to the original <code>oring</code> dataset. Complete the code to also add the predicted odds and probabilities.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">oring &lt;-<span class="st"> </span>oring <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(
+        <span class="dt">log_odds =</span> <span class="kw">predict</span>(oring_mod),
+        <span class="dt">odds =</span> ???, <span class="co"># Hint: you can use log_odds in this expression</span>
+        <span class="dt">prob =</span> ???
+    )</code></pre></div></li>
+<li><p>Construct plots of the log odds, odds, and probability as a function of temperature.</p></li>
+<li><p>We can also zoom out to see a broader temperature range. Describe the shape of the relationship between the probability of an O-ring breaking and temperature.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(oring, <span class="kw">aes</span>(<span class="dt">x =</span> Temp, <span class="dt">y =</span> Broken)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;glm&quot;</span>, <span class="dt">method.args =</span> <span class="kw">list</span>(<span class="dt">family =</span> <span class="st">&quot;binomial&quot;</span>), <span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">fullrange =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;probability of breaking&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">lims</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">100</span>))</code></pre></div>
+<p>Note: the function shown in this plot is called the <strong>logistic function</strong> which is where logistic regression gets its name.</p></li>
+</ol>
+<p><br><br></p>
+</div>
+<div id="exercise-4-4" class="section level3 unnumbered">
+<h3>Exercise 4</h3>
+<p>We have the following data on whether or not individuals were exposed to an environmental hazard and whether or not they developed a certain disease within 10 years.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Disease</th>
+<th>No disease</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Exposed</td>
+<td>5</td>
+<td>495</td>
+<td>500</td>
+</tr>
+<tr class="even">
+<td>Unexposed</td>
+<td>5</td>
+<td>995</td>
+<td>1000</td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td>10</td>
+<td>1490</td>
+<td>1500</td>
+</tr>
+</tbody>
+</table>
+<p>Write down the logistic regression model formula corresponding and estimate the coefficients by hand using data from the table. (Use a variable called <code>exposed</code> that is equal to 1 if exposed and 0 if not.)</p>
 
 </div>
 </div>
@@ -574,8 +401,8 @@ experiment &lt;-<span class="st"> </span>experiment <span class="op">%&gt;%</spa
           </div>
         </div>
       </div>
-<a href="experiment.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="causal-inference.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="probability-essentials.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

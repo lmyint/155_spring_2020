@@ -1,0 +1,110 @@
+```{r 16_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=TRUE)
+```
+
+# Simple Logistic Regression
+
+## Learning Goals {-}
+
+- Construct simple logistic regression models in R
+- Interpret coefficients in simple logistic regression models
+
+<br><br><br><br>
+
+## Exercises {-}
+
+A template RMarkdown document that you can start from is available [here](template_rmds/16-simple-logistic-regression.Rmd).
+
+We'll look at the O-ring data described in the video. Load the data and necessary packages as follows:
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+
+oring <- read_csv("https://www.macalester.edu/~ajohns24/data/NASA.csv")
+```
+
+Let's get acquainted with the data and make a few exploratory plots:
+
+```{r}
+dim(oring)
+head(oring)
+
+# Univariate visualization of Broken
+
+
+# Univariate visualization of Temp
+
+
+# Visualization of Broken and Temp
+```
+
+### Exercise 1 {-}
+
+a. We want to model `Broken` as a function of `Temp`. Write down the logistic regression model formula. Try to do these without referring to notes.
+
+b. We can fit logistic regression models in R using the `glm()` function. The "lm" part of "glm" stands for "linear model" (just like the `lm()` function), and the "g" stands for "generalized". (The left hand side of the model has been made more general than just $E[Y]$.) Also note that we need to supply the argument `family = "binomial"`.
+    ```{r}
+    oring_mod <- glm(Broken ~ Temp, data = oring, family = "binomial")
+    summary(oring_mod)
+    ```
+    We'll focus primarily on the output in the coefficients table. Interpret the intercept and the temperature coefficient on the log scale in a contextually meaningful way. What concern arises in interpreting the intercept?
+
+c. Interpret the coefficients *on the natural scale* by exponentiating. Use the `exp()` function to do this. (e.g., `exp(3)` gives $e^3$.)
+
+d. Use this model to make predictions about a 60 degree day:
+    - Predict the log odds of O-ring failure
+    - Predict the odds of O-ring failure
+    - Predict the probability of O-ring failure. Also write this probability using conditional probability notation.
+
+<br><br>
+
+### Exercise 2 {-}
+
+a. When you use `glm()`, R by default will use `Broken = 1` as the event of interest (as opposed to `Broken = 0`). Suppose that we were to fit the logistic regression model where `Broken = 0` became the event of interest. Mathematically work out what the new values of the model coefficients will be.
+
+b. Check your work by replacing the `glm()` model formula with `Broken==0 ~ Temp`.
+
+<br><br>
+
+### Exercise 3 {-}
+
+Let's visualize the model's predictions.
+
+a. The code below adds the predicted log odds to the original `oring` dataset. Complete the code to also add the predicted odds and probabilities.
+    ```{r}
+    oring <- oring %>%
+        mutate(
+            log_odds = predict(oring_mod),
+            odds = ???, # Hint: you can use log_odds in this expression
+            prob = ???
+        )
+    ```
+
+b. Construct plots of the log odds, odds, and probability as a function of temperature.
+
+c. We can also zoom out to see a broader temperature range. Describe the shape of the relationship between the probability of an O-ring breaking and temperature.
+    ```{r}
+    ggplot(oring, aes(x = Temp, y = Broken)) +
+        geom_point() +
+        geom_smooth(method = "glm", method.args = list(family = "binomial"), se = FALSE, fullrange = TRUE) + 
+        labs(y = "probability of breaking") + 
+        lims(x = c(0,100))
+    ```
+    Note: the function shown in this plot is called the **logistic function** which is where logistic regression gets its name.
+
+<br><br>
+
+### Exercise 4 {-}
+
+We have the following data on whether or not individuals were exposed to an environmental hazard and whether or not they developed a certain disease within 10 years.
+
+|           | Disease | No disease | Total |
+|-----------|---------|------------|-------|
+| Exposed   | 5       | 495        | 500   |
+| Unexposed | 5       | 995        | 1000  |
+| Total     | 10      | 1490       | 1500  |
+
+Write down the logistic regression model formula corresponding and estimate the coefficients by hand using data from the table. (Use a variable called `exposed` that is equal to 1 if exposed and 0 if not.)
+

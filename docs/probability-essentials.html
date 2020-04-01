@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="midterm-review.html"/>
-
+<link rel="next" href="simple-logistic-regression.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -251,6 +251,15 @@ code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="probability-essentials.html"><a href="probability-essentials.html#exercise-6-disease-screening"><i class="fa fa-check"></i>Exercise 6: Disease screening</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="16" data-path="simple-logistic-regression.html"><a href="simple-logistic-regression.html"><i class="fa fa-check"></i><b>16</b> Simple Logistic Regression</a><ul>
+<li class="chapter" data-level="" data-path="simple-logistic-regression.html"><a href="simple-logistic-regression.html#learning-goals-11"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="simple-logistic-regression.html"><a href="simple-logistic-regression.html#exercises-8"><i class="fa fa-check"></i>Exercises</a><ul>
+<li class="chapter" data-level="" data-path="simple-logistic-regression.html"><a href="simple-logistic-regression.html#exercise-1-8"><i class="fa fa-check"></i>Exercise 1</a></li>
+<li class="chapter" data-level="" data-path="simple-logistic-regression.html"><a href="simple-logistic-regression.html#exercise-2-8"><i class="fa fa-check"></i>Exercise 2</a></li>
+<li class="chapter" data-level="" data-path="simple-logistic-regression.html"><a href="simple-logistic-regression.html#exercise-3-6"><i class="fa fa-check"></i>Exercise 3</a></li>
+<li class="chapter" data-level="" data-path="simple-logistic-regression.html"><a href="simple-logistic-regression.html#exercise-4-4"><i class="fa fa-check"></i>Exercise 4</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
 
@@ -276,7 +285,7 @@ code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Inf
 <div id="learning-goals-10" class="section level2 unnumbered">
 <h2>Learning Goals</h2>
 <ul>
-<li>Use and interpret unconditional and conditional proabilities</li>
+<li>Use and interpret unconditional and conditional probabilities</li>
 <li>Use and interpret odds as another form of measuring chances</li>
 </ul>
 <p><br><br><br><br></p>
@@ -351,7 +360,7 @@ x:</p></li>
 <div id="exercise-4-probability-from-odds" class="section level3 unnumbered">
 <h3>Exercise 4: Probability from odds</h3>
 <p>Note that if given odds, we can obtain probabilities with:</p>
-<p><span class="math display">\[ \hbox{p} = \frac{\hbox{odds}}{1+\hbox{odds}} \]</span></p>
+<p><span class="math display">\[ p = \frac{\hbox{odds}}{1+\hbox{odds}} \]</span></p>
 <ol style="list-style-type: lower-alpha">
 <li>Suppose that sports analysts give a certain team a 2-to-1 odds of winning the next game.
 <ul>
@@ -391,7 +400,7 @@ x:</p></li>
 <li>Calculate and interpret <span class="math inline">\(P(D = 1 \mid \hbox{Test positive})\)</span>. (Also known as the <strong>positive predictive value (PPV)</strong> of the test.)</li>
 <li>Calculate and interpret <span class="math inline">\(P(D = 0 \mid \hbox{Test negative})\)</span>. (Also known as the <strong>negative predictive value (NPV)</strong> of the test.)</li>
 </ul></li>
-<li><p>Repeat part (b) except supoose that the disease is more rare: <span class="math inline">\(P(D = 1) = 1\%\)</span>.</p></li>
+<li><p>Repeat part (b) except suppose that the disease is more rare: <span class="math inline">\(P(D = 1) = 1\%\)</span>.</p></li>
 <li><p>For doctors and patients who are viewing diagnostic test results, do you think that sensitivity and specificity are more useful or that PPV and NPV are more useful for making clinical decisions?</p></li>
 <li><p>Make a general conclusion about how the rarity of the disease affects the PPV and NPV and why this is important.</p></li>
 </ol>
@@ -404,8 +413,8 @@ x:</p></li>
           </div>
         </div>
       </div>
-<a href="midterm-review.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="midterm-review.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="simple-logistic-regression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

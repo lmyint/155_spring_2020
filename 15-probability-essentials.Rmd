@@ -8,7 +8,7 @@ knitr::opts_chunk$set(echo=TRUE, eval=TRUE)
 
 ## Learning Goals {-}
 
-- Use and interpret unconditional and conditional proabilities
+- Use and interpret unconditional and conditional probabilities
 - Use and interpret odds as another form of measuring chances
 
 <br><br><br><br>
@@ -60,7 +60,7 @@ Interpret one of the odds that is less than 1, and interpret one of the odds tha
 
 Note that if given odds, we can obtain probabilities with:
 
-$$ \hbox{p} = \frac{\hbox{odds}}{1+\hbox{odds}} $$
+$$ p = \frac{\hbox{odds}}{1+\hbox{odds}} $$
 
 a. Suppose that sports analysts give a certain team a 2-to-1 odds of winning the next game.
     - Before doing any calculations, what does this imply about the corresponding probability of the team winning: is it less than, equal to, or greater than 0.5?
@@ -102,7 +102,7 @@ b. Suppose that there are 10,000 people in the population.
     - Calculate and interpret $P(D = 1 \mid \hbox{Test positive})$. (Also known as the **positive predictive value (PPV)** of the test.)
     - Calculate and interpret $P(D = 0 \mid \hbox{Test negative})$. (Also known as the **negative predictive value (NPV)** of the test.)
 
-c. Repeat part (b) except supoose that the disease is more rare: $P(D = 1) = 1\%$.
+c. Repeat part (b) except suppose that the disease is more rare: $P(D = 1) = 1\%$.
 
 d. For doctors and patients who are viewing diagnostic test results, do you think that sensitivity and specificity are more useful or that PPV and NPV are more useful for making clinical decisions?
 
