@@ -8,6 +8,18 @@ knitr::opts_chunk$set(echo=TRUE, eval=TRUE)
 
 - Construct simple logistic regression models in R
 - Interpret coefficients in simple logistic regression models
+- Use simple logistic regression models to make predictions
+- Describe the form (shape) of relationships on the log odds, odds, and probability scales
+
+<br><br><br><br>
+
+## Warm-up {-}
+
+Navigate to:
+
+<center>
+[PollEv.com/lesliemyint417](https://www.PollEv.com/lesliemyint417)
+</center>
 
 <br><br><br><br>
 
