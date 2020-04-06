@@ -102,5 +102,13 @@ If Google/YouTube access is a problem, all videos and slides are also available 
     - Moodle questions: Logistic Regression
 - **Friday:** Continuing with logistic regression. No new video or Moodle questions.
 
+## Week 10: 4/6 - 4/10 {-}
+
+- **Monday:** Multiple logistic regression
+- **Wednesday:** Sampling distributions and the normal distribution
+    - Video: Sampling Distributions ([YouTube link](https://youtu.be/hR3h7VGA3Sc), [Slides](https://drive.google.com/file/d/1HRij3BtATblO9uzeoxGHyirI0b3zzu9D/view?usp=sharing))
+- **Friday:** The central limit theorem and confidence intervals
+    - Video: Central Limit Theorem (YouTube link will be added soon, [Slides](https://drive.google.com/file/d/1E4ARLYbdq_YAX8vK28KenAH1mbL3W0wm/view?usp=sharing))
+
 
 
