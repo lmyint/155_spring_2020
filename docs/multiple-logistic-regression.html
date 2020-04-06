@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Topic 4 Bivariate Visualization - Part 2 | STAT 155: Introduction to Statistical Modeling</title>
+  <title>Topic 17 Multiple Logistic Regression | STAT 155: Introduction to Statistical Modeling</title>
   <meta name="description" content="This is the class website for STAT 155 at Macalester College." />
   <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Topic 4 Bivariate Visualization - Part 2 | STAT 155: Introduction to Statistical Modeling" />
+  <meta property="og:title" content="Topic 17 Multiple Logistic Regression | STAT 155: Introduction to Statistical Modeling" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="lmyint/155_spring_2020" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Topic 4 Bivariate Visualization - Part 2 | STAT 155: Introduction to Statistical Modeling" />
+  <meta name="twitter:title" content="Topic 17 Multiple Logistic Regression | STAT 155: Introduction to Statistical Modeling" />
   
   <meta name="twitter:description" content="This is the class website for STAT 155 at Macalester College." />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="bivariate-visualization-part-1.html"/>
-<link rel="next" href="modeling-concepts-part-1.html"/>
+<link rel="prev" href="simple-logistic-regression.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -290,87 +290,82 @@ code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="bivariate-visualization---part-2" class="section level1">
-<h1><span class="header-section-number">Topic 4</span> Bivariate Visualization - Part 2</h1>
-<div id="learning-goals-2" class="section level2 unnumbered">
+<div id="multiple-logistic-regression" class="section level1">
+<h1><span class="header-section-number">Topic 17</span> Multiple Logistic Regression</h1>
+<div id="learning-goals-12" class="section level2 unnumbered">
 <h2>Learning Goals</h2>
 <ul>
-<li>Construct bivariate data visualizations of two quantiative variables</li>
-<li>Form ideas about the uses and building of statistical models</li>
-<li>Explain the uses, misuses, and limitations of the correlation coefficient</li>
+<li>Construct multiple logistic regression models in R</li>
+<li>Construct and interpret visualizations to inform model building</li>
+<li>Interpret multiple logistic regression model output</li>
 </ul>
 <p><br><br><br><br></p>
 </div>
-<div id="exercises-2" class="section level2 unnumbered">
+<div id="exercises-9" class="section level2 unnumbered">
 <h2>Exercises</h2>
-<p>A template RMarkdown document that you can start from is available <a href="template_rmds/04-bivariate-viz-part2.Rmd">here</a>.</p>
-<p>We’ll continue using the dataset for our first case study:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load required packages</span>
-<span class="kw">library</span>(readr)
+<p>A template RMarkdown document that you can start from is available <a href="template_rmds/17-multiple-logistic-regression.Rmd">here</a>.</p>
+<p>We will be looking at data from the Add Health study (<a href="https://cpc.unc.edu/projects/addhealth" class="uri">https://cpc.unc.edu/projects/addhealth</a>), a national survey of adolescent health.</p>
+<blockquote>
+<p><strong>Research question:</strong> What is the causal effect of adolescent marijuana smoking on adulthood cigarette smoking?</p>
+</blockquote>
+<p>The following variables are in the dataset:</p>
+<ul>
+<li><code>exposure</code>: Indicator for whether or not marijuana was smoked in adolescence. 1=yes, 0=no. (Main predictor of interest.)</li>
+<li><code>smoke</code>: Indicator for whether the individual smoked in adulthood. 1=yes, 0=no. (Response variable.)</li>
+<li><code>age</code>: Age at study entry (continuous)</li>
+<li><code>male</code>: Indicator for whether the individual was male. 1=yes, 0=no.</li>
+<li><code>white</code>: Indicator for whether the individual was White. 1=yes, 0=no.</li>
+<li><code>susp</code>: Indicator for whether the individual was ever suspended from school. 1=yes, 0=no.</li>
+<li><code>mathG</code>: Math grade (1 to 4 corresponding respectively to A to D)</li>
+<li><code>readG</code>: Reading grade (1 to 4 corresponding respectively to A to D)</li>
+<li><code>parentED</code>: Parent education (1 to 5 corresponding respectively to less than high school, high school, vocational school, some college, and college graduate and beyond).</li>
+<li><code>housesmoke</code>: Indicator for the presence of a cigarette smoker in the individual’s household. 1=yes, 0=no.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readr)
 <span class="kw">library</span>(ggplot2)
 <span class="kw">library</span>(dplyr)
 
-<span class="co"># Read in the weightlifting data</span>
-lifts &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/n6jko5m7ygeasoj/openpowerlifting_subs.csv?dl=1&quot;</span>)
-
-<span class="co"># Try to create the SWR variable without looking at your cheat sheet</span>
-???</code></pre></div>
-<p><br></p>
-<div id="exercise-1-2" class="section level3 unnumbered">
+addhealth &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/h09nq0nwgx8eioz/addhealth.csv?dl=1&quot;</span>)</code></pre></div>
+<p>Peek at the first few rows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(addhealth)</code></pre></div>
+<p><strong>Note:</strong> Throughout these exercises, you’ll want to use <code>factor()</code> within visualizations and model formulas to force R to treat a variable as categorical (rather than quantitative).</p>
+<p><br><br></p>
+<div id="exercise-1-9" class="section level3 unnumbered">
 <h3>Exercise 1</h3>
-<ol style="list-style-type: lower-alpha">
-<li>Using the plotting examples that we have gone over so far, generalize the code structure to create a scatterplot of <code>SWR</code> (y-axis) vs. <code>BodyweightKg</code> (x-axis). For no reason at all, I’ll say the word “point”. Before running the code, write down what you expect the plot to look like.</li>
-<li>In a few sentences describe the direction, form, strength, and any unusual features of the plot.</li>
-<li>Now add the following after the scatterplot: <code>+ geom_smooth()</code>. What does this code do?</li>
-<li>Create another copy of your scatterplot code using <code>geom_smooth(method = &quot;lm&quot;)</code> instead of <code>geom_smooth()</code>. What does the <strong>argument</strong> <code>method = &quot;lm&quot;</code> do?</li>
-<li><p>Compute the correlation coefficient between these two variables using the following. Is the correlation coefficient appropriate for summarizing this relationship?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cor</span>(lifts<span class="op">$</span>SWR, lifts<span class="op">$</span>BodyweightKg)</code></pre></div></li>
-</ol>
-<p>Pause after this exercise, and we’ll discuss as a class.</p>
-<p><br></p>
+<p>Let’s get a feel for the main variables of interest.</p>
+<p>Construct and interpret appropriate univariate visualizations of adolescent marijuana smoking and adulthood cigarette smoking.</p>
+<p><br><br></p>
 </div>
-<div id="exercise-2-2" class="section level3 unnumbered">
+<div id="exercise-2-9" class="section level3 unnumbered">
 <h3>Exercise 2</h3>
-<p>Using the plot from exercise 1, try to estimate by hand the equation of the line shown on the plot.</p>
-<p><br></p>
+<ol style="list-style-type: lower-alpha">
+<li>Construct and interpret an appropriate visualization of the relationship between <code>exposure</code> and <code>smoke</code>.</li>
+<li>Based on your visualization what would you expect about the coefficient in an appropriate model of <code>smoke ~ exposure</code>? What would you expect about the 95% bootstrap confidence interval?</li>
+<li>Fit the appropriate model, and interpret the coefficient of interest on the natural scale.</li>
+<li>Construct a 95% bootstrap confidence interval for the coefficient (on the log scale). Transform the confidence interval to the natural scale by exponentiating both endpoints. If we define a meaningful effect as one that has an odds ratio of at least 1.5, do we have evidence for a meaningful effect of adolescent marijuana smoking in the broader population?</li>
+</ol>
+<p><br><br></p>
 </div>
-<div id="exercise-3-2" class="section level3 unnumbered">
+<div id="exercise-3-7" class="section level3 unnumbered">
 <h3>Exercise 3</h3>
-<p>Now use the code below to more precisely get the equation of the line. More specifically, this code <strong>fits</strong> a <strong>simple linear regression model</strong> to the data. There is a lot of output that gets printed, but focus only on the “Coefficients:” section and the “Estimate” column in that section.</p>
-<p>How does your estimated line compare?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod1 &lt;-<span class="st"> </span><span class="kw">lm</span>(SWR <span class="op">~</span><span class="st"> </span>BodyweightKg, <span class="dt">data =</span> lifts)
-<span class="kw">summary</span>(mod1)</code></pre></div>
-<p><br></p>
-</div>
-<div id="exercise-4-2" class="section level3 unnumbered">
-<h3>Exercise 4</h3>
-<p>Do you think the simple linear regression model is any good? What features of the plot contribute to your decision? Using tools that we’ve learned so far, how might you try to quantify the quality of this model? How could we make the model better? What’s missing from it?</p>
-<p><br></p>
-</div>
-<div id="exercise-5-1" class="section level3 unnumbered">
-<h3>Exercise 5</h3>
-<p>Your client for this case study is interested in learning how height is related to athlete strength (as measured by <code>SWR</code> or <code>Wilks</code>. However, height is not recorded in the data. Plan: how might we address this issue?</p>
-<p><br></p>
-</div>
-<div id="exercise-6" class="section level3 unnumbered">
-<h3>Exercise 6</h3>
-<p>This last exercise takes a step away from our <code>lifts</code> dataset. Load the <code>anscombe</code> dataset using:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(anscombe)</code></pre></div>
-<p>There are 4 sets of data within this dataset. <code>x1</code> and <code>y1</code>, <code>x2</code> and <code>y2</code>, <code>x3</code> and <code>y3</code>, and <code>x4</code> and <code>y4</code>. Compute the correlation coefficient between each of these pairs, and also make a scatterplot for each of these pairs. What is the message of this last exercise?</p>
+<p>That previous analysis ignored the “causal” part of the question!</p>
+<ol style="list-style-type: lower-alpha">
+<li>Looking through the variables measured, what variables might be confounders and what might be mediators?</li>
+<li>Make appropriate plots to determine whether <code>housesmoke</code> might confound the relationship between adolescent marijuana smoking and adulthood cigarette smoking.</li>
+<li>Based on your results from part (b), fit an appropriate model, and interpret the coefficient of interest on the natural scale.</li>
+<li>Construct a 95% bootstrap confidence interval for the coefficient on the natural scale. Interpret the interval (what information does it contain?), and use it to determine whether we have evidence for a real, meaningful causal effect of adolescent marijuana smoking in the broader population.</li>
+</ol>
 
 </div>
 </div>
 </div>
-
-
-
             </section>
 
           </div>
         </div>
       </div>
-<a href="bivariate-visualization-part-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="modeling-concepts-part-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="simple-logistic-regression.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

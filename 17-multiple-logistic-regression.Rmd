@@ -1,0 +1,79 @@
+```{r 17_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=TRUE)
+```
+
+# Multiple Logistic Regression
+
+## Learning Goals {-}
+
+- Construct multiple logistic regression models in R
+- Construct and interpret visualizations to inform model building
+- Interpret multiple logistic regression model output
+
+<br><br><br><br>
+
+## Exercises {-}
+
+A template RMarkdown document that you can start from is available [here](template_rmds/17-multiple-logistic-regression.Rmd).
+
+We will be looking at data from the Add Health study (https://cpc.unc.edu/projects/addhealth), a national survey of adolescent health. 
+
+> **Research question:** What is the causal effect of adolescent marijuana smoking on adulthood cigarette smoking?
+
+The following variables are in the dataset:
+
+- `exposure`: Indicator for whether or not marijuana was smoked in adolescence. 1=yes, 0=no. (Main predictor of interest.)
+- `smoke`: Indicator for whether the individual smoked in adulthood. 1=yes, 0=no. (Response variable.)
+- `age`: Age at study entry (continuous)
+- `male`: Indicator for whether the individual was male. 1=yes, 0=no.
+- `white`: Indicator for whether the individual was White. 1=yes, 0=no.
+- `susp`: Indicator for whether the individual was ever suspended from school. 1=yes, 0=no.
+- `mathG`: Math grade (1 to 4 corresponding respectively to A to D)
+- `readG`: Reading grade (1 to 4 corresponding respectively to A to D)
+- `parentED`: Parent education (1 to 5 corresponding respectively to less than high school, high school, vocational school, some college, and college graduate and beyond).
+- `housesmoke`: Indicator for the presence of a cigarette smoker in the individual's household. 1=yes, 0=no.
+
+```{r}
+library(readr)
+library(ggplot2)
+library(dplyr)
+
+addhealth <- read_csv("https://www.dropbox.com/s/h09nq0nwgx8eioz/addhealth.csv?dl=1")
+```
+
+Peek at the first few rows:
+
+```{r}
+head(addhealth)
+```
+
+**Note:** Throughout these exercises, you'll want to use `factor()` within visualizations and model formulas to force R to treat a variable as categorical (rather than quantitative).
+
+<br><br>
+
+### Exercise 1 {-}
+
+Let's get a feel for the main variables of interest.
+
+Construct and interpret appropriate univariate visualizations of adolescent marijuana smoking and adulthood cigarette smoking.
+
+<br><br>
+
+### Exercise 2 {-}
+
+a. Construct and interpret an appropriate visualization of the relationship between `exposure` and `smoke`.
+b. Based on your visualization what would you expect about the coefficient in an appropriate model of `smoke ~ exposure`? What would you expect about the 95% bootstrap confidence interval?
+c. Fit the appropriate model, and interpret the coefficient of interest on the natural scale.
+d. Construct a 95% bootstrap confidence interval for the coefficient (on the log scale). Transform the confidence interval to the natural scale by exponentiating both endpoints. If we define a meaningful effect as one that has an odds ratio of at least 1.5, do we have evidence for a meaningful effect of adolescent marijuana smoking in the broader population?
+
+<br><br>
+
+### Exercise 3 {-}
+
+That previous analysis ignored the "causal" part of the question!
+
+a. Looking through the variables measured, what variables might be confounders and what might be mediators?
+b. Make appropriate plots to determine whether `housesmoke` might confound the relationship between adolescent marijuana smoking and adulthood cigarette smoking.
+c. Based on your results from part (b), fit an appropriate model, and interpret the coefficient of interest on the natural scale.
+d. Construct a 95% bootstrap confidence interval for the coefficient on the natural scale. Interpret the interval (what information does it contain?), and use it to determine whether we have evidence for a real, meaningful causal effect of adolescent marijuana smoking in the broader population.
+
