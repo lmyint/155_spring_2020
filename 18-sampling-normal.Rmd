@@ -1,0 +1,87 @@
+```{r 18_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=TRUE)
+```
+
+# (PART) Statistical Inference {-}
+
+# Sampling Distributions and the Normal Distribution
+
+## Learning Goals {-}
+
+- Describe the information contained in sampling distributions
+- Use normal distribution models of sampling distributions to make probability statements about sample estimates
+
+<br><br><br><br>
+
+## Exercises {-}
+
+A template RMarkdown document that you can start from is available [here](template_rmds/18-sampling-normal.Rmd).
+
+We'll continue working with data from the Add Health study to understand how the risk of adulthood cigarette smoking is related to adolescent marijuana smoking.
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+
+addhealth <- read_csv("https://www.dropbox.com/s/h09nq0nwgx8eioz/addhealth.csv?dl=1")
+```
+
+Let's pretend that the 1541 people in this dataset represent the full broader population of interest. When we fit the logistic regression model below, the coeffients represent the true population values of these quantities:
+
+```{r}
+population_mod <- glm(smoke ~ exposure, data = addhealth, family = "binomial")
+summary(population_mod)
+```
+
+We would not normally have access to this full population, so let's draw a random sample of 500 people from it to obtain our study's data:
+
+```{r}
+set.seed(155)
+addhealth_sample <- addhealth %>% sample_n(size = 500, replace = FALSE)
+```
+
+We can fit the same model of interest in our "sample":
+
+```{r}
+sample_mod <- glm(smoke ~ exposure, data = addhealth_sample, family = "binomial")
+summary(sample_mod)
+```
+
+**Exercise:** Based on the model output, how would you expect the sampling distributions of the intercept and the `exposure` coefficient to compare?
+
+<br><br>
+
+**Exercise:** With the luxury of having the "full population", we can set out to obtain the sampling distribution.
+
+- Modify our traditional code for bootstrapping to obtain 1000 different samples of size 500 from the full population.
+- Make plots that show the distribution of the intercept and `exposure` coefficient estimates across samples. Does your expectation from the previous hold up?
+- How close are the standard deviations of the estimates to the standard errors from our sample's model? (You can use the `sd()` function and `repeated_samples[["name_of_coefficient"]]` will pull out a specific coefficient.)
+
+```{r}
+set.seed(155)
+repeated_samples <- replicate(1000, {
+})
+repeated_samples <- repeated_samples %>% t() %>% as.data.frame()
+head(repeated_samples)
+```
+
+```{r}
+# Plots
+# For the intercept
+ggplot(repeated_samples, aes(x = `(Intercept)`)) + ???
+# For the exposure coefficient
+```
+
+**Exercise:** Repeat the above process for samples of size 1000 from the population. How do the distributions compare?
+
+<br><br>
+
+**Exercise:** It turns out that sampling distributions for regression coefficients are often normally-distributed with mean equal to the true population value and standard deviation equal to the standard error for that coefficient.
+
+Based on the model output from `population_mod` and `sample_mod`, provide a answer for the following based on samples of size 500:
+
+- 68% of samples will generate estimates between what two values?
+- 95% of samples will generate estimates between what two values?
+- 99.7% of samples will generate estimates between what two values?
+

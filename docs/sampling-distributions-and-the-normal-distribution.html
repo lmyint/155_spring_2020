@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Topic 3 Bivariate Visualization - Part 1 | STAT 155: Introduction to Statistical Modeling</title>
+  <title>Topic 18 Sampling Distributions and the Normal Distribution | STAT 155: Introduction to Statistical Modeling</title>
   <meta name="description" content="This is the class website for STAT 155 at Macalester College." />
   <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Topic 3 Bivariate Visualization - Part 1 | STAT 155: Introduction to Statistical Modeling" />
+  <meta property="og:title" content="Topic 18 Sampling Distributions and the Normal Distribution | STAT 155: Introduction to Statistical Modeling" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="lmyint/155_spring_2020" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Topic 3 Bivariate Visualization - Part 1 | STAT 155: Introduction to Statistical Modeling" />
+  <meta name="twitter:title" content="Topic 18 Sampling Distributions and the Normal Distribution | STAT 155: Introduction to Statistical Modeling" />
   
   <meta name="twitter:description" content="This is the class website for STAT 155 at Macalester College." />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="univariate-visualization-and-data-summaries.html"/>
-<link rel="next" href="bivariate-visualization-part-2.html"/>
+<link rel="prev" href="multiple-logistic-regression.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -295,101 +295,61 @@ code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="bivariate-visualization---part-1" class="section level1">
-<h1><span class="header-section-number">Topic 3</span> Bivariate Visualization - Part 1</h1>
-<div id="learning-goals-1" class="section level2 unnumbered">
+<div id="sampling-distributions-and-the-normal-distribution" class="section level1">
+<h1><span class="header-section-number">Topic 18</span> Sampling Distributions and the Normal Distribution</h1>
+<div id="learning-goals-13" class="section level2 unnumbered">
 <h2>Learning Goals</h2>
 <ul>
-<li>Construct bivariate data visualizations of (1) two categorical variables and (2) one quantitative and one categorical variable</li>
-<li>Using good visualization principles, compare the strengths and weaknesses of these different visualizations</li>
+<li>Describe the information contained in sampling distributions</li>
+<li>Use normal distribution models of sampling distributions to make probability statements about sample estimates</li>
 </ul>
 <p><br><br><br><br></p>
 </div>
-<div id="exercises-1" class="section level2 unnumbered">
+<div id="exercises-10" class="section level2 unnumbered">
 <h2>Exercises</h2>
-<p>A template RMarkdown document that you can start from is available <a href="template_rmds/03-bivariate-viz-part1.Rmd">here</a>.</p>
-<p>As you proceed, put any new code that you encounter on your cheat sheet.</p>
-<div id="context-and-setup" class="section level3 unnumbered">
-<h3>Context and Setup</h3>
-<p>Today we begin our data exploration for our first case study! We’ll be looking at a dataset of weightlifting competition results to understand how various factors relate to an athlete’s strength.</p>
-<p>The data originally come from <a href="https://www.kaggle.com/open-powerlifting/powerlifting-database">Kaggle</a> and <a href="https://www.openpowerlifting.org/">OpenPowerlifting</a>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load required packages</span>
-<span class="kw">library</span>(readr)
-<span class="kw">library</span>(ggplot2)
+<p>A template RMarkdown document that you can start from is available <a href="template_rmds/18-sampling-normal.Rmd">here</a>.</p>
+<p>We’ll continue working with data from the Add Health study to understand how the risk of adulthood cigarette smoking is related to adolescent marijuana smoking.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readr)
 <span class="kw">library</span>(dplyr)
+<span class="kw">library</span>(ggplot2)
 
-<span class="co"># Read in the weightlifting data</span>
-lifts &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/n6jko5m7ygeasoj/openpowerlifting_subs.csv?dl=1&quot;</span>)</code></pre></div>
-</div>
-<div id="exercise-1-1" class="section level3 unnumbered">
-<h3>Exercise 1</h3>
-<p>As always, we’ll start by getting acquainted with the data. Look at the first few rows, and obtain the dimensions of the dataset.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Look at the first 6 rows</span>
-
-
-<span class="co"># Get the dimensions of the dataset</span></code></pre></div>
-<ol style="list-style-type: lower-alpha">
-<li>How many cases are there? (What are the cases?)</li>
-<li>What kinds of variables do we have information on? (Are there broader categories of variables?) Look up any variables that are unfamiliar (for example, <a href="https://en.wikipedia.org/wiki/Wilks_Coefficient">Wilks Coefficient</a>).</li>
-</ol>
-<p><br></p>
-</div>
-<div id="exercise-2-1" class="section level3 unnumbered">
-<h3>Exercise 2</h3>
-<p>Research question: Do males and females tend to use different types of equipment?</p>
-<p>The three barplots below give different ways of showing the <code>Sex</code> and <code>Equipment</code> variables. Which one is best suited to answering this research question and why?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(lifts, <span class="kw">aes</span>(<span class="dt">x =</span> Sex, <span class="dt">fill =</span> Equipment)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_bar</span>()
-
-<span class="kw">ggplot</span>(lifts, <span class="kw">aes</span>(<span class="dt">x =</span> Sex, <span class="dt">fill =</span> Equipment)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>)
-
-<span class="kw">ggplot</span>(lifts, <span class="kw">aes</span>(<span class="dt">x =</span> Sex, <span class="dt">fill =</span> Equipment)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>)</code></pre></div>
-<p><br></p>
-</div>
-<div id="exercise-3-1" class="section level3 unnumbered">
-<h3>Exercise 3</h3>
-<p>Your client for this case study (Leslie) is interested in using two of the variables to compute a third one. In particular, she wants to create a variable that is the ratio of total weight lifted to the athlete’s bodyweight.</p>
-<p>The code below creates a new variable called <code>SWR</code> (strength-to-weight ratio). Read through the code below and get a sense for what it is doing. If you have questions, ask the instructor.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The %&gt;% symbol is called a pipe. You can read it as:</span>
-<span class="co"># take the output that comes before the pipe and feed it in as input to the function that comes after</span>
-lifts &lt;-<span class="st"> </span>lifts <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">SWR =</span> TotalKg<span class="op">/</span>BodyweightKg)</code></pre></div>
-<p>Research question: How does strength-to-weight ratio differ between males and females?</p>
-<p>The code below makes different plots that can be used to explore this question. Before running the code, make note of what you expect. How might each contribute to answering the research question? Which one(s) would you choose to present to your client and why?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(lifts, <span class="kw">aes</span>(<span class="dt">x =</span> SWR, <span class="dt">fill =</span> Sex)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_histogram</span>()
-<span class="kw">ggplot</span>(lifts, <span class="kw">aes</span>(<span class="dt">x =</span> SWR, <span class="dt">fill =</span> Sex)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_histogram</span>() <span class="op">+</span>
-<span class="st">    </span><span class="kw">facet_grid</span>(<span class="op">~</span><span class="st"> </span>Sex)
-<span class="kw">ggplot</span>(lifts, <span class="kw">aes</span>(<span class="dt">x =</span> SWR, <span class="dt">color =</span> Sex)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_density</span>()
-<span class="kw">ggplot</span>(lifts, <span class="kw">aes</span>(<span class="dt">x =</span> Sex, <span class="dt">y =</span> SWR)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_boxplot</span>()</code></pre></div>
-<p><br></p>
-</div>
-<div id="exercise-4-1" class="section level3 unnumbered">
-<h3>Exercise 4</h3>
-<p>Did you notice anything unusual about the shape of the distribution of SWR in males and females? What group of athletes do you think is causing this peculiar shape? (Hint: you may have noticed this when you looked at the first few rows of the data.)</p>
-<p>Let’s filter out these individuals and remake your preferred plots from Exercise 3. Do you think that the rest of the analysis should proceed with these athletes filtered out?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Fill in the ??? below with a description of the athletes that you want to KEEP</span>
-<span class="co"># See Day 1 - Phase 5 for an example</span>
-lifts_subs &lt;-<span class="st"> </span>lifts <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">filter</span>(???)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Now remake your preferred plots from Exercise 3</span></code></pre></div>
-<p><br></p>
-</div>
-<div id="extra-1" class="section level3 unnumbered">
-<h3>Extra!</h3>
-<p>If you have time and want to continue your explorations, try the following:</p>
+addhealth &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/h09nq0nwgx8eioz/addhealth.csv?dl=1&quot;</span>)</code></pre></div>
+<p>Let’s pretend that the 1541 people in this dataset represent the full broader population of interest. When we fit the logistic regression model below, the coeffients represent the true population values of these quantities:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">population_mod &lt;-<span class="st"> </span><span class="kw">glm</span>(smoke <span class="op">~</span><span class="st"> </span>exposure, <span class="dt">data =</span> addhealth, <span class="dt">family =</span> <span class="st">&quot;binomial&quot;</span>)
+<span class="kw">summary</span>(population_mod)</code></pre></div>
+<p>We would not normally have access to this full population, so let’s draw a random sample of 500 people from it to obtain our study’s data:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">155</span>)
+addhealth_sample &lt;-<span class="st"> </span>addhealth <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dt">size =</span> <span class="dv">500</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p>We can fit the same model of interest in our “sample”:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sample_mod &lt;-<span class="st"> </span><span class="kw">glm</span>(smoke <span class="op">~</span><span class="st"> </span>exposure, <span class="dt">data =</span> addhealth_sample, <span class="dt">family =</span> <span class="st">&quot;binomial&quot;</span>)
+<span class="kw">summary</span>(sample_mod)</code></pre></div>
+<p><strong>Exercise:</strong> Based on the model output, how would you expect the sampling distributions of the intercept and the <code>exposure</code> coefficient to compare?</p>
+<p><br><br></p>
+<p><strong>Exercise:</strong> With the luxury of having the “full population”, we can set out to obtain the sampling distribution.</p>
 <ul>
-<li>Make plots showing the relationship between <code>SWR</code> and <code>Equipment</code>.</li>
-<li>Make plots showing the relationship between <code>Wilks</code> and <code>Sex</code>.</li>
-<li>Make plots showing the relationship between <code>Wilks</code> and <code>Equipment</code>.</li>
+<li>Modify our traditional code for bootstrapping to obtain 1000 different samples of size 500 from the full population.</li>
+<li>Make plots that show the distribution of the intercept and <code>exposure</code> coefficient estimates across samples. Does your expectation from the previous hold up?</li>
+<li>How close are the standard deviations of the estimates to the standard errors from our sample’s model? (You can use the <code>sd()</code> function and <code>repeated_samples[[&quot;name_of_coefficient&quot;]]</code> will pull out a specific coefficient.)</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">155</span>)
+repeated_samples &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, {
+})
+repeated_samples &lt;-<span class="st"> </span>repeated_samples <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">t</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>()
+<span class="kw">head</span>(repeated_samples)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plots</span>
+<span class="co"># For the intercept</span>
+<span class="kw">ggplot</span>(repeated_samples, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">`</span><span class="dt">(Intercept)</span><span class="st">`</span>)) <span class="op">+</span><span class="st"> </span>???
+<span class="co"># For the exposure coefficient</span></code></pre></div>
+<p><strong>Exercise:</strong> Repeat the above process for samples of size 1000 from the population. How do the distributions compare?</p>
+<p><br><br></p>
+<p><strong>Exercise:</strong> It turns out that sampling distributions for regression coefficients are often normally-distributed with mean equal to the true population value and standard deviation equal to the standard error for that coefficient.</p>
+<p>Based on the model output from <code>population_mod</code> and <code>sample_mod</code>, provide a answer for the following based on samples of size 500:</p>
+<ul>
+<li>68% of samples will generate estimates between what two values?</li>
+<li>95% of samples will generate estimates between what two values?</li>
+<li>99.7% of samples will generate estimates between what two values?</li>
 </ul>
 
-</div>
 </div>
 </div>
             </section>
@@ -397,8 +357,8 @@ lifts_subs &lt;-<span class="st"> </span>lifts <span class="op">%&gt;%</span>
           </div>
         </div>
       </div>
-<a href="univariate-visualization-and-data-summaries.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="bivariate-visualization-part-2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="multiple-logistic-regression.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
