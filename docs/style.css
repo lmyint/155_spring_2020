@@ -32,6 +32,12 @@ pre code {
 /* My custom styles */
 /* top, right, bottom, left */
 
+span.solution {
+    background-color: black;
+    color: black;
+    padding: 2px;
+}
+
 /* Reflection questions */
 div.reflect {
     border: 4px solid #8cc63f;

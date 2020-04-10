@@ -117,6 +117,7 @@ code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="schedule.html"><a href="schedule.html#spring-break-316---327"><i class="fa fa-check"></i>Spring Break: 3/16 - 3/27</a></li>
 <li class="chapter" data-level="" data-path="schedule.html"><a href="schedule.html#week-9-330---43"><i class="fa fa-check"></i>Week 9: 3/30 - 4/3</a></li>
 <li class="chapter" data-level="" data-path="schedule.html"><a href="schedule.html#week-10-46---410"><i class="fa fa-check"></i>Week 10: 4/6 - 4/10</a></li>
+<li class="chapter" data-level="0.1" data-path="schedule.html"><a href="schedule.html#week-11-413-417"><i class="fa fa-check"></i><b>0.1</b> Week 11: 4/13-4/17</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="software-setup.html"><a href="software-setup.html"><i class="fa fa-check"></i>Software Setup</a><ul>
 <li class="chapter" data-level="" data-path="software-setup.html"><a href="software-setup.html#troubleshooting"><i class="fa fa-check"></i>Troubleshooting</a></li>
@@ -315,31 +316,50 @@ code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Inf
 </center>
 <p>Warm up questions and answers:</p>
 <p>If I want to estimate P(Vote = yes | Democrat = yes), who should be counted in the numerator and denominator?</p>
-<p>A. Denominator: all voters. Numerator: Democrats who are voters. B. Denominator: all Democrats who are voters. Numerator: all voters. C. Denominator: all Democrats. Numerator: all voters. D. Denominator: all Democrats. Numerator: Democrats who are voters.</p>
-<p>Answer: <span style="background-color: black;">D</span></p>
+<p>A. Denominator: all voters. Numerator: Democrats who are voters.<br />
+B. Denominator: all Democrats who are voters. Numerator: all voters.<br />
+C. Denominator: all Democrats. Numerator: all voters.<br />
+D. Denominator: all Democrats. Numerator: Democrats who are voters.</p>
+<p>Answer: <span class="solution">D</span></p>
 <p><br><br></p>
 <p>Which of the following is a logistic regression model describing how voting is related to age?</p>
-<p>A. P(Vote = Yes) = B0 + B1 Age B. Odds(Vote = Yes) = B0 + B1 Age C. ln(Odds(Vote = Yes)) = B0 + B1 Age D. e^P(Vote = Yes) = B0 + B1 Age E. e^Odds(Vote = Yes) = B0 + B1 Age</p>
-<p>Answer: <span style="background-color: black;">C</span></p>
+<p>A. P(Vote = Yes) = B0 + B1 Age<br />
+B. Odds(Vote = Yes) = B0 + B1 Age<br />
+C. ln(Odds(Vote = Yes)) = B0 + B1 Age<br />
+D. e^P(Vote = Yes) = B0 + B1 Age<br />
+E. e^Odds(Vote = Yes) = B0 + B1 Age</p>
+<p>Answer: <span class="solution">C</span></p>
 <p><br><br></p>
 <p>Suppose that the odds of an event increases as a predictor X increases. What can be said about the probability of the event as X increases?</p>
-<p>A. Probability increases B. Probability increases initially but then decreases C. Probability decreases</p>
-<p>Answer: <span style="background-color: black;">A</span></p>
+<p>A. Probability increases<br />
+B. Probability increases initially but then decreases<br />
+C. Probability decreases</p>
+<p>Answer: <span class="solution">A</span></p>
 <p><br><br></p>
 <p>Suppose the log odds of an event decreases as X increases. What can be said about the corresponding probability?</p>
-<p>A. Probability increases B. Probability increases initially but then decreases C. Probability decreases</p>
-<p>Answer: <span style="background-color: black;">C</span></p>
+<p>A. Probability increases<br />
+B. Probability increases initially but then decreases<br />
+C. Probability decreases</p>
+<p>Answer: <span class="solution">C</span></p>
 <p><br><br></p>
 <p>Consider the logistic regression model log(odds(disease = Yes)) = -2 + 0.5*ExposedYes. What are the odds of disease in those not exposed to an environmental hazard?</p>
-<p>A. -2 B. 0.5 C. -1.5 D. <span class="math inline">\(e^{-2}\)</span> E. <span class="math inline">\(e^{0.5}\)</span> F. <span class="math inline">\(e^{-1.5}\)</span></p>
-<p>Answer: <span style="background-color: black;">D</span></p>
+<p>A. -2<br />
+B. 0.5<br />
+C. -1.5<br />
+D. <span class="math inline">\(e^{-2}\)</span><br />
+E. <span class="math inline">\(e^{0.5}\)</span><br />
+F. <span class="math inline">\(e^{-1.5}\)</span></p>
+<p>Answer: <span class="solution">D</span></p>
 <p><br><br></p>
 <p>Same model: log(odds(disease = Yes)) = -2 + 0.5*ExposedYes. How do the odds of disease compare in the exposed and unexposed?</p>
-<p>A. Exposed have 0.5 times the odds of the unexposed B. Exposed have 0.5 lower odds than the unexposed (difference) C. Exposed have e^0.5 times the odds of the unexposed D. Exposed have e^0.5 lower odds than the unexposed (difference)</p>
-<p>Answer: <span style="background-color: black;">C</span></p>
+<p>A. Exposed have 0.5 times the odds of the unexposed<br />
+B. Exposed have 0.5 lower odds than the unexposed (difference)<br />
+C. Exposed have e^0.5 times the odds of the unexposed<br />
+D. Exposed have e^0.5 lower odds than the unexposed (difference)</p>
+<p>Answer: <span class="solution">C</span></p>
 <p><br><br></p>
 <p>Consider the model log(odds(Disease = Yes)) = B0 + B1*ExposedYes. If the exposed and unexposed have the same chance of having disease, what would you expect about B1?</p>
-<p>Answer: <span style="background-color: black;">B1 = 0, e^B1 = 1</span></p>
+<p>Answer: <span class="solution">B1 = 0, e^B1 = 1</span></p>
 <p><br><br><br><br></p>
 </div>
 <div id="exercises-8" class="section level2 unnumbered">

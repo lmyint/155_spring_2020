@@ -110,5 +110,12 @@ If Google/YouTube access is a problem, all videos and slides are also available 
 - **Friday:** The central limit theorem and confidence intervals
     - Video: Central Limit Theorem (YouTube link will be added soon, [Slides](https://drive.google.com/file/d/1E4ARLYbdq_YAX8vK28KenAH1mbL3W0wm/view?usp=sharing))
 
+## Week 11: 4/13-4/17
+
+- **Monday:** Linear regression assumptions
+    - Video: Linear Regression Assumptions ([YouTube link](https://youtu.be/FFxUbXRuufM), [Slides](https://drive.google.com/file/d/1sXhuyKUHbKJlFtrNBgN2xLw1bu4mUplz/view?usp=sharing))
+- **Wednesday:** Hypothesis testing
+    - Video and slides to be added soon
+- **Friday:** Continuing with hypothesis testing.
 
 
