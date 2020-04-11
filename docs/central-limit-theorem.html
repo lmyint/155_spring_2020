@@ -278,6 +278,7 @@ code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="19" data-path="central-limit-theorem.html"><a href="central-limit-theorem.html"><i class="fa fa-check"></i><b>19</b> Central Limit Theorem</a><ul>
 <li class="chapter" data-level="" data-path="central-limit-theorem.html"><a href="central-limit-theorem.html#learning-goals-14"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="central-limit-theorem.html"><a href="central-limit-theorem.html#discussion-6"><i class="fa fa-check"></i>Discussion</a></li>
 <li class="chapter" data-level="" data-path="central-limit-theorem.html"><a href="central-limit-theorem.html#exercises-11"><i class="fa fa-check"></i>Exercises</a><ul>
 <li class="chapter" data-level="" data-path="central-limit-theorem.html"><a href="central-limit-theorem.html#exercise-1-10"><i class="fa fa-check"></i>Exercise 1</a></li>
 <li class="chapter" data-level="" data-path="central-limit-theorem.html"><a href="central-limit-theorem.html#exercise-2-10"><i class="fa fa-check"></i>Exercise 2</a></li>
@@ -314,6 +315,11 @@ code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Inf
 <li>Make quantitative predictions about how changing sample size</li>
 </ul>
 <p><br><br><br><br></p>
+</div>
+<div id="discussion-6" class="section level2 unnumbered">
+<h2>Discussion</h2>
+<p>In the video/slides, we saw</p>
+<p><img src="stat155_manual_files/figure-html/19-clt-pop1-1.png" width="960" /><img src="stat155_manual_files/figure-html/19-clt-pop1-2.png" width="960" /><img src="stat155_manual_files/figure-html/19-clt-pop1-3.png" width="960" /><img src="stat155_manual_files/figure-html/19-clt-pop1-4.png" width="960" /></p>
 </div>
 <div id="exercises-11" class="section level2 unnumbered">
 <h2>Exercises</h2>
@@ -353,7 +359,8 @@ code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Inf
 <li>The correct interpretation:<br />
 95% of all possible samples will produce 95% CI’s that cover the true value. The other 5% are based on unlucky samples that produce unusually low or high estimates.</li>
 <li>The INCORRECT interpretation:<br />
-We cannot say that “there’s a 95% chance that the true population value is in the 95% CI.” Technically, the population value is either in the interval or it’s not, so the probability is simply 1 or 0.</li>
+We cannot say that “there’s a 95% chance that the true population value is in the 95% CI <em>from this particular sample</em>.” Technically, the population value is either in the interval or it’s not, so the probability is simply 1 or 0.<br />
+e.g., If the true population value is <span class="math inline">\(\beta = 1\)</span>, and my CI is (2,4), there is a 0% probability that the truth is in my interval. If my CI were (0.5,3.5), there is a 100% probability that the truth is in this interval.</li>
 </ul>
 <p>Note that this also applies to bootstrap confidence intervals, and 95% is called the <strong>coverage probability</strong> or <strong>confidence level</strong>.</p>
 <p><br><br></p>

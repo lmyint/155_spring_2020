@@ -12,6 +12,69 @@ knitr::opts_chunk$set(echo=TRUE, eval=TRUE)
 
 <br><br><br><br>
 
+## Discussion {-}
+
+In the video/slides, we saw 
+
+```{r 19-clt-pop1, echo=FALSE, eval=TRUE, fig.width=10, fig.height=3.3}
+## Population size
+N <- 1000000
+## Sample sizes
+n_vec <- c(10,100,1000,10000)
+## Number of samples to take to estimate sampling distribution
+n_sd <- 1000
+
+## Population 1: gamma distribution with shape = scale = 2
+set.seed(5)
+pop1 <- rgamma(N, shape = 2, scale = 2)
+mean_pop1 <- mean(pop1)
+## Estimate sampling distributions for the different sample sizes
+sampling_dists <- do.call(rbind, lapply(n_vec, function(n) {
+    samp_dist <- replicate(n_sd, {
+        samp <- sample(pop1, size = n)
+        mean(samp)
+    })
+    data.frame(mean = samp_dist, sample_size = paste("Sample size:", n))
+}))
+
+ggplot(data.frame(values = pop1), aes(x = values)) +
+    geom_density() +
+    geom_vline(xintercept = mean_pop1, color = "red", alpha = 0.5) +
+    theme_minimal() +
+    labs(title = "Population 1 (True mean = 4)", x = "Values", y = "Density")
+ggplot(sampling_dists, aes(x = mean)) +
+    geom_density() +
+    facet_grid(~sample_size) +
+    geom_vline(xintercept = mean_pop1, color = "red", alpha = 0.5) +
+    theme_minimal() +
+    labs(title = "Sampling distributions of the sample mean", x = "Means", y = "Density")
+
+## Population 2: mixture
+set.seed(6)
+pop2 <- c(rgamma(N/2, shape = 2, scale = 2), rnorm(N/2, mean = 10))
+mean_pop2 <- mean(pop2)
+## Estimate sampling distributions for the different sample sizes
+sampling_dists <- do.call(rbind, lapply(n_vec, function(n) {
+    samp_dist <- replicate(n_sd, {
+        samp <- sample(pop2, size = n)
+        mean(samp)
+    })
+    data.frame(mean = samp_dist, sample_size = paste("Sample size:", n))
+}))
+
+ggplot(data.frame(values = pop2), aes(x = values)) +
+    geom_density() +
+    geom_vline(xintercept = mean_pop2, color = "red", alpha = 0.5) +
+    theme_minimal() +
+    labs(title = "Population 2 (True mean = 7)", x = "Values", y = "Density")
+ggplot(sampling_dists, aes(x = mean)) +
+    geom_density() +
+    facet_grid(~sample_size) +
+    geom_vline(xintercept = mean_pop2, color = "red", alpha = 0.5) +
+    theme_minimal() +
+    labs(title = "Sampling distributions of the sample mean", x = "Means", y = "Density")
+```
+
 ## Exercises {-}
 
 A template RMarkdown document that you can start from is available [here](template_rmds/19-clt.Rmd).
@@ -63,7 +126,8 @@ as saying: the probability that a 95% confidence interval **from a random sample
 - The correct interpretation:    
     95% of all possible samples will produce 95% CI's that cover the true value. The other 5% are based on unlucky samples that produce unusually low or high estimates.
 - The INCORRECT interpretation:    
-    We cannot say that "there's a 95% chance that the true population value is in the 95% CI." Technically, the population value is either in the interval or it's not, so the probability is simply 1 or 0.
+    We cannot say that "there's a 95% chance that the true population value is in the 95% CI *from this particular sample*." Technically, the population value is either in the interval or it's not, so the probability is simply 1 or 0.    
+    e.g., If the true population value is $\beta = 1$, and my CI is (2,4), there is a 0% probability that the truth is in my interval. If my CI were (0.5,3.5), there is a 100% probability that the truth is in this interval.
 
 Note that this also applies to bootstrap confidence intervals, and 95% is called the **coverage probability** or **confidence level**.
 
