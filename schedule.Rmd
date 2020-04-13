@@ -115,7 +115,7 @@ If Google/YouTube access is a problem, all videos and slides are also available 
 - **Monday:** Linear regression assumptions
     - Video: Linear Regression Assumptions ([YouTube link](https://youtu.be/FFxUbXRuufM), [Slides](https://drive.google.com/file/d/1sXhuyKUHbKJlFtrNBgN2xLw1bu4mUplz/view?usp=sharing))
 - **Wednesday:** Hypothesis testing
-    - Video and slides to be added soon
+    - Video: Hypothesis Testing ([YouTube link](https://youtu.be/lwk_-mmfJc8), [Slides](https://drive.google.com/file/d/18zXB3yBCXjASiElfx9ojOVX9M9vpUsUd/view?usp=sharing))
 - **Friday:** Continuing with hypothesis testing.
 
 
