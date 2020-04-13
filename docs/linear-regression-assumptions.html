@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Topic 14 Midterm Review | STAT 155: Introduction to Statistical Modeling</title>
+  <title>Topic 20 Linear Regression Assumptions | STAT 155: Introduction to Statistical Modeling</title>
   <meta name="description" content="This is the class website for STAT 155 at Macalester College." />
   <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Topic 14 Midterm Review | STAT 155: Introduction to Statistical Modeling" />
+  <meta property="og:title" content="Topic 20 Linear Regression Assumptions | STAT 155: Introduction to Statistical Modeling" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="lmyint/155_spring_2020" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Topic 14 Midterm Review | STAT 155: Introduction to Statistical Modeling" />
+  <meta name="twitter:title" content="Topic 20 Linear Regression Assumptions | STAT 155: Introduction to Statistical Modeling" />
   
   <meta name="twitter:description" content="This is the class website for STAT 155 at Macalester College." />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="causal-inference.html"/>
-<link rel="next" href="probability-essentials.html"/>
+<link rel="prev" href="central-limit-theorem.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -314,81 +314,132 @@ code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="midterm-review" class="section level1">
-<h1><span class="header-section-number">Topic 14</span> Midterm Review</h1>
-<div id="core-themes" class="section level2 unnumbered">
-<h2>Core Themes</h2>
-<p>Misleading</p>
+<div id="linear-regression-assumptions" class="section level1">
+<h1><span class="header-section-number">Topic 20</span> Linear Regression Assumptions</h1>
+<div id="learning-goals-15" class="section level2 unnumbered">
+<h2>Learning Goals</h2>
 <ul>
-<li>Visualizations: How do different visualizations hide / fail to show certain aspects of the data?</li>
-<li>Summary statistics: How do summary statistics hide / fail to show certain aspects of the data?</li>
-<li>Coefficients in simple linear regression models</li>
-<li>Multiple R-squared</li>
-<li>Multicollinearity</li>
-<li>Confounders and mediators</li>
+<li>Use visualizations to check the assumptions behind linear regression models</li>
+<li>Transform variables approriately to help models better meet assumptions</li>
+<li>Predict how properties of statistical inference proceudres will vary based on the degree to which assumptions are met</li>
 </ul>
+<p><br><br><br><br></p>
+</div>
+<div id="discussion-7" class="section level2 unnumbered">
+<h2>Discussion</h2>
+<p>We’ve written linear regression models as:</p>
+<p><span class="math display">\[ E[Y] = \beta_0 + \beta_1x_1 + \cdots + \beta_p x_p \]</span></p>
+<p>This is equivalent to how it was written in the video:</p>
+<p><span class="math display">\[ Y = \beta_0 + \beta_1x_1 + \cdots + \beta_p x_p + \varepsilon \]</span></p>
+<p><span class="math inline">\(\varepsilon\)</span> stands for the error, or the <strong>residuals</strong>, and the 4 key assumptions of linear regression can be compactly summarized by the following statement:</p>
+<p><span class="math display">\[ \varepsilon \stackrel{ind}{\sim} N(0, \sigma^2) \]</span></p>
+<ol style="list-style-type: decimal">
+<li>Independence</li>
+<li>Trend</li>
+<li>Homoskedasticity</li>
+<li>Normality<br />
+Normality of the residuals is actually least important of the 4 because of the Central Limit Theorem. However, violations of normality usually lead to violations of homoskedasticity.</li>
+</ol>
 <p><br><br></p>
-<p>Prediction vs. Explanation</p>
+<p>Assumptions serve to ensure that statistical inference procedures (e.g., confidence intervals, hypothesis tests–coming up next!) “work as advertised”:</p>
 <ul>
-<li>Metrics for predictive quality</li>
-<li>Goal: prediction
+<li>The process of creating a 95% CI is a <strong>procedure</strong> (add and subtract about 2 standard errors from the estimate).
 <ul>
-<li>Include all variables that actually predict the response</li>
-<li>Does multicollinearity / redundancy matter?</li>
-<li>Do confounders / mediators matter?</li>
-</ul></li>
-<li>Goal: explanation
-<ul>
-<li>Does multicollinearity / redundancy matter?</li>
-<li>Do confounders / mediators matter?</li>
+<li>It “works as advertised” if in 95% of possible samples it creates intervals that contain the true population value. (The other 5% of samples are unlucky ones.)</li>
+<li>It does not “work as advertised” if, for example, only 90% of possible samples result in intervals (95% CIs) that contain the true population value.</li>
 </ul></li>
 </ul>
 <p><br><br><br><br></p>
 </div>
-<div id="additional-exercises" class="section level2 unnumbered">
-<h2>Additional Exercises</h2>
-<div id="exercise-1-7" class="section level3 unnumbered">
-<h3>Exercise 1</h3>
-<p>Suppose that we want to know the causal effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span>, and there is a single confounder <span class="math inline">\(C\)</span>.</p>
-<ul>
-<li>Can the model <code>Y ~ X+C</code> answer this research question?</li>
-<li>Can the model <code>Y ~ X*C</code> answer this research question?</li>
-</ul>
-<p>Make sure that you know how to interpret the coefficients in both of the above models regardless of the type of variable <span class="math inline">\(X\)</span> and <span class="math inline">\(C\)</span> are.</p>
+<div id="exercises-12" class="section level2 unnumbered">
+<h2>Exercises</h2>
+<p>A template RMarkdown document that you can start from is available <a href="template_rmds/20-lin-reg-assumptions.Rmd">here</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load required packages</span>
+<span class="kw">library</span>(readr)
+<span class="kw">library</span>(ggplot2)
+<span class="kw">library</span>(dplyr)
+
+<span class="co"># Read in the data</span>
+homes &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&quot;http://sites.williams.edu/rdeveaux/files/2014/09/Saratoga.txt&quot;</span>)
+
+<span class="co"># Look at the first 6 rows</span>
+<span class="kw">head</span>(homes)</code></pre></div>
+<p>We will pretend that the <code>homes</code> dataset contains the <strong>full population</strong> of New York houses. Let’s draw a random sample of 500 houses from the “population”. We can do this with the <code>sample_n()</code> function available in the <code>dplyr</code> package:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Randomly sample 500 homes</span>
+<span class="kw">set.seed</span>(<span class="dv">155</span>)
+homes_sample &lt;-<span class="st"> </span><span class="kw">sample_n</span>(homes, <span class="dt">size =</span> <span class="dv">500</span>)</code></pre></div>
+</div>
+<div id="exercise-1-11" class="section level2 unnumbered">
+<h2>Exercise 1</h2>
+<p>Do you think the independence assumption holds? Briefly explain.</p>
+<p><strong>Note:</strong> violations to the indpendence assumption are beyond the scope of our course, but appropriate methods are handled in Mac’s Correlated Data class (STAT 452).</p>
 <p><br><br></p>
 </div>
-<div id="exercise-2-7" class="section level3 unnumbered">
-<h3>Exercise 2</h3>
-<p>Consider a categorical predictor of interest <span class="math inline">\(X\)</span>, response <span class="math inline">\(Y\)</span>, and a quantitative confounder <span class="math inline">\(C\)</span>. Consider the following 3 situations:</p>
-<ul>
-<li><strong>Situation 1:</strong> Confounding: no. Interaction: yes.</li>
-<li><strong>Situation 2:</strong> Confounding: yes. Interaction: no.</li>
-<li><strong>Situation 3:</strong> Confounding: yes. Interaction: yes.</li>
-<li><strong>Situation 4:</strong> Confounding: no. Interaction: no.</li>
-</ul>
-<p>For each situation draw a <strong>single</strong> plot that <strong>clearly</strong> shows the situation. After you draw these single plots, think about what the plots would look like if the situation weren’t so clear and about what additional plots would be helpful in that circumstance.</p>
-<p><br><br></p>
-</div>
-<div id="exercise-3-5" class="section level3 unnumbered">
-<h3>Exercise 3</h3>
+<div id="exercise-2-11" class="section level2 unnumbered">
+<h2>Exercise 2</h2>
+<p>In this exercise, we’ll build an initial model of <code>Price</code> versus <code>Age</code>. We’ll aim to improve it in the next exercise.</p>
 <ol style="list-style-type: lower-alpha">
-<li><p>Consider the process of performing bootstrapping. Identify all points in the process that could be performed incorrectly and describe the implications of such errors.</p></li>
-<li><p>We view our bootstrap confidence intervals as ranges of plausible values for the true population value. What is the rationale for this?</p></li>
+<li><p>Using our sample (<code>homes_sample</code>), visualize the relationship between house price and house age. How would you describe the overall shape of the trend? Is it linear?</p></li>
+<li><p>Using our sample (<code>homes_sample</code>), fit a linear regression model where <code>Price</code> is predicted by <code>Age</code>. Call this model <code>mod1</code>.</p></li>
+<li><p>Check the trend and homoskedasticity assumptions by plotting the residuals versus the fitted (predicted) values. The points should be evenly scattered around the <span class="math inline">\(y = 0\)</span> line. Do you think these assumptions are met?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Put the residuals and predicted values into a dataset</span>
+mod1_output &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
+    <span class="dt">residual =</span> <span class="kw">residuals</span>(mod1),
+    <span class="dt">predicted =</span> <span class="kw">fitted.values</span>(mod1)
+)
+
+<span class="co"># Plot</span>
+<span class="kw">ggplot</span>(mod1_output, <span class="kw">aes</span>(???)) <span class="op">+</span>
+<span class="st">    </span>??? <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="co"># Add the y = 0 line</span></code></pre></div></li>
+<li><p>Check the normality assumption by making a QQ-plot of the residuals. In a QQ-plot, each residual (y-axis) is plotted against its theoretical corresponding value from a standard normal distribution (<span class="math inline">\(N(0,1^2)\)</span>) on the x-axis. That is, the first quartile of the residuals is plotted against the first quartile of <span class="math inline">\(N(0,1^2)\)</span>, the median of the residuals is plotted against the median of <span class="math inline">\(N(0,1^2)\)</span>, and so on. If the residuals follow a normal distribution, then the points should fall on a line. Do you think the normality assumption holds?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mod1_output, <span class="kw">aes</span>(<span class="dt">sample =</span> residual)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_qq</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_qq_line</span>()</code></pre></div></li>
+</ol>
+<p><br><br></p>
+</div>
+<div id="exercise-3-9" class="section level2 unnumbered">
+<h2>Exercise 3</h2>
+<p>The diagnostic plots we made above suggest that key assumptions are not being met. Let’s explore how <strong>transforming</strong> variables can help us meet those assumptions.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>One of the most common <em>variable transformations</em> that can help fix an unmet homoskedasticity assumption is a logarithmic transformation of the response variable. We will also try to better model the nonlinear shape of the <code>Price</code> vs. <code>Age</code> trend by using a logarithmic transformation. The <code>mutate()</code> function in the <code>dplyr</code> package allows us to create these new transformed variables:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">homes_sample &lt;-<span class="st"> </span>homes_sample <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(
+        <span class="dt">log_price =</span> <span class="kw">log</span>(Price),
+        <span class="dt">log_age =</span> <span class="kw">log</span>(Age <span class="op">+</span><span class="st"> </span><span class="dv">1</span>) <span class="co"># Some Age&#39;s are 0, so add 1 to prevent log(0), which is undefined</span>
+    )</code></pre></div></li>
+<li><p>Fit a linear regression model called <code>mod2</code> where <code>log_price</code> is predicted by <code>log_age</code>. Using similar code as in Exercise 2, obtain the residuals and fitted values, and store this in an object called <code>mod2_output</code>.</p></li>
+<li><p>Check the trend, homoskedasticity, and normality assumptions for <code>mod2</code>. Do these assumptions seem to hold better for <code>mod1</code> or <code>mod2</code>?</p></li>
+</ol>
+<p><br><br></p>
+</div>
+<div id="exercise-4-5" class="section level2 unnumbered">
+<h2>Exercise 4</h2>
+<p>Now let’s look at the implications of our investigations for <strong>statistical inference</strong>.</p>
+<p>Since we have the entire population of New York homes, we can investigate whether or not confidence intervals “work as advertised” for the two models we investigated.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Fit the <code>Price ~ Age</code> and the <code>log_price ~ log_age</code> models in the full population. What are the true population values of the <code>Age</code> and <code>log(Age)</code> coefficients?</p></li>
+<li><p>Obtain the 95% confidence intervals for the coefficients in <code>mod1</code> and <code>mod2</code> with the <code>confint()</code> function. (Good review: What computations are going on behind the scenes in <code>confint()</code>?)<br />
+Does the 95% confidence interval “work as advertised” in this case?</p></li>
+<li>In part (b), we just looked at one sample. If the 95% CI truly were “working as advertised”, 95% of samples would produce 95% CIs that contain the true population value. Behind the scenes, we have run a simulation study to see how 95% CIs “work” in 1000 different samples of 500 homes.
+<ul>
+<li>We find that for <code>mod1</code>, 95% CIs contain the true value of the <code>Age</code> coefficient in 935 samples.<br />
+</li>
+<li>We find that for <code>mod2</code>, 95% CIs contain the true value of the <code>log_age</code> coefficient in 968 samples.<br />
+With regards to statistical inference, what can you conclude about assumption violations and fixing those violations?</li>
+</ul></li>
 </ol>
 
 </div>
 </div>
-</div>
-
-
-
             </section>
 
           </div>
         </div>
       </div>
-<a href="causal-inference.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="probability-essentials.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="central-limit-theorem.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
