@@ -1,0 +1,124 @@
+```{r 21_setup, include=FALSE}
+rm(list = ls())
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+
+# Hypothesis Testing
+
+## Learning Goals {-}
+
+- Explain the logic of hypothesis testing
+- Conduct hypothesis tests in the context of regression models to answer research questions
+- Relate hypothesis testing to confidence interval procedures
+- Interpret quantities related to hypothesis testing
+
+<br><br><br><br>
+
+## Discussion {-}
+
+When we fit regression models in R and display the `summary()` output, the Coefficients table gives two new quantities used in hypothesis testing.
+
+For linear regression models:
+
+- `t value`: the test statistic called "t" because the sampling distribution of these test statistics follows a **t distribution** (very closely related to the normal distribution)
+- `Pr(>|t|)`: shorthand for **pr**obability that the test statistic is larger in absolute value than the observed test statistic $t$ ($\|t\|$ represents the absolute value of $t$). This is the **two-sided p-value** for the test.
+
+```
+> lm(Price ~ Age, data = homes) %>% summary()
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 229728.46    3218.18  71.385  < 2e-16 ***
+Age               ???      79.66  -7.987  2.5e-15 ***
+```
+
+**Question:** The estimate for `Age` was deleted by accident! Are we able to fill in that missing information? Why or why not?
+
+<br><br>
+
+For logistic regression models, the "t" is instead a "z" because the sampling distribution of coefficients is the normal distribution. (Usually quantities that follow a normal distribution are denoted by "z".)
+
+```
+> glm(smoke ~ exposure, data = addhealth, family = "binomial") %>% summary()
+
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept) -0.86275    0.05805 -14.862  < 2e-16 ***
+exposure     0.91318    0.19237   4.747 2.06e-06 ***
+```
+
+<br><br>
+
+We noted in the video that both confidence intervals and hypothesis tests can answer questions about whether we have evidence for real, meaningful broader population effects.
+
+It turns out that decisions made from hypothesis tests with a significance level of $\alpha$ are equivalent to the corresponding $100(1-\alpha)\%$ CI.
+
+- e.g., Conducting a hypothesis test with a significance level of $\alpha = 0.05$ is equivalent to conclusion from a 95% CI
+
+
+<br><br><br><br>
+
+
+## Exercises {-}
+
+A template RMarkdown document that you can start from is available [here](template_rmds/21-hypothesis-testing.Rmd).
+
+We will be using data on 1167 colleges obtained from an edition of the U.S. News College Rankings. For each college, the following variables are given:
+
+- `College`: Name of school
+- `GradRate`: College graduation rate (as a value from 0 to 100)
+- `SFRatio`: Student-to-faculty ratio
+- `AdmisRate`: Percentage of applicants accepted (as a value from 0 to 100)
+- `FacultyPhD`: Percentage of faculty with a PhD (as a value from 0 to 100)
+- `Type`: School type (Private or Public)
+- `Region`: Location of school: Midwest, NorthEast, South, or West.
+- `State`: School state
+- `MathSAT`: Average Math SAT score of entering first-years
+- `VerbalSAT`: Average Verbal SAT score of entering first-years
+- `ACT`: Average ACT score of entering first-years
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+
+colleges <- read_csv("https://www.dropbox.com/s/efgkjbqeiikzzn7/USNews.csv?dl=1")
+```
+
+> **Research question:** What is the causal effect of student-to-faculty ratios on graduation rates? How does this effect differ across school types?
+
+Throughout, use zero as the criteria for a meaningful difference and a significance level of 0.01.
+
+### Exercise 1 {-}
+
+a. Fit an *unadjusted* model that ignores these potential confounders. Present a (naïve) answer to the first research question by interpreting the relevant coefficient and conducting an appropriate hypothesis test.
+
+b. What would you expect about the corresponding 99% confidence interval (CI) for the coefficient (whether through bootstrapping or the CLT)? What about the 95% CI for the coefficient? Briefly explain, and check your answer with `confint()`.
+
+<br><br>
+
+### Exercise 2 {-}
+
+We find that school type (`Type`) and average ACT scores (`ACT`) are potential confounders of the relationship between student-to-faculty ratios and graduation rates.
+
+a. Fit an *adjusted* model that answers the first research question. **Give an interpretation** for all 4 quantities for the relevant coefficient: the estimate, the standard error, the test statistic, and p-value.
+
+b. Show that you reach the same conclusions with an appropriate confidence interval.
+
+<br><br>
+
+### Exercise 3 {-}
+
+Fit an appropriate model to answer the second research question. Support your response by interpreting the two relevant coefficients and by appropriately using a p-value and a confidence interval.
+
+Given the hypotheses you stated above, briefly explain why the p-value on `(Intercept)` is so small.
+
+<br><br>
+
+### Exercise 4 {-}
+
+Suppose we know that the distribution of a test statistic $Z$ "under $H_0$" (if $H_0$ is true) is the standard normal distribution (mean = 0, SD = 1). This is the case in logistic regression.
+
+a. For what values of the test statistic $Z$ will I reject $H_0$ using $\alpha = 0.05$ as my p-value cutoff?
+
+b. For what values of the test statistic $Z$ will I reject $H_0$ using $\alpha = 0.32$ as my p-value cutoff?

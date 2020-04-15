@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Topic 17 Multiple Logistic Regression | STAT 155: Introduction to Statistical Modeling</title>
+  <title>Topic 21 Hypothesis Testing | STAT 155: Introduction to Statistical Modeling</title>
   <meta name="description" content="This is the class website for STAT 155 at Macalester College." />
   <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Topic 17 Multiple Logistic Regression | STAT 155: Introduction to Statistical Modeling" />
+  <meta property="og:title" content="Topic 21 Hypothesis Testing | STAT 155: Introduction to Statistical Modeling" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="lmyint/155_spring_2020" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Topic 17 Multiple Logistic Regression | STAT 155: Introduction to Statistical Modeling" />
+  <meta name="twitter:title" content="Topic 21 Hypothesis Testing | STAT 155: Introduction to Statistical Modeling" />
   
   <meta name="twitter:description" content="This is the class website for STAT 155 at Macalester College." />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="simple-logistic-regression.html"/>
-<link rel="next" href="sampling-distributions-and-the-normal-distribution.html"/>
+<link rel="prev" href="linear-regression-assumptions.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -324,85 +324,116 @@ code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="multiple-logistic-regression" class="section level1">
-<h1><span class="header-section-number">Topic 17</span> Multiple Logistic Regression</h1>
-<div id="learning-goals-12" class="section level2 unnumbered">
+<div id="hypothesis-testing" class="section level1">
+<h1><span class="header-section-number">Topic 21</span> Hypothesis Testing</h1>
+<div id="learning-goals-16" class="section level2 unnumbered">
 <h2>Learning Goals</h2>
 <ul>
-<li>Construct multiple logistic regression models in R</li>
-<li>Construct and interpret visualizations to inform model building</li>
-<li>Interpret multiple logistic regression model output</li>
+<li>Explain the logic of hypothesis testing</li>
+<li>Conduct hypothesis tests in the context of regression models to answer research questions</li>
+<li>Relate hypothesis testing to confidence interval procedures</li>
+<li>Interpret quantities related to hypothesis testing</li>
 </ul>
 <p><br><br><br><br></p>
 </div>
-<div id="exercises-9" class="section level2 unnumbered">
-<h2>Exercises</h2>
-<p>A template RMarkdown document that you can start from is available <a href="template_rmds/17-multiple-logistic-regression.Rmd">here</a>.</p>
-<p>We will be looking at data from the Add Health study (<a href="https://cpc.unc.edu/projects/addhealth" class="uri">https://cpc.unc.edu/projects/addhealth</a>), a national survey of adolescent health.</p>
-<blockquote>
-<p><strong>Research question:</strong> What is the causal effect of adolescent marijuana smoking on adulthood cigarette smoking?</p>
-</blockquote>
-<p>The following variables are in the dataset:</p>
+<div id="discussion-8" class="section level2 unnumbered">
+<h2>Discussion</h2>
+<p>When we fit regression models in R and display the <code>summary()</code> output, the Coefficients table gives two new quantities used in hypothesis testing.</p>
+<p>For linear regression models:</p>
 <ul>
-<li><code>exposure</code>: Indicator for whether or not marijuana was smoked in adolescence. 1=yes, 0=no. (Main predictor of interest.)</li>
-<li><code>smoke</code>: Indicator for whether the individual smoked in adulthood. 1=yes, 0=no. (Response variable.)</li>
-<li><code>age</code>: Age at study entry (continuous)</li>
-<li><code>male</code>: Indicator for whether the individual was male. 1=yes, 0=no.</li>
-<li><code>white</code>: Indicator for whether the individual was White. 1=yes, 0=no.</li>
-<li><code>susp</code>: Indicator for whether the individual was ever suspended from school. 1=yes, 0=no.</li>
-<li><code>mathG</code>: Math grade (1 to 4 corresponding respectively to A to D)</li>
-<li><code>readG</code>: Reading grade (1 to 4 corresponding respectively to A to D)</li>
-<li><code>parentED</code>: Parent education (1 to 5 corresponding respectively to less than high school, high school, vocational school, some college, and college graduate and beyond).</li>
-<li><code>housesmoke</code>: Indicator for the presence of a cigarette smoker in the individual’s household. 1=yes, 0=no.</li>
+<li><code>t value</code>: the test statistic called “t” because the sampling distribution of these test statistics follows a <strong>t distribution</strong> (very closely related to the normal distribution)</li>
+<li><code>Pr(&gt;|t|)</code>: shorthand for <strong>pr</strong>obability that the test statistic is larger in absolute value than the observed test statistic <span class="math inline">\(t\)</span> (<span class="math inline">\(\|t\|\)</span> represents the absolute value of <span class="math inline">\(t\)</span>). This is the <strong>two-sided p-value</strong> for the test.</li>
+</ul>
+<pre><code>&gt; lm(Price ~ Age, data = homes) %&gt;% summary()
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 229728.46    3218.18  71.385  &lt; 2e-16 ***
+Age               ???      79.66  -7.987  2.5e-15 ***</code></pre>
+<p><strong>Question:</strong> The estimate for <code>Age</code> was deleted by accident! Are we able to fill in that missing information? Why or why not?</p>
+<p><br><br></p>
+<p>For logistic regression models, the “t” is instead a “z” because the sampling distribution of coefficients is the normal distribution. (Usually quantities that follow a normal distribution are denoted by “z”.)</p>
+<pre><code>&gt; glm(smoke ~ exposure, data = addhealth, family = &quot;binomial&quot;) %&gt;% summary()
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -0.86275    0.05805 -14.862  &lt; 2e-16 ***
+exposure     0.91318    0.19237   4.747 2.06e-06 ***</code></pre>
+<p><br><br></p>
+<p>We noted in the video that both confidence intervals and hypothesis tests can answer questions about whether we have evidence for real, meaningful broader population effects.</p>
+<p>It turns out that decisions made from hypothesis tests with a significance level of <span class="math inline">\(\alpha\)</span> are equivalent to the corresponding <span class="math inline">\(100(1-\alpha)\%\)</span> CI.</p>
+<ul>
+<li>e.g., Conducting a hypothesis test with a significance level of <span class="math inline">\(\alpha = 0.05\)</span> is equivalent to conclusion from a 95% CI</li>
+</ul>
+<p><br><br><br><br></p>
+</div>
+<div id="exercises-13" class="section level2 unnumbered">
+<h2>Exercises</h2>
+<p>A template RMarkdown document that you can start from is available <a href="template_rmds/21-hypothesis-testing.Rmd">here</a>.</p>
+<p>We will be using data on 1167 colleges obtained from an edition of the U.S. News College Rankings. For each college, the following variables are given:</p>
+<ul>
+<li><code>College</code>: Name of school</li>
+<li><code>GradRate</code>: College graduation rate (as a value from 0 to 100)</li>
+<li><code>SFRatio</code>: Student-to-faculty ratio</li>
+<li><code>AdmisRate</code>: Percentage of applicants accepted (as a value from 0 to 100)</li>
+<li><code>FacultyPhD</code>: Percentage of faculty with a PhD (as a value from 0 to 100)</li>
+<li><code>Type</code>: School type (Private or Public)</li>
+<li><code>Region</code>: Location of school: Midwest, NorthEast, South, or West.</li>
+<li><code>State</code>: School state</li>
+<li><code>MathSAT</code>: Average Math SAT score of entering first-years</li>
+<li><code>VerbalSAT</code>: Average Verbal SAT score of entering first-years</li>
+<li><code>ACT</code>: Average ACT score of entering first-years</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readr)
-<span class="kw">library</span>(ggplot2)
 <span class="kw">library</span>(dplyr)
+<span class="kw">library</span>(ggplot2)
 
-addhealth &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/h09nq0nwgx8eioz/addhealth.csv?dl=1&quot;</span>)</code></pre></div>
-<p>Peek at the first few rows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(addhealth)</code></pre></div>
-<p><strong>Note:</strong> Throughout these exercises, you’ll want to use <code>factor()</code> within visualizations and model formulas to force R to treat a variable as categorical (rather than quantitative).</p>
-<p><br><br></p>
-<div id="exercise-1-9" class="section level3 unnumbered">
+colleges &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/efgkjbqeiikzzn7/USNews.csv?dl=1&quot;</span>)</code></pre></div>
+<blockquote>
+<p><strong>Research question:</strong> What is the causal effect of student-to-faculty ratios on graduation rates? How does this effect differ across school types?</p>
+</blockquote>
+<p>Throughout, use zero as the criteria for a meaningful difference and a significance level of 0.01.</p>
+<div id="exercise-1-12" class="section level3 unnumbered">
 <h3>Exercise 1</h3>
-<p>Let’s get a feel for the main variables of interest.</p>
-<p>Construct and interpret appropriate univariate visualizations of adolescent marijuana smoking and adulthood cigarette smoking.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Fit an <em>unadjusted</em> model that ignores these potential confounders. Present a (naïve) answer to the first research question by interpreting the relevant coefficient and conducting an appropriate hypothesis test.</p></li>
+<li><p>What would you expect about the corresponding 99% confidence interval (CI) for the coefficient (whether through bootstrapping or the CLT)? What about the 95% CI for the coefficient? Briefly explain, and check your answer with <code>confint()</code>.</p></li>
+</ol>
 <p><br><br></p>
 </div>
-<div id="exercise-2-9" class="section level3 unnumbered">
+<div id="exercise-2-12" class="section level3 unnumbered">
 <h3>Exercise 2</h3>
+<p>We find that school type (<code>Type</code>) and average ACT scores (<code>ACT</code>) are potential confounders of the relationship between student-to-faculty ratios and graduation rates.</p>
 <ol style="list-style-type: lower-alpha">
-<li>Construct and interpret an appropriate visualization of the relationship between <code>exposure</code> and <code>smoke</code>.</li>
-<li>Based on your visualization what would you expect about the coefficient in an appropriate model of <code>smoke ~ exposure</code>? What would you expect about the 95% bootstrap confidence interval?</li>
-<li>Fit the appropriate model, and interpret the coefficient of interest on the natural scale.</li>
-<li>Construct a 95% bootstrap confidence interval for the coefficient (on the log scale). Transform the confidence interval to the natural scale by exponentiating both endpoints. If we define a meaningful effect as one that has an odds ratio of at least 1.5, do we have evidence for a meaningful effect of adolescent marijuana smoking in the broader population?</li>
+<li><p>Fit an <em>adjusted</em> model that answers the first research question. <strong>Give an interpretation</strong> for all 4 quantities for the relevant coefficient: the estimate, the standard error, the test statistic, and p-value.</p></li>
+<li><p>Show that you reach the same conclusions with an appropriate confidence interval.</p></li>
 </ol>
 <p><br><br></p>
 </div>
-<div id="exercise-3-7" class="section level3 unnumbered">
+<div id="exercise-3-10" class="section level3 unnumbered">
 <h3>Exercise 3</h3>
-<p>That previous analysis ignored the “causal” part of the question!</p>
+<p>Fit an appropriate model to answer the second research question. Support your response by interpreting the two relevant coefficients and by appropriately using a p-value and a confidence interval.</p>
+<p>Given the hypotheses you stated above, briefly explain why the p-value on <code>(Intercept)</code> is so small.</p>
+<p><br><br></p>
+</div>
+<div id="exercise-4-6" class="section level3 unnumbered">
+<h3>Exercise 4</h3>
+<p>Suppose we know that the distribution of a test statistic <span class="math inline">\(Z\)</span> “under <span class="math inline">\(H_0\)</span>” (if <span class="math inline">\(H_0\)</span> is true) is the standard normal distribution (mean = 0, SD = 1). This is the case in logistic regression.</p>
 <ol style="list-style-type: lower-alpha">
-<li>Looking through the variables measured, what variables might be confounders and what might be mediators?</li>
-<li>Make appropriate plots to determine whether <code>housesmoke</code> might confound the relationship between adolescent marijuana smoking and adulthood cigarette smoking.</li>
-<li>Based on your results from part (b), fit an appropriate model, and interpret the coefficient of interest on the natural scale.</li>
-<li>Construct a 95% bootstrap confidence interval for the coefficient on the natural scale. Interpret the interval (what information does it contain?), and use it to determine whether we have evidence for a real, meaningful causal effect of adolescent marijuana smoking in the broader population.</li>
+<li><p>For what values of the test statistic <span class="math inline">\(Z\)</span> will I reject <span class="math inline">\(H_0\)</span> using <span class="math inline">\(\alpha = 0.05\)</span> as my p-value cutoff?</p></li>
+<li><p>For what values of the test statistic <span class="math inline">\(Z\)</span> will I reject <span class="math inline">\(H_0\)</span> using <span class="math inline">\(\alpha = 0.32\)</span> as my p-value cutoff?</p></li>
 </ol>
 
 </div>
 </div>
 </div>
-
-
-
             </section>
 
           </div>
         </div>
       </div>
-<a href="simple-logistic-regression.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="sampling-distributions-and-the-normal-distribution.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="linear-regression-assumptions.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
