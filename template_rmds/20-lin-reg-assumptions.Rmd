@@ -120,7 +120,7 @@ mod2_population <- lm(log_price ~ log_age, data = homes)
 true_coeff_mod1 <- coefficients(mod1_population)[2]
 true_coeff_mod2 <- coefficients(mod2_population)[2]
 
-set.seed(333)
+set.seed(155)
 sim_results <- replicate(1000, {
     # Sample 500 homes from the population
     homes_new_sample <- sample_n(homes, size = 500)

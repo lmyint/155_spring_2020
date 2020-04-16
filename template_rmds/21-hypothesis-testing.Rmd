@@ -42,7 +42,7 @@ Throughout, use zero as the criteria for a meaningful difference and a significa
 
 ### Part a
 
-Fit an *unadjusted* model that ignores these potential confounders. Present a (naïve) answer to the first research question by interpreting the relevant coefficient and conducting an appropriate hypothesis test.
+Fit an *unadjusted* model that ignores any potential confounders. Present a (naïve) answer to the first research question by interpreting the relevant coefficient and conducting an appropriate hypothesis test.
 
 ### Part b
 
@@ -71,8 +71,6 @@ Show that you reach the same conclusions with an appropriate confidence interval
 ## Exercise 3
 
 Fit an appropriate model to answer the second research question. Support your response by interpreting the two relevant coefficients and by appropriately using a p-value and a confidence interval.
-
-Given the hypotheses you stated above, briefly explain why the p-value on `(Intercept)` is so small.
 
 
 

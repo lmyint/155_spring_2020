@@ -338,11 +338,11 @@ code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="discussion-8" class="section level2 unnumbered">
 <h2>Discussion</h2>
-<p>When we fit regression models in R and display the <code>summary()</code> output, the Coefficients table gives two new quantities used in hypothesis testing.</p>
+<p>When we fit regression models in R and display the <code>summary()</code> output, the Coefficients table gives two new quantities used in hypothesis testing. By default, a null value of zero is used (i.e., <span class="math inline">\(H_0: \beta=0\)</span>).</p>
 <p>For linear regression models:</p>
 <ul>
 <li><code>t value</code>: the test statistic called “t” because the sampling distribution of these test statistics follows a <strong>t distribution</strong> (very closely related to the normal distribution)</li>
-<li><code>Pr(&gt;|t|)</code>: shorthand for <strong>pr</strong>obability that the test statistic is larger in absolute value than the observed test statistic <span class="math inline">\(t\)</span> (<span class="math inline">\(\|t\|\)</span> represents the absolute value of <span class="math inline">\(t\)</span>). This is the <strong>two-sided p-value</strong> for the test.</li>
+<li><code>Pr(&gt;|t|)</code>: shorthand for <strong>pr</strong>obability that the test statistic is larger in absolute value than the observed test statistic <span class="math inline">\(t\)</span> (<span class="math inline">\(|t|\)</span> represents the absolute value of <span class="math inline">\(t\)</span>). This is the <strong>two-sided p-value</strong> for the test.</li>
 </ul>
 <pre><code>&gt; lm(Price ~ Age, data = homes) %&gt;% summary()
 
@@ -396,7 +396,7 @@ colleges &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span cl
 <div id="exercise-1-12" class="section level3 unnumbered">
 <h3>Exercise 1</h3>
 <ol style="list-style-type: lower-alpha">
-<li><p>Fit an <em>unadjusted</em> model that ignores these potential confounders. Present a (naïve) answer to the first research question by interpreting the relevant coefficient and conducting an appropriate hypothesis test.</p></li>
+<li><p>Fit an <em>unadjusted</em> model that ignores any potential confounders. Present a (naïve) answer to the first research question by interpreting the relevant coefficient and conducting an appropriate hypothesis test.</p></li>
 <li><p>What would you expect about the corresponding 99% confidence interval (CI) for the coefficient (whether through bootstrapping or the CLT)? What about the 95% CI for the coefficient? Briefly explain, and check your answer with <code>confint()</code>.</p></li>
 </ol>
 <p><br><br></p>
@@ -413,7 +413,6 @@ colleges &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span cl
 <div id="exercise-3-10" class="section level3 unnumbered">
 <h3>Exercise 3</h3>
 <p>Fit an appropriate model to answer the second research question. Support your response by interpreting the two relevant coefficients and by appropriately using a p-value and a confidence interval.</p>
-<p>Given the hypotheses you stated above, briefly explain why the p-value on <code>(Intercept)</code> is so small.</p>
 <p><br><br></p>
 </div>
 <div id="exercise-4-6" class="section level3 unnumbered">

@@ -16,12 +16,12 @@ knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
 
 ## Discussion {-}
 
-When we fit regression models in R and display the `summary()` output, the Coefficients table gives two new quantities used in hypothesis testing.
+When we fit regression models in R and display the `summary()` output, the Coefficients table gives two new quantities used in hypothesis testing. By default, a null value of zero is used (i.e., $H_0: \beta=0$).
 
 For linear regression models:
 
 - `t value`: the test statistic called "t" because the sampling distribution of these test statistics follows a **t distribution** (very closely related to the normal distribution)
-- `Pr(>|t|)`: shorthand for **pr**obability that the test statistic is larger in absolute value than the observed test statistic $t$ ($\|t\|$ represents the absolute value of $t$). This is the **two-sided p-value** for the test.
+- `Pr(>|t|)`: shorthand for **pr**obability that the test statistic is larger in absolute value than the observed test statistic $t$ ($|t|$ represents the absolute value of $t$). This is the **two-sided p-value** for the test.
 
 ```
 > lm(Price ~ Age, data = homes) %>% summary()
@@ -91,7 +91,7 @@ Throughout, use zero as the criteria for a meaningful difference and a significa
 
 ### Exercise 1 {-}
 
-a. Fit an *unadjusted* model that ignores these potential confounders. Present a (naïve) answer to the first research question by interpreting the relevant coefficient and conducting an appropriate hypothesis test.
+a. Fit an *unadjusted* model that ignores any potential confounders. Present a (naïve) answer to the first research question by interpreting the relevant coefficient and conducting an appropriate hypothesis test.
 
 b. What would you expect about the corresponding 99% confidence interval (CI) for the coefficient (whether through bootstrapping or the CLT)? What about the 95% CI for the coefficient? Briefly explain, and check your answer with `confint()`.
 
@@ -110,8 +110,6 @@ b. Show that you reach the same conclusions with an appropriate confidence inter
 ### Exercise 3 {-}
 
 Fit an appropriate model to answer the second research question. Support your response by interpreting the two relevant coefficients and by appropriately using a p-value and a confidence interval.
-
-Given the hypotheses you stated above, briefly explain why the p-value on `(Intercept)` is so small.
 
 <br><br>
 
