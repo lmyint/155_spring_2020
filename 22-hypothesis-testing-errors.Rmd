@@ -1,0 +1,85 @@
+```{r 22_setup, include=FALSE}
+rm(list = ls())
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+
+# Hypothesis Testing Errors
+
+## Learning Goals {-}
+
+- Explain the trade-offs between type 1 and type 2 errors
+- Explain how different factors affect the power of a hypothesis test
+- Connect concepts of error rates to practical ethical considerations in the conduct of science
+
+<br><br><br><br>
+
+## Exercises {-}
+
+### Exercise 1 {-}
+
+Navigate to [this page](https://rpsychologist.com/d3/nhst/) to perform an interactive investigation on what factors influence statistical power.
+
+Under "Settings", choose the button that solves for power. You will vary the different parameters (one at a time) to understand how these factors affect power.
+
+Some context behind this interactive visualization:
+
+- Visualization is based on a one sample Z-test:    
+    This is a test for whether the true population mean equals a particular value. (e.g., true mean = 30)
+- The effect size slider is measured with a metric called Cohen's d:
+    - Cohen's d = magnitude of effect/standard deviation of response variable
+    - Here: how far is the true mean from the null value in units of SD?
+    - e.g., If the null value is 30, true mean is 40, and the true population SD of the quantity is 5, the Cohen’s d effect size is (40-30)/5 = 2.
+
+a. What is your intuition about how changing the significance level will change power? Check your intuition with the visualization and explain why this happens.
+
+b. Repeat part (a) for sample size.
+
+c. Repeat part (a) for the effect size. As you reason through this, think first about the impact of the numerator of Cohen's d (magnitude of the effect). Second, think about the impact of the denominator of Cohen's d (SD of the response variable).
+
+<br><br>
+
+### Exercise 2 {-}
+
+For each of the situations below, describe what a type I error and a type II error mean in context. Which is worse?
+
+- $H_0$: defendant is innocent    
+    $H_A$: defendant is guilty
+- $H_0$: males and females benefit equally from a drug    
+    $H_A$: males and females do not benefit equally from a drug
+
+For the second situation, write down a potential linear regression model formula and a logistic regression model formula that could investigate these hypotheses. (You'll need to add a little more contextual information on your own.)
+
+<br><br>
+
+### Exercise 3 {-}
+
+Visit [this page](https://mchankins.wordpress.com/2013/04/21/still-not-significant-2/) and look at both the comic at the top and the various ways in which researchers have described p-values that do not fall below the $\alpha = 0.05$ significance level threshold.
+
+What ethical consideration is arising here? What are your views on this? (Keep these thoughts in mind as you work on Case Study 2.)
+
+Just for fun: a related [xkcd comic](https://xkcd.com/1478/)
+
+<br><br>
+
+### Exercise 4 {-}
+
+Suppose that a hypothesis test yields a p-value of $1\times 10^{-6}$. Often times, when a p-value falls below the significance level threshold, this is called a **statistically significant** result.
+
+What can you tell about the magnitude of the effect or the uncertainty of the effect from this p-value? (i.e., What can you tell about the coefficient estimate or the standard error?)
+
+The notion here is a differentiation between statistical and *practical* significance. What do you think this idea is referring to?
+
+<br><br>
+
+### Exercise 5 {-}
+
+Take a look at the xkcd comic [here](https://xkcd.com/882/). What do you think is going on here? Explain in terms of class concepts.
+
+
+
+
+
+
+
+
+

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Topic 11 Experiment! | STAT 155: Introduction to Statistical Modeling</title>
+  <title>Topic 22 Hypothesis Testing Errors | STAT 155: Introduction to Statistical Modeling</title>
   <meta name="description" content="This is the class website for STAT 155 at Macalester College." />
   <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Topic 11 Experiment! | STAT 155: Introduction to Statistical Modeling" />
+  <meta property="og:title" content="Topic 22 Hypothesis Testing Errors | STAT 155: Introduction to Statistical Modeling" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="lmyint/155_spring_2020" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Topic 11 Experiment! | STAT 155: Introduction to Statistical Modeling" />
+  <meta name="twitter:title" content="Topic 22 Hypothesis Testing Errors | STAT 155: Introduction to Statistical Modeling" />
   
   <meta name="twitter:description" content="This is the class website for STAT 155 at Macalester College." />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="review.html"/>
-<link rel="next" href="bootstrapping.html"/>
+<link rel="prev" href="hypothesis-testing.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -334,113 +334,70 @@ code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="experiment" class="section level1">
-<h1><span class="header-section-number">Topic 11</span> Experiment!</h1>
-<div id="motivation" class="section level2 unnumbered">
-<h2>Motivation</h2>
-<p>When you drive, bike, or walk (or commute in some other way), you need to be able to react quickly to avoid various hazards.</p>
-<p>How much can distraction affect your reaction times?</p>
-<p><br><br></p>
-<p>Choice: Use <a href="https://youtu.be/kBsF-XoOgfg?t=11">distracting music</a> that your instructor found OR have loud, distracting conversations where you intentionally try to distract your classmates?</p>
+<div id="hypothesis-testing-errors" class="section level1">
+<h1><span class="header-section-number">Topic 22</span> Hypothesis Testing Errors</h1>
+<div id="learning-goals-17" class="section level2 unnumbered">
+<h2>Learning Goals</h2>
+<ul>
+<li>Explain the trade-offs between type 1 and type 2 errors</li>
+<li>Explain how different factors affect the power of a hypothesis test</li>
+<li>Connect concepts of error rates to practical ethical considerations in the conduct of science</li>
+</ul>
 <p><br><br><br><br></p>
 </div>
-<div id="experiment-1" class="section level2 unnumbered">
-<h2>Experiment</h2>
-<p><strong>Part 1: Random assignment</strong></p>
+<div id="exercises-14" class="section level2 unnumbered">
+<h2>Exercises</h2>
+<div id="exercise-1-13" class="section level3 unnumbered">
+<h3>Exercise 1</h3>
+<p>Navigate to <a href="https://rpsychologist.com/d3/nhst/">this page</a> to perform an interactive investigation on what factors influence statistical power.</p>
+<p>Under “Settings”, choose the button that solves for power. You will vary the different parameters (one at a time) to understand how these factors affect power.</p>
+<p>Some context behind this interactive visualization:</p>
 <ul>
-<li>Pick two group members at each table.</li>
-<li>Randomly assign these two group members to the Treatment or the Control group by rolling the die:
+<li>Visualization is based on a one sample Z-test:<br />
+This is a test for whether the true population mean equals a particular value. (e.g., true mean = 30)</li>
+<li>The effect size slider is measured with a metric called Cohen’s d:
 <ul>
-<li>Even: Treatment (loud distractions)</li>
-<li>Odd: Control (complete quiet in the room)</li>
+<li>Cohen’s d = magnitude of effect/standard deviation of response variable</li>
+<li>Here: how far is the true mean from the null value in units of SD?</li>
+<li>e.g., If the null value is 30, true mean is 40, and the true population SD of the quantity is 5, the Cohen’s d effect size is (40-30)/5 = 2.</li>
 </ul></li>
-<li>The other group members will be in the opposite group.</li>
 </ul>
-<p><br><br><br><br></p>
-<p>Quiet phase first!</p>
-<ul>
-<li>For those in the Control group, go to:</li>
-</ul>
-<p><a href="https://www.humanbenchmark.com/tests/reactiontime/" class="uri">https://www.humanbenchmark.com/tests/reactiontime/</a></p>
-<ul>
-<li>Read the instructions, and click to start the trial.</li>
-<li>Record the reaction time from the first trial <a href="https://forms.gle/Y538d9KofjEMvoNZ9">here</a>.</li>
-</ul>
-<p><br><br><br><br></p>
-<p>Noisy phase!</p>
-<ul>
-<li>For those in the Treatment group, go to:</li>
-</ul>
-<p><a href="https://www.humanbenchmark.com/tests/reactiontime/" class="uri">https://www.humanbenchmark.com/tests/reactiontime/</a></p>
-<ul>
-<li>Read the instructions, and click to start the trial.</li>
-<li>Record the reaction time from the first trial <a href="https://forms.gle/Y538d9KofjEMvoNZ9">here</a>.</li>
-</ul>
-<p><br></p>
+<ol style="list-style-type: lower-alpha">
+<li><p>What is your intuition about how changing the significance level will change power? Check your intuition with the visualization and explain why this happens.</p></li>
+<li><p>Repeat part (a) for sample size.</p></li>
+<li><p>Repeat part (a) for the effect size. As you reason through this, think first about the impact of the numerator of Cohen’s d (magnitude of the effect). Second, think about the impact of the denominator of Cohen’s d (SD of the response variable).</p></li>
+</ol>
+<p><br><br></p>
 </div>
-<div id="analysis-and-discussion" class="section level2 unnumbered">
-<h2>Analysis and Discussion</h2>
-<p>A template RMarkdown document that you can start from is available <a href="template_rmds/11-experiment.Rmd">here</a>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readr)
-<span class="kw">library</span>(ggplot2)
-<span class="kw">library</span>(dplyr)
-
-experiment &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/cwhhr0vjibw64tx/experiment_spring_2020.csv?dl=1&quot;</span>)</code></pre></div>
-<p>A little bit of data management (cleaning):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colnames</span>(experiment) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;timestamp&quot;</span>, <span class="st">&quot;arm&quot;</span>, <span class="st">&quot;rtime&quot;</span>, <span class="st">&quot;vid_games&quot;</span>, <span class="st">&quot;sports&quot;</span>, <span class="st">&quot;drive&quot;</span>, <span class="st">&quot;hand&quot;</span>)</code></pre></div>
-<div id="part-1-comparing-the-groups" class="section level3 unnumbered">
-<h3>Part 1: Comparing the groups</h3>
-<p>We can calculate the observed difference in mean reaction time between the treatment and conrol groups:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Use the pipe %&gt;% to chain together a series of commands</span>
-<span class="co"># First: group the data by experiment arm (treatment and control)</span>
-<span class="co"># Second: compute the mean reaction time in each arm</span>
-experiment_summ &lt;-<span class="st"> </span>experiment <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">group_by</span>(arm) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">summarize</span>(<span class="dt">mean_rtime =</span> <span class="kw">mean</span>(rtime))
-
-<span class="co"># Display the data summary</span>
-experiment_summ
-
-<span class="co"># Observed difference in means</span>
-experiment_summ<span class="op">$</span>mean_rtime[<span class="dv">2</span>] <span class="op">-</span><span class="st"> </span>experiment_summ<span class="op">$</span>mean_rtime[<span class="dv">1</span>]</code></pre></div>
-<p>Fit a linear regression model that would also give this result, and display the summary output:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">experiment_mod &lt;-<span class="st"> </span><span class="kw">lm</span>(???)</code></pre></div>
-<p><br><br><br></p>
+<div id="exercise-2-13" class="section level3 unnumbered">
+<h3>Exercise 2</h3>
+<p>For each of the situations below, describe what a type I error and a type II error mean in context. Which is worse?</p>
+<ul>
+<li><span class="math inline">\(H_0\)</span>: defendant is innocent<br />
+<span class="math inline">\(H_A\)</span>: defendant is guilty</li>
+<li><span class="math inline">\(H_0\)</span>: males and females benefit equally from a drug<br />
+<span class="math inline">\(H_A\)</span>: males and females do not benefit equally from a drug</li>
+</ul>
+<p>For the second situation, write down a potential linear regression model formula and a logistic regression model formula that could investigate these hypotheses. (You’ll need to add a little more contextual information on your own.)</p>
+<p><br><br></p>
 </div>
-<div id="part-2-is-this-a-real-difference" class="section level3 unnumbered">
-<h3>Part 2: Is this a real difference?</h3>
-<p>We performed this experiment on a <strong>sample</strong> of people at Macalester, but we conducted our study in the hopes of understanding a result in a broader population.</p>
-<p><em>Question for thought:</em> How different would our data (and results) look if we had used a different sample of people?</p>
-<p>We often don’t have the luxury (or resources) to get many different samples. Let’s instead <strong>resample our own data</strong> to get an answer to that question.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Sample size of the experiment</span>
-n &lt;-<span class="st"> </span><span class="kw">nrow</span>(experiment)
-
-<span class="co"># How many times will we resample?</span>
-num_resamples &lt;-<span class="st"> </span><span class="dv">1000</span>
-
-<span class="co"># Resample the data and estimate the difference</span>
-resampled_coeffs &lt;-<span class="st"> </span><span class="kw">replicate</span>(num_resamples, {
-    experiment_resampled &lt;-<span class="st"> </span>experiment <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dt">size =</span> n, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
-    mod &lt;-<span class="st"> </span><span class="kw">lm</span>(rtime <span class="op">~</span><span class="st"> </span>arm, <span class="dt">data =</span> experiment_resampled)
-    <span class="kw">coefficients</span>(mod)[<span class="st">&quot;armTreatment&quot;</span>]
-})
-
-<span class="co"># Look at the first few resampled coefficients</span>
-<span class="kw">head</span>(resampled_coeffs)
-
-<span class="co"># Put the resampled coefficients into a dataset and plot</span>
-data_resampled &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">coefficients =</span> resampled_coeffs)
-<span class="kw">ggplot</span>(data_resampled, <span class="kw">aes</span>(<span class="dt">x =</span> coefficients)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_histogram</span>()</code></pre></div>
-<p>What information does this histogram give you? Is there evidence for a real difference in the broader population of adults?</p>
-<p>This procedure of resampling the data and estimating a quantity of interest is called <strong>bootstrapping</strong>. Can you think of how this procedure might be of general use for us?</p>
-<p><br><br><br></p>
+<div id="exercise-3-11" class="section level3 unnumbered">
+<h3>Exercise 3</h3>
+<p>Visit <a href="https://mchankins.wordpress.com/2013/04/21/still-not-significant-2/">this page</a> and look at both the comic at the top and the various ways in which researchers have described p-values that do not fall below the <span class="math inline">\(\alpha = 0.05\)</span> significance level threshold.</p>
+<p>What ethical consideration is arising here? What are your views on this? (Keep these thoughts in mind as you work on Case Study 2.)</p>
+<p>Just for fun: a related <a href="https://xkcd.com/1478/">xkcd comic</a></p>
+<p><br><br></p>
 </div>
-<div id="part-3-study-design" class="section level3 unnumbered">
-<h3>Part 3: Study design</h3>
-<p>Are the treatment and control groups similar in every respect except the distraction? Were the classroom conditions exactly the same for both groups? Make plots to check if the groups were similar in their video game playing, sports participation, driving frequency, and handedness.</p>
-<p>How might you improve the design of the experiment?</p>
-<p>What is the importance of the random assignment to the treatment or control group? What might be a concern if people were allowed to self-select into the treatment or control group? Draw a causal diagram to describe this (similar to the diagrams we’ve drawn for confounding).</p>
+<div id="exercise-4-7" class="section level3 unnumbered">
+<h3>Exercise 4</h3>
+<p>Suppose that a hypothesis test yields a p-value of <span class="math inline">\(1\times 10^{-6}\)</span>. Often times, when a p-value falls below the significance level threshold, this is called a <strong>statistically significant</strong> result.</p>
+<p>What can you tell about the magnitude of the effect or the uncertainty of the effect from this p-value? (i.e., What can you tell about the coefficient estimate or the standard error?)</p>
+<p>The notion here is a differentiation between statistical and <em>practical</em> significance. What do you think this idea is referring to?</p>
+<p><br><br></p>
+</div>
+<div id="exercise-5-3" class="section level3 unnumbered">
+<h3>Exercise 5</h3>
+<p>Take a look at the xkcd comic <a href="https://xkcd.com/882/">here</a>. What do you think is going on here? Explain in terms of class concepts.</p>
 
 </div>
 </div>
@@ -450,8 +407,8 @@ data_resampled &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
           </div>
         </div>
       </div>
-<a href="review.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="bootstrapping.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="hypothesis-testing.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
