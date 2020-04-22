@@ -108,7 +108,7 @@ If Google/YouTube access is a problem, all videos and slides are also available 
 - **Wednesday:** Sampling distributions and the normal distribution
     - Video: Sampling Distributions ([YouTube link](https://youtu.be/hR3h7VGA3Sc), [Slides](https://drive.google.com/file/d/1HRij3BtATblO9uzeoxGHyirI0b3zzu9D/view?usp=sharing))
 - **Friday:** The central limit theorem and confidence intervals
-    - Video: Central Limit Theorem (YouTube link will be added soon, [Slides](https://drive.google.com/file/d/1E4ARLYbdq_YAX8vK28KenAH1mbL3W0wm/view?usp=sharing))
+    - Video: Central Limit Theorem ([Slides](https://drive.google.com/file/d/1E4ARLYbdq_YAX8vK28KenAH1mbL3W0wm/view?usp=sharing))
 
 ## Week 11: 4/13 - 4/17 {-}
 
@@ -117,5 +117,13 @@ If Google/YouTube access is a problem, all videos and slides are also available 
 - **Wednesday:** Hypothesis testing
     - Video: Hypothesis Testing ([YouTube link](https://youtu.be/lwk_-mmfJc8), [Slides](https://drive.google.com/file/d/18zXB3yBCXjASiElfx9ojOVX9M9vpUsUd/view?usp=sharing))
 - **Friday:** Continuing with hypothesis testing.
+
+## Week 12: 4/20 - 4/24 {-}
+
+- **Monday:** Errors in hypothesis testing
+    - Video: Hypothesis testing errors ([YouTube link](https://youtu.be/NPTMOHa-O-0), [Slides](https://drive.google.com/file/d/1-J0eiI29OHNSSU_tLTpimQzD29FYE8Vi/view?usp=sharing))
+- **Wednesday:** Continuing with hypothesis testing errors.
+
+From Friday 4/24 to the end of the semester, open office hours will be held in place of normal Zoom sessions.
 
 
