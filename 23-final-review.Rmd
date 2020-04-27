@@ -1,0 +1,62 @@
+```{r 23_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=TRUE)
+```
+
+# Review
+
+The following exercises are conceptual exercises connecting to many, but not necessarily all, key ideas from class. For a complete review of topics and relevant coding in R, make sure to look back through our activities, homeworks, quizzes, and exams. Looking back through the learning objectives at the top of each topic page is also a good idea.
+
+### Exercise 1 {-}
+
+Explain how confidence intervals and hypothesis tests are equivalent ways of answering yes/no questions about associations. That is, if we reject the null hypothesis at a significance level of $\alpha$, what can be said about a related confidence interval? If we don't reject the null?
+
+<br>
+
+### Exercise 2 {-}
+
+Even though confidence intervals and hypothesis tests give the same yes/no conclusions about associations, confidence intervals are seen as more informative. Why this might be the case?
+
+<br>
+
+### Exercise 3 {-}
+
+Although confidence intervals are seen as more informative, hypothesis tests provide a nice way of expressing errors in decision making. What are those errors and how do we try to control the rates (probabilities) of those errors?
+
+<br>
+
+### Exercise 4 {-}
+
+An often-cited criticism of clinical trials (e.g., to test the efficacy of a new drug) is that because certain types of people tend to be enrolled, the results may not generalize to the broader public. Carefully explain how this is related to the concept of interaction / effect modification.
+
+<br>
+
+### Exercise 5 {-}
+
+It is important to consider the units of all variables when interpreting model output. Suppose that the response variable is price, and one of the predictors is a weight of a product in grams. How would you expect the coefficient for weight to change in the following circumstances?
+
+- Price is measured in thousands of dollars instead of dollars
+- Weight is measured in kilograms instead of grams
+
+<br>
+
+### Exercise 6 {-}
+
+In what situations will the intercept of a regression model be meaningful? (There are a few - try to describe as many as you can.)
+
+<br>
+
+### Exercise 7 {-}
+
+a. A p-value can be expressed as a conditional probability. Write an expression for this conditional probability if $t$ is the actual value of the test statistic computed from our sample.
+
+b. Let's use your response from (a) to examine some common misinterpretations of p-values. Explain why each statement below is false.    
+    - The p-value is the probability that the null hypothesis is true.
+    - A low p-value indicates that the effect is large, or of substantial practical importance.
+
+<br>
+
+### Exercise 8 {-}
+
+Cite and explain 3 dangers potentially linked to indiscriminately putting predictors into a regression model. It may be useful to consider both the predictive and explanatory viewpoints of modeling.
+
+<br>

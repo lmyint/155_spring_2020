@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Topic 7 Multiple Linear Regression | STAT 155: Introduction to Statistical Modeling</title>
+  <title>Topic 23 Review | STAT 155: Introduction to Statistical Modeling</title>
   <meta name="description" content="This is the class website for STAT 155 at Macalester College." />
   <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Topic 7 Multiple Linear Regression | STAT 155: Introduction to Statistical Modeling" />
+  <meta property="og:title" content="Topic 23 Review | STAT 155: Introduction to Statistical Modeling" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="lmyint/155_spring_2020" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Topic 7 Multiple Linear Regression | STAT 155: Introduction to Statistical Modeling" />
+  <meta name="twitter:title" content="Topic 23 Review | STAT 155: Introduction to Statistical Modeling" />
   
   <meta name="twitter:description" content="This is the class website for STAT 155 at Macalester College." />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="modeling-concepts-part-2.html"/>
-<link rel="next" href="interaction-models.html"/>
+<link rel="prev" href="hypothesis-testing-errors.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -345,172 +345,59 @@ code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="multiple-linear-regression" class="section level1">
-<h1><span class="header-section-number">Topic 7</span> Multiple Linear Regression</h1>
-<div id="learning-goals-5" class="section level2 unnumbered">
-<h2>Learning Goals</h2>
-<ul>
-<li>Understand the predictive and causal viewpoints for including multiple predictor variables in regression models</li>
-<li>Interpret the coefficients in multiple linear regression models</li>
-<li>Graphically/geometrically describe the “pictures” implied by different multivariate models</li>
-<li>Understand how to extend linear regression models with polynomial terms to model nonlinear relationships</li>
-</ul>
-<p><br><br><br><br></p>
+<div id="review-1" class="section level1">
+<h1><span class="header-section-number">Topic 23</span> Review</h1>
+<p>The following exercises are conceptual exercises connecting to many, but not necessarily all, key ideas from class. For a complete review of topics and relevant coding in R, make sure to look back through our activities, homeworks, quizzes, and exams. Looking back through the learning objectives at the top of each topic page is also a good idea.</p>
+<div id="exercise-1-14" class="section level3 unnumbered">
+<h3>Exercise 1</h3>
+<p>Explain how confidence intervals and hypothesis tests are equivalent ways of answering yes/no questions about associations. That is, if we reject the null hypothesis at a significance level of <span class="math inline">\(\alpha\)</span>, what can be said about a related confidence interval? If we don’t reject the null?</p>
+<p><br></p>
 </div>
-<div id="discussion-and-exercises" class="section level2 unnumbered">
-<h2>Discussion and Exercises</h2>
-<p>A template RMarkdown document that you can start from is available <a href="template_rmds/07-multiple-regression.Rmd">here</a>.</p>
-<p><strong>New data context:</strong> diamond prices</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readr)
-<span class="kw">library</span>(ggplot2)
-<span class="kw">library</span>(dplyr)
-
-diamonds &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/9c8jqda4pwaq8i1/diamonds.csv?dl=1&quot;</span>)</code></pre></div>
-<p><strong>Research question:</strong> How are different factors related to the price of a diamond?</p>
-<p>Let’s familiarize ourselves with the data:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Display the dimensions and first few rows</span></code></pre></div>
-<p>Key variables:</p>
-<ul>
-<li><code>carat</code>: the weight of the diamond in carats (1 carat = 200 milligrams)</li>
-<li><code>price</code>: price in US dollars</li>
-<li><code>cut</code>: quality of the cut of the diamond (Fair, Good, Very Good, Premium, Ideal)</li>
-<li><code>color</code>: Level 1 (best) to Level 7 (worst)</li>
-<li><code>clarity</code>: Level 1 (worst) to Level 8 (best)</li>
-<li><code>x</code>, <code>y</code>, and <code>z</code>: length, width, and depth respectively (in mm)</li>
-<li><code>depth</code>: total depth percentage = z / mean(x, y)</li>
-<li><code>table</code>: width of top of diamond relative to widest point</li>
-</ul>
-<p><br><br><br></p>
-<p><strong>Exercise 1:</strong> What are your expectations for how <code>price</code> and <code>clarity</code> will be related? Construct a visualization to see. (Clarity level 1 is deemed worst and level 8 is deemed best.)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot of price vs. clarity</span></code></pre></div>
-<p><br><br><br></p>
-<p><strong>Exercise 2:</strong> Let’s first fit a linear regression model with just <code>clarity</code> as a predictor of <code>price</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod1 &lt;-<span class="st"> </span><span class="kw">lm</span>(price <span class="op">~</span><span class="st"> </span>clarity, <span class="dt">data =</span> diamonds)
-<span class="kw">summary</span>(mod1)</code></pre></div>
-<ol style="list-style-type: lower-alpha">
-<li><p>Why is there no coefficient for <code>clarityLevel_1</code>?</p></li>
-<li><p>Interpret the <code>clarityLevel_2</code> and <code>clarityLevel_5</code> coefficients.</p></li>
-<li><p>Based on this output, can you tell which clarity level has the highest mean price in this dataset? Explain.</p></li>
-<li><p>Relate the magnitudes of the coefficients to the trends that you see in your plot.</p></li>
-</ol>
-<p><br><br><br><br></p>
-<p><strong>Exercise 3:</strong> What if the most clear diamonds happened to be quite small (low carat)? Would this explain why your plot looks the way it does?</p>
-<p><br><br><br></p>
-<p>We can picture the relationship between <code>clarity</code>, <code>carat</code>, and <code>price</code> with a <strong>causal diagram</strong>. Exercise 3 is getting us to think about <code>carat</code> being a <strong>confounding variable</strong> in the relationship between <code>clarity</code> and <code>price</code>. A confounding variable is a cause of both the variable of interest (<code>clarity</code>) and of the response variable (<code>price</code>):</p>
-<p><img src="stat155_manual_files/figure-html/unnamed-chunk-56-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p><code>carat</code> being a cause of <code>clarity</code> tells us that there is potential for the most clear diamonds to be of systematically different sizes (likely smaller) than less clear diamonds. This idea with the fact that <code>carat</code> is a cause of price leads to the initially misleading relationship between <code>clarity</code> and <code>price</code>.</p>
-<p><br><br><br></p>
-<p>Wouldn’t it be nice if we could hold carat fixed and then compare diamonds of different clarity?</p>
-<center>
-<strong><em>We can with regression models.</em></strong>
-</center>
-<p><br><br><br></p>
-<p>If we want to examine average changes in the response while letting one variable change and holding the others fixed, we can add those other variables to the model:</p>
-<p><span class="math display">\[ E[\hbox{price}] = \beta_0 + \beta_1\hbox{clarityLevel_2} + \beta_2\hbox{clarityLevel_3} + \cdots + \beta_7\hbox{clarityLevel_8} + \beta_8\hbox{carat} \]</span></p>
-<p>Let’s simplify this model to gain better understanding:</p>
-<ul>
-<li><p>For clarity level 1: <span class="math display">\[ E[\hbox{price}] = \beta_0 + \beta_8\hbox{carat} \]</span> <span class="math inline">\(\beta_0\)</span> is the intercept<br />
-<span class="math inline">\(\beta_8\)</span> is the <code>carat</code> coefficient (the slope for <code>carat</code>)</p></li>
-<li><p>For clarity level 2: <span class="math display">\[
-\begin{align*}
-E[\hbox{price}] &amp;= \beta_0 + \beta_1 \times 1 + \beta_8\hbox{carat} \\
-&amp;= (\beta_0 + \beta_1) + \beta_8\hbox{carat}
-\end{align*}
-\]</span> <span class="math inline">\(\beta_0+\beta_1\)</span> is the intercept<br />
-<span class="math inline">\(\beta_8\)</span> is the <code>carat</code> coefficient (the slope for <code>carat</code>)</p></li>
-<li><p>For clarity level 8: <span class="math display">\[
-\begin{align*}
-E[\hbox{price}] &amp;= \beta_0 + \beta_7 \times 1 + \beta_8\hbox{carat} \\
-&amp;= (\beta_0 + \beta_7) + \beta_8\hbox{carat}
-\end{align*}
-\]</span> <span class="math inline">\(\beta_0+\beta_7\)</span> is the intercept<br />
-<span class="math inline">\(\beta_8\)</span> is the <code>carat</code> coefficient (the slope for <code>carat</code>)</p></li>
-</ul>
-<p><br><br></p>
-<p>Observations about these clarity level-specific model formulas:</p>
-<ul>
-<li>The <code>carat</code> coefficient is always the same: <span class="math inline">\(\beta_8\)</span></li>
-<li>The intercept changes for each level of <code>clarity</code>
-<ul>
-<li><span class="math inline">\(\beta_1\)</span> to <span class="math inline">\(\beta_7\)</span> indicate <strong>changes</strong> in the intercept, compared to the reference category: clarity level 1</li>
-</ul></li>
-<li>This model (<code>y ~ categorical+quantitative</code>) is called a <strong>parallel lines model</strong>.</li>
-</ul>
-<p><br><br><br></p>
-<p><strong>Exercise 4:</strong> Add to your previous model by including <code>carat</code> as a predictor.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod2 &lt;-<span class="st"> </span><span class="kw">lm</span>(price <span class="op">~</span><span class="st"> </span>clarity<span class="op">+</span>carat, <span class="dt">data =</span> diamonds)
-<span class="kw">summary</span>(mod2)</code></pre></div>
-<ol style="list-style-type: lower-alpha">
-<li><p>Write an expression for the average price of a clarity level 1 diamond that is zero carats. What coefficient does this allow you to interpret?</p></li>
-<li><p>Write an expression for the average price of a clarity level 1 diamond that is <span class="math inline">\(C\)</span> carats.</p></li>
-<li><p>Write an expression for the average price of a clarity level 2 diamond that is <span class="math inline">\(C\)</span> carats. Subtract your answer from part (b) from this expression. Based on this, give an interpretation of the <code>clarityLevel_2</code> coefficient.</p></li>
-<li><p>Write an expression for the average price of a clarity level 3 diamond that is <span class="math inline">\(C\)</span> carats. Subtract your answer from part (b) from this expression. Based on this, give an interpretation of the <code>clarityLevel_3</code> coefficient.</p></li>
-<li><p>Pick any clarity level. Write an expression for the average price of two diamonds of that clarity level: (1) one with <span class="math inline">\(C\)</span> carats and (2) one with <span class="math inline">\(C+1\)</span> carats. Subtract (1) from (2), and thus interpret the <code>carat</code> coefficient.</p></li>
-<li><p>Compare the values of the <code>clarityLevel</code> coefficients in <code>mod2</code> and <code>mod1</code> and form a conclusion about the relationship between <code>price</code> and <code>clarity</code>.</p></li>
-</ol>
-<p><br><br><br></p>
-<p>In general, a linear regression model with multiple predictors is called a <strong>multiple linear regression model</strong>.</p>
-<p><span class="math display">\[ E[y] = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p \]</span></p>
-<p>Interpreting <span class="math inline">\(\beta_1\)</span>:</p>
-<ul>
-<li>Case 1: <span class="math inline">\(x_1 = a_1, \qquad x_2 = a_2, \ldots, x_p = a_p\)</span></li>
-</ul>
-<p><span class="math display">\[ E[y_1] = \beta_0 + \beta_1 a_1 + \beta_2 a_2 + \cdots + \beta_p a_p \]</span></p>
+<div id="exercise-2-14" class="section level3 unnumbered">
+<h3>Exercise 2</h3>
+<p>Even though confidence intervals and hypothesis tests give the same yes/no conclusions about associations, confidence intervals are seen as more informative. Why this might be the case?</p>
 <p><br></p>
-<ul>
-<li>Case 2: <span class="math inline">\(x_1 = a_1 + 1, x_2 = a_2, \ldots, x_p = a_p\)</span><br />
-Value of <span class="math inline">\(x_1\)</span> is 1 unit higher, but otherwise exactly the same as Case 1.</li>
-</ul>
-<p><span class="math display">\[ E[y_2] = \beta_0 + \beta_1 (a_1+1) + \beta_2 a_2 + \cdots + \beta_p a_p \]</span></p>
+</div>
+<div id="exercise-3-12" class="section level3 unnumbered">
+<h3>Exercise 3</h3>
+<p>Although confidence intervals are seen as more informative, hypothesis tests provide a nice way of expressing errors in decision making. What are those errors and how do we try to control the rates (probabilities) of those errors?</p>
 <p><br></p>
-<p>We can compare the expected (average) response for case 1 and case 2:</p>
-<p><span class="math display">\[ E[y_2] - E[y_1] = \beta_1 \]</span></p>
-<p>Thus, <span class="math inline">\(\beta_1\)</span> is the expected change in the response for every unit change in the predictor <span class="math inline">\(x_1\)</span>, <strong>holding constant the other predictors in the model</strong>.</p>
-<p>On average, if we increase <span class="math inline">\(x_1\)</span> by 1, we expect the response to change by <span class="math inline">\(\beta_1\)</span>, <strong>holding constant the other predictors in the model</strong>.</p>
-<p><br><br><br></p>
-<p><strong>General strategy for interpreting regression coefficients</strong></p>
+</div>
+<div id="exercise-4-8" class="section level3 unnumbered">
+<h3>Exercise 4</h3>
+<p>An often-cited criticism of clinical trials (e.g., to test the efficacy of a new drug) is that because certain types of people tend to be enrolled, the results may not generalize to the broader public. Carefully explain how this is related to the concept of interaction / effect modification.</p>
+<p><br></p>
+</div>
+<div id="exercise-5-4" class="section level3 unnumbered">
+<h3>Exercise 5</h3>
+<p>It is important to consider the units of all variables when interpreting model output. Suppose that the response variable is price, and one of the predictors is a weight of a product in grams. How would you expect the coefficient for weight to change in the following circumstances?</p>
 <ul>
-<li>Interpreting a coefficient on a quantiative variable <span class="math inline">\(x\)</span>
-<ul>
-<li>Write an expression for the expected outcome for (1) a case that has <span class="math inline">\(x = a\)</span> and (2) a case that has <span class="math inline">\(x = a+1\)</span></li>
-<li>Make all <em>other</em> predictors have the same value for the two cases</li>
-<li>Compare the expected outcomes for the two cases to interpret the coefficient</li>
-</ul></li>
-<li>Interpreting a coefficient for an indicator variable for a categorical variable <span class="math inline">\(x\)</span>
-<ul>
-<li>Write an expression for the expected outcome for (1) a case that has <span class="math inline">\(x\)</span> equal to the reference category and (2) a case that has <span class="math inline">\(x\)</span> equal to the category of interest (the one corresponding to the coefficient)</li>
-<li>Make all <em>other</em> predictors have the same value for the two cases</li>
-<li>Compare the expected outcomes for the two cases to interpret the coefficient</li>
-</ul></li>
+<li>Price is measured in thousands of dollars instead of dollars</li>
+<li>Weight is measured in kilograms instead of grams</li>
 </ul>
-<p><br><br><br></p>
-<p><strong>Exercise 5:</strong> What are we assuming about the form of the relationship between <code>price</code> and <code>carat</code> by including it in the model <code>mod2</code>? Make an appropriate plot to check. (Make sure to add <code>+ geom_smooth()</code> to your plot.)</p>
-<p><br><br><br></p>
-<p><strong>Exercise 6:</strong> We can model nonlinear trends with linear regression models by adding <strong>polynomial terms</strong>. The code below fits the model</p>
-<p><span class="math display">\[ E[\hbox{price}] = \beta_0 + \beta_1\hbox{clarityLevel_2} + \cdots + \beta_7\hbox{clarityLevel_8} + \beta_8\hbox{carat} + \beta_9\hbox{carat}^2 \]</span></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod3 &lt;-<span class="st"> </span><span class="kw">lm</span>(price <span class="op">~</span><span class="st"> </span>clarity <span class="op">+</span><span class="st"> </span><span class="kw">poly</span>(carat, <span class="dt">degree =</span> <span class="dv">2</span>, <span class="dt">raw =</span> <span class="ot">TRUE</span>), <span class="dt">data =</span> diamonds)
-<span class="kw">summary</span>(mod3)</code></pre></div>
-<p>The coefficients <code>poly(carat, degree = 2, raw = TRUE)1</code> and <code>poly(carat, degree = 2, raw = TRUE)2</code> represent <span class="math inline">\(\beta_8\)</span> and <span class="math inline">\(\beta_9\)</span> respectively and aren’t really interpretable anymore. But the <code>clarityLevel</code> coefficients still have the same interpretation as in <code>mod2</code>.</p>
+<p><br></p>
+</div>
+<div id="exercise-6-1" class="section level3 unnumbered">
+<h3>Exercise 6</h3>
+<p>In what situations will the intercept of a regression model be meaningful? (There are a few - try to describe as many as you can.)</p>
+<p><br></p>
+</div>
+<div id="exercise-7" class="section level3 unnumbered">
+<h3>Exercise 7</h3>
 <ol style="list-style-type: lower-alpha">
-<li><p>Do you reach the same conclusions about the relationship between <code>clarity</code> and <code>price</code> here as in <code>mod2</code>?</p></li>
-<li><p>How does the residual standard error compare in <code>mod2</code> and <code>mod3</code> and what does this indicate about the quality of the two models? (We can’t compare the Multiple R-squared, but we can compare the Adjusted R-squared. Coming up later!)</p></li>
+<li><p>A p-value can be expressed as a conditional probability. Write an expression for this conditional probability if <span class="math inline">\(t\)</span> is the actual value of the test statistic computed from our sample.</p></li>
+<li>Let’s use your response from (a) to examine some common misinterpretations of p-values. Explain why each statement below is false.
+<ul>
+<li>The p-value is the probability that the null hypothesis is true.</li>
+<li>A low p-value indicates that the effect is large, or of substantial practical importance.</li>
+</ul></li>
 </ol>
-<p><br><br><br></p>
-<p><strong>Exercise 7:</strong> Now let’s consider <code>color</code> (Level 1 is best, and Level 7 is worst.)</p>
-<ol style="list-style-type: lower-alpha">
-<li><p>What do you expect the relationship between <code>color</code> and <code>price</code> to be. Make a plot to check.</p></li>
-<li><p>Fit a multiple linear regression model of <code>price</code> with <code>clarity</code>, <code>carat</code>, and <code>color</code> (Level 1 is best, and Level 7 is worst.)</p></li>
-<li><p>Interpret the intercept, <code>clarityLevel_2</code>, <code>carat</code>, and <code>colorLevel_2</code> coefficients. If the intercept is not meaningful, what could we do to make it meaningful?</p></li>
-<li><p>For <code>carat</code> to confound the relationship between <code>color</code> and <code>price</code>, what two properties must it have? Contextually, do you think that is plausible? Make plots to check if the data support that hypothesis. Do the same for <code>carat</code> confounding the relationship between <code>clarity</code> and <code>price</code>.</p></li>
-<li><p>Write a few sentences summarizing the nature of the confounding role of <code>carat</code> in the <code>clarity</code> vs. <code>price</code> and <code>color</code> vs. <code>price</code> relationships.</p></li>
-</ol>
-<p><br><br><br></p>
-<p><strong>Exercise 8:</strong> (Extra practice if you have time.)</p>
-<ol style="list-style-type: lower-alpha">
-<li><p>Fit a multiple linear regression model of <code>price</code> with <code>clarity</code>, <code>carat</code>, <code>color</code>, and <code>cut</code>.</p></li>
-<li><p>Interpret the intercept, <code>clarityLevel_2</code>, <code>carat</code>, <code>colorLevel_2</code>, and <code>cut2_Good</code> coefficients.</p></li>
-<li><p>Summarize your overall findings from this model, and appropriately compare its quality to the previous models.</p></li>
-</ol>
+<p><br></p>
+</div>
+<div id="exercise-8" class="section level3 unnumbered">
+<h3>Exercise 8</h3>
+<p>Cite and explain 3 dangers potentially linked to indiscriminately putting predictors into a regression model. It may be useful to consider both the predictive and explanatory viewpoints of modeling.</p>
+<p><br></p>
 
 </div>
 </div>
@@ -519,8 +406,8 @@ Value of <span class="math inline">\(x_1\)</span> is 1 unit higher, but otherwis
           </div>
         </div>
       </div>
-<a href="modeling-concepts-part-2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="interaction-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="hypothesis-testing-errors.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
