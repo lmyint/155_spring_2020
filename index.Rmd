@@ -26,6 +26,10 @@ Image source: [xkcd](https://xkcd.com/2048/)
 This is the class manual for Introduction to Statistical Modeling (STAT 155) at Macalester College for the Spring 2020 semester. The content here was developed by [Leslie Myint](https://lmyint.github.io) and draws upon material developed by the Macalester statistics faculty.
 
 <br>
+
+**For the most recent versions of my course websites and associated content, please see the [Teaching section](https://lmyint.github.io/#teaching) of my [website](https://lmyint.github.io/).**
+
+<br>
 <br>
 <br>
 
